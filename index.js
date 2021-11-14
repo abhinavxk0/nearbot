@@ -20,6 +20,7 @@ client.events = new Discord.Collection();
 client.distube = new Distube(client, {
   emitNewSongOnly: true,
   searchSongs: 0,
+  searchCooldown: 0,
   plugins: [new SpotifyPlugin({
     parallel: true,
     emitEventsAfterFetching: false,

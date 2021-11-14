@@ -35,24 +35,24 @@ client.distube.on("playSong", (queue, song) => queue.textChannel.send(
   new Discord.MessageEmbed()
     .setColor(embedcolor)
     .setDescription(`[${song.name}](${song.url}) - \`${song.formattedDuration}\``)
-    .setFooter(`Requested by ${song.user.tag}`, song.user.displayAvatarURL({ dynamic : true}))
+    .setFooter(`Requested by ${song.user.tag}`, song.user.displayAvatarURL({ dynamic: true }))
 ))
 client.distube.on("addSong", (message, queue, song) => queue.textChannel.send(
   new Discord.MessageEmbed()
-      .setColor(embedcolor)
-      .setDescription(`**Added:**\n[${song.name}](${song.url}) - \`${song.formattedDuration}\``)
-      .setFooter(`Added by: ${song.user.username}`, song.user.displayAvatarURL({ size: 4096, dynamic: true }))
+    .setColor(embedcolor)
+    .setDescription(`**Added:**\n[${song.name}](${song.url}) - \`${song.formattedDuration}\``)
+    .setFooter(`Added by: ${song.user.username}`, song.user.displayAvatarURL({ size: 4096, dynamic: true }))
 ).then(message => { message.delete({ timeout: 10000 }); }))
 client.distube.on("addList", (queue, playlist) => queue.textChannel.send(
   new Discord.MessageEmbed()
-  .setColor(embedcolor)
-  .setDescription(`Added \`${playlist.name}\` playlist (${playlist.songs.length} songs) to the queue!`)
+    .setColor(embedcolor)
+    .setDescription(`Added \`${playlist.name}\` playlist to the queue!`)
 ));
 client.distube.on("empty", (message, queue, song) => queue.textChannel.send(
   new Discord.MessageEmbed()
-      .setColor(embedcolor)
-      .setAuthor('Clearing queue and leaving channel!')
-      .setFooter('Reason: Disconnect because voice channel is empty!')
+    .setColor(embedcolor)
+    .setAuthor('Clearing queue and leaving channel!')
+    .setFooter('Reason: Disconnect because voice channel is empty!')
 ))
 client.distube.on("initQueue", queue => {
   queue.autoplay = false;

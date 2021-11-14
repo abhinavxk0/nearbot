@@ -16,7 +16,7 @@ module.exports = {
             new Discord.MessageEmbed()
                 .setColor(embedcolor)
                 .setDescription(`[${song.name}](${song.url}) - \`${song.formattedDuration}\``)
-                .setFooter(`Added by ${song.member.tag}`, song.member.displayAvatarURL({ dynamic: true} )
+                .setFooter(`Added by ${song.member.user.tag}`, song.member.user.displayAvatarURL({ dynamic: true} )
         )
         )
     }

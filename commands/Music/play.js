@@ -17,7 +17,7 @@ module.exports = {
             return message.lineReply(
                 new Discord.MessageEmbed()
                 .setColor('#A9E9F6')
-                .setDescription('Etner a song URL or query to play.')
+                .setDescription('Enter a song URL or query to play!')
             ).then(message => { message.delete({ timeout: 10000 }); })
         }
 

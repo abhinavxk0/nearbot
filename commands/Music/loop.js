@@ -7,7 +7,7 @@ module.exports = {
     async execute(client, message, args, Discord) {
 
         let mode;
-        switch(distube.setRepeatMode(message, parseInt(args[0]))) {
+        switch(client.distube.setRepeatMode(message, parseInt(args[0]))) {
             case RepeatMode.DISABLED:
                 mode = "Off";
                 break;

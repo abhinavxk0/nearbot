@@ -22,7 +22,7 @@ module.exports = {
                 .setDescription(queue.songs.map((song, id) =>
                     `**0${id + 1}#**<:spacer:907723859258667038>${song.name} - \`${song.formattedDuration}\``
                 ).slice(0, 5).join("\n\n"))
-                .setFooter(message.guild.name)
+                .setFooter(`playing in ${message.guild.name}`)
         );
     }
 }   

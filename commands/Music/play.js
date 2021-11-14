@@ -11,9 +11,17 @@ module.exports = {
                 .setColor('#A9E9F6')
                 .setDescription('You need to be in a voice channel to execute this command!')
         ).then(message => { message.delete({ timeout: 10000 }); })
-        const music = args.join(" ");
+        const query = args.join(" ");
 
-        client.distube.play(message, music)
+        if (!query){
+            return message.lineReply(
+                new Discord.MessageEmbed()
+                .setColor('#A9E9F6')
+                .setDescription('Etner a song URL or query to play.')
+            ).then(message => { message.delete({ timeout: 10000 }); })
+        }
+
+        client.distube.play(message, query)
     }
 }
 

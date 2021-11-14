@@ -36,7 +36,7 @@ client.distube.on("playSong", (queue, song) => queue.textChannel.send(
     .setColor(embedcolor)
     .setDescription(`[${song.name}](${song.url}) - \`${song.formattedDuration}\``)
     .setFooter(`Requested by ${song.user.tag}`, song.user.displayAvatarURL({ dynamic: true }))
-))
+)).then(message => { message.delete({ timeout: 10000 }); })
 client.distube.on("addSong", (message, queue, song) => queue.textChannel.send(
   new Discord.MessageEmbed()
     .setColor(embedcolor)

@@ -1,4 +1,4 @@
-const DisTube = require('distube');
+const { RepeatMode } = require('distube');
 
 module.exports = {
     name: 'loop',
@@ -6,8 +6,18 @@ module.exports = {
     description: 'loops song',
     async execute(client, message, args, Discord) {
 
-        let mode = client.distube.setRepeatMode(message, parseInt(args[0]));
-        mode = mode ? mode == 2 ? "Repeat Queue" : "Repeat Song" : "Off";
+        let mode;
+        switch(distube.setRepeatMode(message, parseInt(args[0]))) {
+            case RepeatMode.DISABLED:
+                mode = "Off";
+                break;
+            case RepeatMode.SONG:
+                mode = "Repeat a song";
+                break;
+            case RepeatMode.QUEUE:
+                mode = "Repeat all queue";
+                break;
+        }
         
         if (!message.member.voice.channel) return message.lineReplyNoMention(
             new Discord.MessageEmbed()

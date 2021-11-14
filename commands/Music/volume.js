@@ -21,12 +21,12 @@ module.exports = {
         )
 
 
-        client.distube.setVolume(message, args[0]);
+        client.distube.setVolume(message, Number(args[0]));
         message.lineReplyNoMention(
             new Discord.MessageEmbed()
             .setColor('#A9E9F6')
             .setAuthor(`Volume updated!`)
-            .setDescription(`The volume has been set to ${args[0]}`)
+            .setDescription(`The volume has been set to **${args[0]}%**!`)
         )
     }
 }

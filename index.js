@@ -37,18 +37,18 @@ client.distube.on("playSong", (queue, song) => queue.textChannel.send(
     .setColor(embedcolor)
     .setDescription(`[${song.name}](${song.url}) - \`${song.formattedDuration}\``)
     .setFooter(`Requested by ${song.user.tag}`, song.user.displayAvatarURL({ dynamic: true }))
-).then(message => { message.delete({ timeout: 10000 }); }))
+))
 client.distube.on("addSong", (message, queue, song) => queue.textChannel.send(
   new Discord.MessageEmbed()
     .setColor(embedcolor)
     .setDescription(`**Added:**\n[${song.name}](${song.url}) - \`${song.formattedDuration}\``)
     .setFooter(`Added by: ${song.user.username}`, song.user.displayAvatarURL({ size: 4096, dynamic: true }))
-).then(message => { message.delete({ timeout: 10000 }); }))
+))
 client.distube.on("addList", (queue, playlist) => queue.textChannel.send(
   new Discord.MessageEmbed()
     .setColor(embedcolor)
     .setDescription(`Added \`${playlist.name}\` playlist to the queue!`)
-).then(message => { message.delete({ timeout: 10000 }); }));
+));
 client.distube.on("empty", (message, queue, song) => queue.textChannel.send(
   new Discord.MessageEmbed()
     .setColor(embedcolor)

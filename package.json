@@ -1,4 +1,8 @@
 {
+  "engines": {
+    "node": "16.x",
+    "npm": "8.x"
+  },
   "dependencies": {
     "@distube/soundcloud": "^1.0.0",
     "@distube/spotify": "^1.0.0",

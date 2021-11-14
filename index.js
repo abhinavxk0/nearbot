@@ -48,7 +48,7 @@ client.distube.on("addList", (queue, playlist) => queue.textChannel.send(
   new Discord.MessageEmbed()
     .setColor(embedcolor)
     .setDescription(`Added \`${playlist.name}\` playlist to the queue!`)
-));
+).then(message => { message.delete({ timeout: 10000 }); }));
 client.distube.on("empty", (message, queue, song) => queue.textChannel.send(
   new Discord.MessageEmbed()
     .setColor(embedcolor)

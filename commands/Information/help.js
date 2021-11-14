@@ -63,8 +63,7 @@ module.exports = {
                 },
                 {
                     name: 'API Info Commands',
-                    value: `Use \`covid\` to fetch global or country specific **COVID-19** information.
-                            Use \`weather\` to fetch **weather and temperature** (C) of a location.
+                    value: `Use \`weather\` to fetch **weather and temperature** (C) of a location.
                             Use \`urbandictionary\` to fetch definitions from **Urban Dictionary**. (Results might be NSFW.)
                             Use \`youtube-search\` to fetch a video from **YouTube**.`
                 }

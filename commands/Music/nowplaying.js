@@ -13,6 +13,8 @@ module.exports = {
             )
         }
         const song = client.distube.getQueue(message).songs[0]
+        console.log(queue.currentTime)
+        console.log(queue.duration)
         message.lineReply(
             new Discord.MessageEmbed()
                 .setColor(embedcolor)

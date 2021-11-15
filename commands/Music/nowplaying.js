@@ -17,7 +17,7 @@ module.exports = {
                 .setColor(embedcolor)
                 .setTitle('now playing...')
                 .setDescription(`[${song.name}](${song.url}) - \`${song.formattedDuration}\``)
-                .setFooter(`Added by ${song.member.user.tag}`, song.member.user.displayAvatarURL({ dynamic: true} )
+                .setFooter(`Added by ${song.member.user.tag}`, song.member.user.displayAvatarURL({ dynamic: true} ))
                 .addFields(
                     {
                         name: 'Volume',
@@ -29,7 +29,7 @@ module.exports = {
                         value: queue.autoplay ? 'On' : 'Off'
                     }
                 )
-        )
+        
         )
     }
 }

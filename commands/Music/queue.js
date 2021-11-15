@@ -28,7 +28,7 @@ module.exports = {
                 .setAuthor('Queue', client.user.displayAvatarURL({ dynamic : true}))
                 .setColor(embedcolor)
                 .setDescription(queue.songs.map((song, id) =>
-                    `**${id + 1}#** -<:spacer:907723859258667038>[${song.name}](${song.url}) - \`${song.formattedDuration}\``
+                    `**${id + 1}#**<:spacer:907723859258667038>[${song.name}](${song.url}) - \`${song.formattedDuration}\``
                 ).slice(0, 10).join("\n\n"))
                 .addField('queue duration:', proctime)
         )

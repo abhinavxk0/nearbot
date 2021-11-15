@@ -20,13 +20,13 @@ module.exports = {
 
         const ratio = Math.floor((current / target) * progressBar.length);
 
-        const newProgressBar = progressBar.substring(0, ratio) + '▫️' + progressBar.substring(ratio + 1, progressBar.length)
+        const newProgressBar = progressBar.substring(0, ratio) + '<:greendot:909726274711322664>' + progressBar.substring(ratio + 1, progressBar.length)
         message.lineReply(
             new Discord.MessageEmbed()
                 .setColor(embedcolor)
                 .setTitle('now playing...')
                 .setThumbnail(song.thumbnail)
-                .setDescription(`[${song.name}](${song.url})\n${queue.formattedCurrentTime} - ${queue.formattedDuration}\n${newProgressBar}`)
+                .setDescription(`[${song.name}](${song.url})\n${queue.formattedCurrentTime} - ${newProgressBar} - ${queue.formattedDuration}`)
                 .setFooter(`Added by ${song.user.tag}`, song.user.displayAvatarURL({ dynamic: true} ))
                 .addFields(
                     {

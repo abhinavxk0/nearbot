@@ -13,14 +13,20 @@ module.exports = {
             )
         }
         const song = client.distube.getQueue(message).songs[0]
-        console.log(queue.currentTime)
-        console.log(queue.duration)
+        const progressBar = '▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬';
+
+        const target = song.duration;
+        const current = queue.currentTime;
+
+        const ratio = Math.floor((current / target) * progressBar.length);
+
+        const newProgressBar = progressBar.substring(0, ratio) + '▫️' + progressBar.substring(ratio + 1, progressBar.length)
         message.lineReply(
             new Discord.MessageEmbed()
                 .setColor(embedcolor)
                 .setTitle('now playing...')
                 .setThumbnail(song.thumbnail)
-                .setDescription(`[${song.name}](${song.url})\n${queue.formattedCurrentTime} - ${queue.formattedDuration}`)
+                .setDescription(`[${song.name}](${song.url})\n${queue.formattedCurrentTime} - ${queue.formattedDuration}\n${newProgressBar}`)
                 .setFooter(`Added by ${song.user.tag}`, song.user.displayAvatarURL({ dynamic: true} ))
                 .addFields(
                     {

@@ -16,17 +16,19 @@ module.exports = {
             new Discord.MessageEmbed()
                 .setColor(embedcolor)
                 .setTitle('now playing...')
+                .setThumbnail(song.thumbnail)
                 .setDescription(`[${song.name}](${song.url}) - \`${song.formattedDuration}\``)
-                .setFooter(`Added by ${song.member.user.tag}`, song.member.user.displayAvatarURL({ dynamic: true} ))
+                .setFooter(`Added by ${song.user.tag}`, song.user.displayAvatarURL({ dynamic: true} ))
                 .addFields(
                     {
-                        name: 'Volume',
-                        value: queue.volume,
+                        name: 'Volume: ',
+                        value: `${queue.volume}%`,
                         inline: true
                     },
                     {
                         name: 'Autoplay',
-                        value: queue.autoplay ? 'On' : 'Off'
+                        value: queue.autoplay ? 'On' : 'Off',
+                        inline: true
                     }
                 )
         

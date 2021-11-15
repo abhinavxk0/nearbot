@@ -1,4 +1,3 @@
-const { RepeatMode } = require('distube');
 const { embedcolor } = require('../../config.json')
 
 module.exports = {
@@ -31,7 +30,12 @@ module.exports = {
         }
         mode = queue.setRepeatMode(mode)
         mode = mode ? mode === 2 ? "Repeat queue" : "Repeat song" : "Off"
-        message.channel.send(`${client.emotes.repeat} | Set repeat mode to \`${mode}\``)
+        message.lineReply(
+            new Discord.MessageEmbed()
+            .setAuthor('Repeat Mode')
+            .setColor('#A9E9F6')
+            .setDescription(`Set repeat mode to \`${mode}\``)
+        )
     }
 }
 

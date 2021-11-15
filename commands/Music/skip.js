@@ -15,6 +15,7 @@ module.exports = {
                 .setColor('#defafe')
                 .setDescription('The queue is empty!')
         )
+        console.log(queue.songs.length)
         client.distube.skip(message)
         message.react('⏩')
 

@@ -3,6 +3,7 @@ const DisTube = require('distube');
 module.exports = {
     name: 'play',
     aliases: ['p'],
+    cooldown: 15,
     category: "music",
     description: 'plays music',
     async execute(client, message, args, Discord) {

@@ -1,43 +1,37 @@
 const { RepeatMode } = require('distube');
+const { embedcolor } = require('../../config.json')
 
 module.exports = {
     name: 'loop',
     aliases: ['repeat'],
     description: 'loops song',
     async execute(client, message, args, Discord) {
-
-        let mode;
-        switch(client.distube.setRepeatMode(message, parseInt(args[0]))) {
-            case RepeatMode.DISABLED:
-                mode = "Off";
-                break;
-            case RepeatMode.SONG:
-                mode = "Repeat a song";
-                break;
-            case RepeatMode.QUEUE:
-                mode = "Repeat all queue";
-                break;
-        }
-        
-        if (!message.member.voice.channel) return message.lineReplyNoMention(
+        const queue = client.distube.getQueue(message)
+        if (!queue) return message.lineReply(
             new Discord.MessageEmbed()
-                .setColor('#A9E9F6')
-                .setDescription('You need to be in a voice channel to execute this command!')
-        ).then(message => { message.delete({ timeout: 10000 }); })
-        var queue = client.distube.getQueue(message);
-        if (!queue) {
-            return message.lineReply(
-                new Discord.MessageEmbed()
-                    .setColor(embedcolor)
-                    .setDescription(`Nothing's in the queue right now!`)
-            )
-        }
-        message.channel.send(
-            new Discord.MessageEmbed()
-            .setAuthor('Repeat Mode')
-            .setColor('#A9E9F6')
-            .setDescription(`Set repeat mode to \`${mode}\``)
+                .setColor(embedcolor)
+                .setDescription(`Nothing's in the queue right now!`)
         )
+        if (!args[0]) return message.lineReply(
+            new Discord.MessageEmbed()
+                .setColor(embedcolor)
+                .setDescription(`Enter a loop setting. (\`off, song, queue\`)`)
+        )
+        let mode = null
+        switch (args[0]) {
+            case "off":
+                mode = 0
+                break
+            case "song":
+                mode = 1
+                break
+            case "queue":
+                mode = 2
+                break
+        }
+        mode = queue.setRepeatMode(mode)
+        mode = mode ? mode === 2 ? "Repeat queue" : "Repeat song" : "Off"
+        message.channel.send(`${client.emotes.repeat} | Set repeat mode to \`${mode}\``)
     }
 }
 

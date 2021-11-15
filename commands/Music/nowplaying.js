@@ -18,6 +18,17 @@ module.exports = {
                 .setTitle('now playing...')
                 .setDescription(`[${song.name}](${song.url}) - \`${song.formattedDuration}\``)
                 .setFooter(`Added by ${song.member.user.tag}`, song.member.user.displayAvatarURL({ dynamic: true} )
+                .addFields(
+                    {
+                        name: 'Volume',
+                        value: queue.volume,
+                        inline: true
+                    },
+                    {
+                        name: 'Autoplay',
+                        value: queue.autoplay ? 'On' : 'Off'
+                    }
+                )
         )
         )
     }

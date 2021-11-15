@@ -11,6 +11,7 @@ module.exports = {
 
         let queue = await client.distube.getQueue(message);
         if (queue) {
+            
             client.distube.stop(message)
 
             message.channel.send(

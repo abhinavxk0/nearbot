@@ -1,6 +1,3 @@
-const { Guild } = require('discord.js');
-const DisTube = require('distube');
-
 module.exports = {
     name: 'skip',
     category: "music",
@@ -18,12 +15,6 @@ module.exports = {
                 .setColor('#defafe')
                 .setDescription('The queue is empty!')
         )
-        if (!queue.songs > 2){
-            return message.channel.send(
-                new Discord.MessageEmbed()
-                    .setColor('#defafe')
-                    .setDescription('The queue is empty!'))
-        }
         client.distube.skip(message)
         message.react('⏩')
 

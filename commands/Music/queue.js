@@ -25,12 +25,11 @@ module.exports = {
         
         message.lineReply(
             new Discord.MessageEmbed()
+                .setAuthor('Queue', client.user.displayAvatarURL({ dynamic : true}))
                 .setColor(embedcolor)
                 .setDescription(queue.songs.map((song, id) =>
-                    `**0${id + 1}#**<:spacer:907723859258667038>${song.name} - \`${song.formattedDuration}\``
-                ).slice(0, 9).join("\n\n") + '\n\n' + queue.songs.map((song, id) =>
-                    `**${id + 1}#**<:spacer:907723859258667038>${song.name} - \`${song.formattedDuration}\``
-                ).slice(9, 15).join("\n\n"))
+                    `**${id + 1}#** -<:spacer:907723859258667038>[${song.name}](${song.url}) - \`${song.formattedDuration}\``
+                ).slice(0, 10).join("\n\n"))
                 .addField('queue duration:', proctime)
         )
     }

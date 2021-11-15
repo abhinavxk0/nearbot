@@ -10,7 +10,7 @@ module.exports = {
             new Discord.MessageEmbed()
                 .setColor('#A9E9F6')
                 .setImage(userAv)
-                .setAuthor(`${user.username}'s Avatar`)
+                .setAuthor(`${user.tag}'s Avatar`)
         )
     }
 }

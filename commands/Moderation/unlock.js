@@ -20,7 +20,7 @@ module.exports = {
                 new Discord.MessageEmbed()
                     .setColor('#A9E9F6')
                     .setDescription(`${message.channel} has been unlocked.`)
-                    .setFooter(`Unlocked by ${message.author.username}`, message.author.displayAvatarURL({dynamic : true}))
+                    .setFooter(`Unlocked by ${message.author.tag}`, message.author.displayAvatarURL({dynamic : true}))
             )
         } catch (e){
             console.log(e)

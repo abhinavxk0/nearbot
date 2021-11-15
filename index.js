@@ -48,16 +48,16 @@ client.distube.on("addSong", async(queue, song) => {
     .setDescription(`**Added:**\n[${song.name}](${song.url}) - \`${song.formattedDuration}\``)
     .setFooter(`Added by: ${song.user.tag}`, song.user.displayAvatarURL({ size: 4096, dynamic: true }))
 )
-  message.delete({ timeout : 5000 })
+  message.delete({ timeout : 10000 })
 })
 client.distube.on("addList", async (queue, playlist) => {
   const message = await queue.textChannel.send(
   new Discord.MessageEmbed()
     .setColor(embedcolor)
-    .setDescription(`**Added:**\n[\`${playlist.name}\`](${playlist.url}) playlist to the queue!`)
+    .setDescription(`**Added:**\n[\`${playlist.name}\`](${playlist.url}) (${playlist.songs} songs) to the queue!`)
     .setFooter(`Added by: ${playlist.user.tag}`, playlist.user.displayAvatarURL({ size: 4096, dynamic: true }))
 )
-  message.delete({ timeout: 5000 })
+  message.delete({ timeout: 10000 })
 });
 client.distube.on("empty", (queue) => queue.textChannel.send(
   new Discord.MessageEmbed()

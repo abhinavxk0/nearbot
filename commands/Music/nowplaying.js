@@ -2,6 +2,7 @@ const { embedcolor } = require('../../config.json')
 
 module.exports = {
     name: 'nowplaying',
+    aliases: ['np', 'now'],
     async execute(client, message, args, Discord){
         const queue = client.distube.getQueue(message)
         if (!queue){
@@ -17,7 +18,7 @@ module.exports = {
                 .setColor(embedcolor)
                 .setTitle('now playing...')
                 .setThumbnail(song.thumbnail)
-                .setDescription(`[${song.name}](${song.url})\n${queue.formattedCurrentTime} - ${formattedDuration}`)
+                .setDescription(`[${song.name}](${song.url})\n${queue.formattedCurrentTime} - ${queue.formattedDuration}`)
                 .setFooter(`Added by ${song.user.tag}`, song.user.displayAvatarURL({ dynamic: true} ))
                 .addFields(
                     {

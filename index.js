@@ -57,7 +57,7 @@ client.distube.on("addList", async (queue, playlist) => {
 
 client.distube.on("initQueue", async (queue, song) => {
   // const djRole = await db.fetch(`djrole.${queue.textChannel.guild.id}`)
-  queue.textChannel.send(song.member)
+  queue.textChannel.send(song.user.tag)
   queue.autoplay = false;
   queue.volume = 100;
 

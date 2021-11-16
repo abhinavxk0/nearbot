@@ -31,7 +31,7 @@ module.exports = {
                 .addFields(
                     {
                         name: 'Volume:',
-                        value: `<:spacer:907723859258667038>${queue.volume}%`,
+                        value: `${queue.volume}%`,
                         inline: true
                     },
                     {

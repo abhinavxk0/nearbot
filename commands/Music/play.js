@@ -8,12 +8,17 @@ module.exports = {
     description: 'plays music',
     async execute(client, message, args, Discord) {
         const memberVC = message.member.voice.channel;
-        if (!memberVC) return message.channel.send(`❌ | You must be in a voice channel!`);
+        if (!memberVC) return message.lineReplyNoMention(
+            new Discord.MessageEmbed()
+                .setColor('#A9E9F6')
+                .setDescription('You need to be in a voice channel to execute this command!')
+        ).then(message => { message.delete({ timeout: 10000 }); })
 
-        const clientVC = message.guild.me.voice.channel;
-        if (!clientVC) return message.channel.send(`❌ | I'm not on any voice channel!`);
-
-        if (memberVC !== clientVC) return message.channel.send(`❌ | You must be in the same channel as ${message.client.user}!`);
+        if (memberVC !== clientVC) return message.lineReplyNoMention(
+            new Discord.MessageEmbed()
+                .setColor('#A9E9F6')
+                .setDescription(`You need to be in ${message.guild.me.voice.channel} to execute this command!`)
+        ).then(message => { message.delete({ timeout: 10000 }); })
         const query = args.join(" ");
 
         if (!query){

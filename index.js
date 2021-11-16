@@ -53,23 +53,24 @@ client.distube.on("addList", async (queue, playlist) => {
   message.delete({ timeout: 5000 })
 });
 
-client.distube.on("initQueue", async (queue, song, message) => {
+client.distube.on("initQueue", async (queue, song) => {
   queue.autoplay = false;
   queue.volume = 100;
-  const djRole = await db.fetch(`djrole.${message.guild.id}`)
+  const djRole = await db.fetch(`djrole.${queue.textChannel.guild.id}`)
   if (djRole) {
     await song.user.roles.add(djRole)
   } else return;
 });
 
-client.distube.on("empty", async (queue, song, message) => {
-  const djRole = await db.fetch(`djrole.${message.guild.id}`)
+client.distube.on("empty", async (queue, song) => {
+  
   queue.textChannel.send(
     new Discord.MessageEmbed()
       .setColor(embedcolor)
       .setAuthor('Clearing queue and leaving channel!')
       .setFooter('Reason: Disconnect because voice channel is empty!')
   )
+  const djRole = await db.fetch(`djrole.${queue.textChannel.guild.id}`)
   if (song.user.roles.cache.has(djRole)) {
     song.user.roles.remove(djRole)
   } else return;

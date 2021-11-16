@@ -51,7 +51,6 @@ module.exports = {
         mode = mode ? mode === 2 ? "Repeat queue" : "Repeat song" : "Off"
         message.lineReply(
             new Discord.MessageEmbed()
-            .setAuthor('Repeat Mode')
             .setColor('#A9E9F6')
             .setDescription(`Set repeat mode to \`${mode}\``)
         )

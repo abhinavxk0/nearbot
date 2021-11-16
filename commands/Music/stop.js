@@ -2,8 +2,7 @@ const db = require('quick.db')
 
 module.exports = {
     name: 'stop',
-    category: "music",
-    description: 'stops music',
+    aliases: ['disconnect', 'dc', 'leave'],
     async execute(client, message, args, Discord) {
         const memberVC = message.member.voice.channel;
         if (!memberVC) return message.lineReplyNoMention(
@@ -35,9 +34,12 @@ module.exports = {
                     .setColor('#A9E9F6')
                     .setDescription('Disconnected!')
             )
-            const djRole = await db.fetch(`djrole.${queue.textChannel.guild.id}`)
-            if (message.member.roles.cache.has(djRole)) {
-              message.member.roles.remove(djRole)
+            const djRole = await db.fetch(`djrole.${message.guild.id}`)
+            const djUser = await db.fetch(`djuser.${message.guild.id}`)
+            const target = message.guild.member(djUser)
+
+            if (target.roles.cache.has(djRole)){
+              target.roles.remove(djRole)
             }
         } else if (!queue) {
             return

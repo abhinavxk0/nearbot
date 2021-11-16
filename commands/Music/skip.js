@@ -1,7 +1,6 @@
 module.exports = {
     name: 'skip',
-    category: "music",
-    description: 'skips music',
+    aliases: ['next'],
     async execute(client, message, args, Discord) {
 
         
@@ -38,7 +37,13 @@ module.exports = {
             client.distube.stop(message).then(
                 message.react('⏩')
             ).catch((err) => console.log(err))
+            const djRole = await db.fetch(`djrole.${message.guild.id}`)
+            const djUser = await db.fetch(`djuser.${message.guild.id}`)
+            const target = message.guild.member(djUser)
 
+            if (target.roles.cache.has(djRole)){
+              target.roles.remove(djRole)
+            }
         } else {
             client.distube.skip(message).then(
                 message.react('⏩')

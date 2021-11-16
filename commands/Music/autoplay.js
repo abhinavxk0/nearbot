@@ -20,7 +20,6 @@ module.exports = {
         let mode = client.distube.toggleAutoplay(message);
         message.lineReplyNoMention(
             new Discord.MessageEmbed()
-            .setAuthor('Autoplay Mode')
             .setColor('#A9E9F6')
             .setDescription("Set autoplay mode to `" + (mode ? "On" : "Off") + "`")
         );

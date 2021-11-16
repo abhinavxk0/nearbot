@@ -1,5 +1,6 @@
 module.exports = {
     name: 'jump',
+    aliases: ['jumpto', 'skipto'],
     async execute(client, message, args, Discord){
 
         const memberVC = message.member.voice.channel;

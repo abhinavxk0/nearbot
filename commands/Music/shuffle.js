@@ -1,5 +1,6 @@
 module.exports = {
     name: 'shuffle',
+    aliases: ['mix'],
     async execute(client, message, args, Discord) {
         const memberVC = message.member.voice.channel;
         if (!memberVC) return message.lineReplyNoMention(

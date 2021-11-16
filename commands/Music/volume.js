@@ -1,6 +1,6 @@
 module.exports = {
     name: 'volume',
-    aliases: ['vol'],
+    aliases: ['vol', 'v'],
     async execute(client, message, args, Discord) {
         const memberVC = message.member.voice.channel;
         if (!memberVC) return message.lineReplyNoMention(
@@ -39,7 +39,6 @@ module.exports = {
         message.lineReplyNoMention(
             new Discord.MessageEmbed()
             .setColor('#A9E9F6')
-            .setAuthor(`Volume updated!`)
             .setDescription(`The volume has been set to **${args[0]}%**!`)
         )
     }

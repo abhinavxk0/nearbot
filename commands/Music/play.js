@@ -2,7 +2,7 @@ const DisTube = require('distube');
 
 module.exports = {
     name: 'play',
-    aliases: ['p'],
+    aliases: ['p', 'pl'],
     cooldown: 15,
     category: "music",
     description: 'plays music',

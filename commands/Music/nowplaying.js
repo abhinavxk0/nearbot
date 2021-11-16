@@ -26,7 +26,7 @@ module.exports = {
                 .setColor(embedcolor)
                 .setTitle('now playing...')
                 .setThumbnail(song.thumbnail)
-                .setDescription(`<:spacer:907723859258667038>\n[${song.name}](${song.url})\n**${queue.formattedCurrentTime}** ${newProgressBar} **${song.formattedDuration}**`)
+                .setDescription(`[${song.name}](${song.url})\n**${queue.formattedCurrentTime}**<:spacer:907723859258667038>${newProgressBar}<:spacer:907723859258667038>**${song.formattedDuration}**`)
                 .setFooter(`Requested by ${song.user.tag}`, song.user.displayAvatarURL({ dynamic: true} ))
                 .addFields(
                     {

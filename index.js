@@ -53,7 +53,7 @@ client.distube.on("addList", async (queue, playlist) => {
   message.delete({ timeout: 5000 })
 });
 
-client.distube.on("initQueue", (queue, song, message) => {
+client.distube.on("initQueue", async (queue, song, message) => {
   queue.autoplay = false;
   queue.volume = 100;
   const djRole = await db.fetch(`djrole.${message.guild.id}`)
@@ -62,7 +62,7 @@ client.distube.on("initQueue", (queue, song, message) => {
   } else return;
 });
 
-client.distube.on("empty", (queue, song, message) => {
+client.distube.on("empty", async (queue, song, message) => {
   const djRole = await db.fetch(`djrole.${message.guild.id}`)
   queue.textChannel.send(
     new Discord.MessageEmbed()

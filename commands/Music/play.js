@@ -8,6 +8,7 @@ module.exports = {
     description: 'plays music',
     async execute(client, message, args, Discord) {
         const memberVC = message.member.voice.channel;
+        const clientVC = message.guild.me.voice.channel;
         if (!memberVC) return message.lineReplyNoMention(
             new Discord.MessageEmbed()
                 .setColor('#A9E9F6')

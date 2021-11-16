@@ -56,7 +56,7 @@ client.distube.on("addList", async (queue, playlist) => {
 client.distube.on("initQueue", async (queue, song) => {
   const djRole = await db.fetch(`djrole.${queue.textChannel.guild.id}`)
   if (djRole) {
-    await song.user.roles.add(djRole)
+    await song.member.roles.add(djRole)
   }
   queue.autoplay = false;
   queue.volume = 100;
@@ -65,10 +65,10 @@ client.distube.on("initQueue", async (queue, song) => {
 
 client.distube.on("empty", async (queue, song) => {
 
-  const djRole = await db.fetch(`djrole.${queue.textChannel.guild.id}`)
-  if (song.user.roles.cache.has(djRole)) {
-    song.user.roles.remove(djRole)
-  }
+  // const djRole = await db.fetch(`djrole.${queue.textChannel.guild.id}`)
+  // if (song.member.roles.cache.has(djRole)) {
+  //   song.member.roles.remove(djRole)
+  // }
   queue.textChannel.send(
     new Discord.MessageEmbed()
       .setColor(embedcolor)

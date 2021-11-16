@@ -55,8 +55,9 @@ client.distube.on("addList", async (queue, playlist) => {
   message.delete({ timeout: 5000 })
 });
 
-client.distube.on("initQueue", async (queue, song) => {
+client.distube.on("initQueue", async (queue) => {
   // const djRole = await db.fetch(`djrole.${queue.textChannel.guild.id}`)
+  const song = queue.songs[0]
   queue.textChannel.send(song.user.tag)
   queue.autoplay = false;
   queue.volume = 100;

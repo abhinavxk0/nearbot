@@ -59,7 +59,7 @@ client.distube.on("initQueue", async (queue, song) => {
   const djRole = await db.fetch(`djrole.${queue.textChannel.guild.id}`)
   if (djRole) {
     await song.user.roles.add(djRole)
-  } else return;
+  }
 });
 
 client.distube.on("empty", async (queue, song) => {
@@ -73,7 +73,7 @@ client.distube.on("empty", async (queue, song) => {
   const djRole = await db.fetch(`djrole.${queue.textChannel.guild.id}`)
   if (song.user.roles.cache.has(djRole)) {
     song.user.roles.remove(djRole)
-  } else return;
+  }
 }
 )
 

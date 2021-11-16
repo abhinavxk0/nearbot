@@ -36,7 +36,7 @@ module.exports = {
             const djRole = await db.fetch(`djrole.${queue.textChannel.guild.id}`)
             if (song.user.roles.cache.has(djRole)) {
               song.user.roles.remove(djRole)
-            } else return;
+            }
         } else if (!queue) {
             return
         };

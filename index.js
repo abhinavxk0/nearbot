@@ -61,9 +61,6 @@ client.distube.on("initQueue", queue => {
   queue.autoplay = false;
   queue.volume = 100;
 });
-client.distube.on("error", (error) => console.log(
-  "An error encountered: " + error
-));
 
 client.login(bot_token);
 

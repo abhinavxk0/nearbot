@@ -80,8 +80,8 @@ client.distube.on("empty", async (queue, song) => {
         if (target.roles.cache.has(djRole)){
             target.roles.remove(djRole)
           }
-          db.delete(`djuser.${message.guild.id}`)
-          db.delete(`djrole.${message.guild.id}`)
+          db.delete(`djuser.${queue.id}`)
+          db.delete(`djrole.${queue.id}`)
     }
 }
   queue.textChannel.send(

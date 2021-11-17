@@ -5,7 +5,7 @@ module.exports = {
     async execute(client, message, args, Discord){
         const djUser = await db.fetch(`djuser.${message.guild.id}`)
         const djmember = message.guild.member(djUser)
-        const djRole = await db.fetch(`djrole.${queue.textChannel.guild.id}`)
+        const djRole = await db.fetch(`djrole.${message.guild.id}`)
         const mention = message.mentions.members.first();
         const queue = await client.distube.getQueue(message);
 

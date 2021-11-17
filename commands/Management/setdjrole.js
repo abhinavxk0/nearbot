@@ -21,7 +21,7 @@ module.exports = {
         message.lineReply(
             new Discord.MessageEmbed()
                 .setColor('#A9E9F6')
-                .setDescription(`The mute role for this server has been set to <@&${djRole.id}>`)
+                .setDescription(`The DJ role for this server has been set to <@&${djRole.id}>`)
         )
 
     }

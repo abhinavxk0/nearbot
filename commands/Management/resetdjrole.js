@@ -14,14 +14,14 @@ module.exports = {
         if (djRole == null) return message.lineReply(
             new Discord.MessageEmbed()
                 .setColor('#A9E9F6')
-                .setDescription("There is no mute role set in this server.")
+                .setDescription("There is no DJ role set in this server.")
         )
 
         db.delete(`djrole.${message.guild.id}`)
         message.lineReply(
             new Discord.MessageEmbed()
                 .setColor('#A9E9F6')
-                .setDescription("The mute role has been reset.")
+                .setDescription("The DJ role has been reset.")
         )
     }
 }

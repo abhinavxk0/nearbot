@@ -2,6 +2,7 @@ const ms = require('ms')
 
 module.exports = {
     name: 'slowmode',
+    aliases: ['sm'],
     async execute(client, message, args, Discord){
         const rawchnl = message.mentions.channels.first() || message.channel;
         const chnl = await client.channels.cache.get(rawchnl.id)

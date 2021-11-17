@@ -1,5 +1,6 @@
 module.exports = {
     name: 'membercount',
+    aliases: ['mcount', 'members'],
     execute(client, message, args, Discord) {
         const { guild } = message
         const { memberCount } = guild;

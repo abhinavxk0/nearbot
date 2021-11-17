@@ -2,7 +2,7 @@ const urban = require('relevant-urban')
 
 module.exports = {
     name: 'urbandictionary',
-    aliases: ['urban'],
+    aliases: ['urban', 'ud'],
     async execute(client, message, args, Discord) {
 
         if (message.channel.nsfw == false) return message.lineReply(

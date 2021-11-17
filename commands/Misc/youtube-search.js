@@ -2,7 +2,7 @@ const ytsr = require('ytsr')
 
 module.exports = {
     name: 'youtube-search',
-    aliases: ['youtube-s', 'yts', 'yt-'],
+    aliases: ['youtube-s', 'yts', 'yt'],
     async execute(client, message, args, Discord){
         let msg = await message.lineReply(
             new Discord.MessageEmbed()

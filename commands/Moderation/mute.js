@@ -3,6 +3,7 @@ const db = require('quick.db')
 
 module.exports = {
     name: 'mute',
+    aliases: ['m'],
     async execute(client, message, args, Discord){
         if (!message.member.hasPermission("MANAGE_ROLES")) return message.lineReply(
             new Discord.MessageEmbed()

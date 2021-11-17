@@ -1,5 +1,6 @@
 module.exports = {
     name: 'purge',
+    aliases: ['sweep', 'delete', 'clear'],
     async execute(client, message, args, Discord) {
         if (!message.member.hasPermission("MANAGE_MESSAGES")) return message.lineReply(
             new Discord.MessageEmbed()

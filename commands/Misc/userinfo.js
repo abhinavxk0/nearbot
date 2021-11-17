@@ -4,6 +4,7 @@ const convert = require('parse-ms');
 
 module.exports = {
     name: 'userinfo',
+    aliases: ['user', 'uinfo', 'whois'],
     execute(client, message, args, Discord) {
         const user = message.mentions.users.first() || message.author;
         if (!user) return message.lineReply(

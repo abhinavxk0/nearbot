@@ -2,6 +2,7 @@ const weather = require('weather-js');
 
 module.exports = {
     name: 'weather',
+    aliases: ['temp', 'wthr'],
     async execute(client, message, args, Discord) {
 
         if (!args[0]) return message.channel.send(

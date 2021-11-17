@@ -2,6 +2,7 @@ const moment = require('moment')
 
 module.exports = {
     name: 'serverinfo',
+    aliases: ['sinfo', 'server'],
     async execute(client, message, args, Discord){
         const { guild } = message;
         const guildCreated = moment(guild.createdTimestamp).format("LLL")

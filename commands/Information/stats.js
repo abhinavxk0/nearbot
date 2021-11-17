@@ -4,6 +4,7 @@ const { utc } = require('moment');
 
 module.exports = {
     name: 'stats',
+    aliases: ['botinfo', 'bot', 'info'],
     async execute(client, message, args, Discord) {
         const core = os.cpus()[0]
         const clientCreated = utc(client.user.createdTimesstamp).format("Do MMMM YYYY");

@@ -21,6 +21,9 @@ module.exports = {
             .setDescription('you are not the dj for this music session!')
             .setFooter(`${djmember.tag} is the current dj`)
         )
+        const olddj = message.guild.member(message.author.id)
+        olddj.roles.remove(djRole)
+        mention.roles.add(djRole)
         db.set(`djuser.${message.guild.id}`, mention.id)
         message.lineReply(
             new Discord.MessageEmbed()

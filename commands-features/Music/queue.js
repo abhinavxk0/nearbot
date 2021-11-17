@@ -16,6 +16,7 @@ module.exports = {
 
         const rawtime = queue.duration;
         const minproctime = Math.round(rawtime / 60);
+        const current = client.distube.getQueue(message).songs[0]
         let proctime;
         if (minproctime > 60) {
             proctime = `${Math.round(minproctime / 60)} hours`
@@ -27,7 +28,7 @@ module.exports = {
             new Discord.MessageEmbed()
                 .setAuthor('Queue', client.user.displayAvatarURL({ dynamic : true}))
                 .setColor(embedcolor)
-                .setDescription(queue.songs.map((song, id) =>
+                .setDescription(`Now playing:\n[${current.name}](${current.url})\n\`${queue.formattedCurrentTime} / ${current.formattedDuration}\`` + queue.songs.map((song, id) =>
                     `**${id + 1}#**<:spacer:907723859258667038>[${song.name}](${song.url}) - \`${song.formattedDuration}\``
                 ).slice(0, 10).join("\n\n"))
                 .addField('Queue Duration:', proctime)

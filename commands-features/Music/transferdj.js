@@ -8,24 +8,15 @@ module.exports = {
         const djRole = await db.fetch(`djrole.${message.guild.id}`)
         const mention = message.mentions.members.first();
         const queue = await client.distube.getQueue(message);
-        
-        if (!queue){
-            return message.lineReply(
-                new Discord.MessageEmbed()
-                    .setColor(embedcolor)
-                    .setDescription('there is nothing playing in the queue right now')
-            )
-        }
+    
         if (message.member.id != djUser) return message.lineReply(
             new Discord.MessageEmbed()
             .setColor('#defafe')
             .setDescription('you are not the dj for this music session!')
             .setFooter(`${djmember.tag} is the current dj`)
         )
-        const olddj = message.guild.member(message.author.id)
-        if (djUser){
             if (djRole){
-                await olddj.roles.remove(djRole)
+                await message.member.roles.remove(djRole)
                 await mention.roles.add(djRole)
             } 
             await db.set(`djuser.${message.guild.id}`, mention.id)
@@ -34,8 +25,6 @@ module.exports = {
                 .setColor('#defafe')
                 .setDescription(`dj transferred to ${mention}`)
             )
-        } else {
-            return
-        }
+        
     }
 }

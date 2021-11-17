@@ -5,6 +5,7 @@ module.exports = {
     async execute(client, message, args, Discord){
         const djUser = await db.fetch(`djuser.${message.guild.id}`)
         const djmember = message.guild.member(djUser)
+        const djRole = await db.fetch(`djrole.${queue.textChannel.guild.id}`)
         const mention = message.mentions.members.first();
         const queue = await client.distube.getQueue(message);
 
@@ -22,9 +23,9 @@ module.exports = {
             .setFooter(`${djmember.tag} is the current dj`)
         )
         const olddj = message.guild.member(message.author.id)
-        olddj.roles.remove(djRole)
-        mention.roles.add(djRole)
-        db.set(`djuser.${message.guild.id}`, mention.id)
+        await olddj.roles.remove(djRole)
+        await mention.roles.add(djRole)
+        await db.set(`djuser.${message.guild.id}`, mention.id)
         message.lineReply(
             new Discord.MessageEmbed()
             .setColor('#defafe')

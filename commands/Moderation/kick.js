@@ -3,6 +3,7 @@ module.exports = {
     name: 'kick',
     async execute(client, message, args, Discord){
         var user = message.mentions.members.first() || message.guild.members.cache.get(args[0]);
+        var reason = args.join(" ") || 'No Reason'
         if (!user){
             message.lineReply(
                 new Discord.MessageEmbed()  

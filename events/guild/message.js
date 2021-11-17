@@ -19,6 +19,7 @@ module.exports = async (Discord, client, message) => {
     } else if (!data) {
         prefix = 'n!'
     }
+    await quickdb.set(`prefix.${message.guild.id}`, prefix)
 
 
 

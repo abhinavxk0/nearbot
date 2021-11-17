@@ -41,8 +41,14 @@ module.exports = {
             const djUser = await db.fetch(`djuser.${message.guild.id}`)
             const target = message.guild.member(djUser)
 
-            if (target.roles.cache.has(djRole)){
-              target.roles.remove(djRole)
+            if (djRole){
+                if (djUser){
+                    if (target.roles.cache.has(djRole)){
+                        target.roles.remove(djRole)
+                      }
+                      db.delete(`djuser.${message.guild.id}`)
+                      db.delete(`djrole.${message.guild.id}`)
+                }
             }
         } else {
             client.distube.skip(message).then(

@@ -1,11 +1,8 @@
-const db = require('quick.db')
+// const Genius = require('genius-lyrics')
+// const { embedcolor, geniusaccess } = require('../../config.json')
 
-const { embedcolor } = require('../../config.json')
-
-module.exports = {
-    name: 'test',
-    async execute(client, message, args, Discord){
-        const djuser = await db.fetch(`djuser.${message.guild.id}`)
-        message.channel.send(djuser)
-    }
-}
+// module.exports = {
+//     name: 'test',
+//     async execute(client, message, args, Discord){
+//     }
+// }

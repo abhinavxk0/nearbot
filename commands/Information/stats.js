@@ -25,6 +25,7 @@ module.exports = {
         let m = await message.lineReply(
             new Discord.MessageEmbed()
                 .setAuthor("Stats 📊", client.user.displayAvatarURL())
+                .setThumbnail(client.user.displayAvatarURL())
                 .setColor(hexColor)
                 .addFields(
                     {

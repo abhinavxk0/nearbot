@@ -1,7 +1,8 @@
 {
-    "bot_token": "ODE5OTQ3MDQ1MDkxNDA5OTkx.YEuBMQ.aBI7ZObX2jL4yeOx8myxHsE4nT0",
+    "bot_token": "ODE5OTQ3MDQ1MDkxNDA5OTkx.YEuBMQ.kN9ac_evfGx8i-h1SyFaz00tbHs",
     "mongoPath" : "mongodb+srv://xavierv:ryzen1907@nearbeta.vrusx.mongodb.net/Data",
     "embedcolor": "#A9E9F6",
     "spotifyID": "f60c8b517d984a86be06dc24e1b08471",
-    "spotifysecret": "2c17443c154449fcb6b46d76cbce5660"
+    "spotifysecret": "2c17443c154449fcb6b46d76cbce5660",
+    "geniusaccess": "fe_6da_GDe6zSeBAx-YnWGGKc4h4GuBQuIoffRrBV_kLQ-UAsE8iW499hzJCDoMI"
 }

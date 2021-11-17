@@ -24,6 +24,7 @@ client.distube = new Distube(client, {
   searchSongs: 0,
   emptyCooldown: 15,
   updateYouTubeDL: false,
+  nsfw: true,
   youtubeCookie: 'VISITOR_INFO1_LIVE=wj2zznEZWVM; tb-search-term-analysis-action=clipboard|undefined|undefined; YSC=5C9li0xMLbI; NID=221=afB0qWs5k2Sk07F0bOeqkPyKI6iIQymgNbnfpRJTqrDlsW6ypp-1KUA9dBSQ_YPEhyY4U6EikJlBootV_5KnJNqWFAVYiP9dlN03JVp31FvHzwZsSuW6P6Zpk5HDh8jtmXdzqlqmy3rlasJlmbaOn4NOegi7fYkLgN9rRRM3M9s; S=youtube_lounge_remote=X-uOo4NxSN2awlgaj5AHPIIIfYmspqsOI0oy7Lvr71w; wide=0; HSID=AA5JSrFOa2cK9QCZH; SSID=ASyyOlKBpGtfKsXVv; APISID=8u6yPLgpdy0PFoiE/AeSyUCvxF1dFH0zWN; SAPISID=S1Ous1rKQRZ_XTDP/ATBtZETqo0u91v3Eu; __Secure-1PAPISID=S1Ous1rKQRZ_XTDP/ATBtZETqo0u91v3Eu; __Secure-3PAPISID=S1Ous1rKQRZ_XTDP/ATBtZETqo0u91v3Eu; GPS=1; __Secure-3PSID=DgimBioga2EDV8K9LiI8IoQmgHjz_etqF4GrqdxbLF_6qu7Eou9KTAymfqN1UbzsYR_FlA.; PREF=tz=Asia.Calcutta&f6=40000000; LOGIN_INFO=AFmmF2swRgIhAIBrwug46RsHI_Hr7mOIJMYIOMpzIYgXCv9TpJManwnQAiEAo2Zr75PFuRHheIQr70mBFPa6SU9JpsoEQIO5lUZMd5s:QUQ3MjNmeTdsNy1vb0M2eEFmbk9wYnA3MnNFbFVtM3N3eUFPMW0tbXRiTTItTENvYVRmVDFzQnhBRG56UGZzZ1EyNE5JVkpMaW95RHNMUkt5WFQybWVIeVdVYTI1VVB3VkF4MW5tT1BHSUhDbVFzWl85dUM5VGJGaWFIMEpSQVRGcEtLalh2enptT1VZSWItSnlzR1lkME9MbUhkcVI5ZVF4bDJwcWR6bE9lb1BDUXpzQ1VjV0FLRUQxOG1xODFBaldmcTRBSzN4YzNGVlhONGRIRk9aWWVaczUyZ3A4QVVTZw==; __Secure-3PSIDCC=AJi4QfETL8RVUieOKegkYAOLFoMvFdfpTRotRVtgBCqndJxyV92pXmPXlg-Rtd8y5UlWDgKY',
   plugins: [new SpotifyPlugin(), new SoundCloudPlugin()],
 })
@@ -74,10 +75,15 @@ client.distube.on("empty", async (queue, song) => {
   const guild = queue.textChannel.guild;
   const target = guild.member(djUser)
 
-  if (target.roles.cache.has(djRole)){
-    target.roles.remove(djRole)
-  }
-
+  if (djRole){
+    if (djUser){
+        if (target.roles.cache.has(djRole)){
+            target.roles.remove(djRole)
+          }
+          db.delete(`djuser.${message.guild.id}`)
+          db.delete(`djrole.${message.guild.id}`)
+    }
+}
   queue.textChannel.send(
     new Discord.MessageEmbed()
       .setColor(embedcolor)

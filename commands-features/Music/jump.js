@@ -1,3 +1,5 @@
+const db = require('quick.db')
+
 module.exports = {
     name: 'jump',
     aliases: ['jumpto', 'skipto'],
@@ -29,6 +31,15 @@ module.exports = {
                 .setColor('#defafe')
                 .setDescription('The queue is empty!')
         )
+
+        const djUser = await db.fetch(`djuser.${message.guild.id}`)
+        const djmember = await message.guild.member(djUser)
+        if (message.member.id != djUser) return message.lineReply(
+            new Discord.MessageEmbed()
+                .setColor('#defafe')
+                .setDescription(`you are not the dj for this music session!\n${djmember} is the current dj`)            
+        )
+        
         if (isNaN(args[0])) return message.lineReply(
             new Discord.MessageEmbed()
                 .setColor('#A9E9F6')

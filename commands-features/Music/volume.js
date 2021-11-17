@@ -1,3 +1,5 @@
+const db = require('quick.db')
+
 module.exports = {
     name: 'volume',
     aliases: ['vol', 'v'],
@@ -21,6 +23,14 @@ module.exports = {
                 .setColor('#A9E9F6')
                 .setDescription(`You need to be in ${message.guild.me.voice.channel} to execute this command!`)
         ).then(message => { message.delete({ timeout: 10000 }); })
+
+        const djUser = await db.fetch(`djuser.${message.guild.id}`)
+        const djmember = await message.guild.member(djUser)
+        if (message.member.id != djUser) return message.lineReply(
+            new Discord.MessageEmbed()
+                .setColor('#defafe')
+                .setDescription(`you are not the dj for this music session!\n${djmember} is the current dj`)            
+        )
 
         if (args[0] > 200) return message.lineReplyNoMention(
             new Discord.MessageEmbed()

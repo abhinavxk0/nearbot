@@ -1,8 +1,9 @@
+const db = require('quick.db')
+
 module.exports = {
     name: 'autoplay',
     aliases: ['ap'],
     async execute(client, message, args, Discord){
-
         if (!message.member.voice.channel) return message.lineReplyNoMention(
             new Discord.MessageEmbed()
                 .setColor('#A9E9F6')
@@ -15,6 +16,13 @@ module.exports = {
             new Discord.MessageEmbed()
                 .setColor('#defafe')
                 .setDescription('The queue is empty!')
+        )
+
+        const djUser = await db.fetch(`djuser.${message.guild.id}`)
+        if (message.member.id != djUser) return message.lineReply(
+            new Discord.MessageEmbed()
+                .setColor('#defafe')
+                .setDescription(`you are not the dj for this music session!\n${djUser} is the current dj`)            
         )
         
         let mode = client.distube.toggleAutoplay(message);

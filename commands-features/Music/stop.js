@@ -43,7 +43,6 @@ module.exports = {
                     .setDescription('Disconnected!')
             )
             const djRole = await db.fetch(`djrole.${message.guild.id}`)
-            const djUser = await db.fetch(`djuser.${message.guild.id}`)
             const target = message.guild.member(djUser)
 
             if (djRole){

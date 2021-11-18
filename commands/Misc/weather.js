@@ -14,7 +14,7 @@ module.exports = {
         const msg = await message.lineReply(
             new Discord.MessageEmbed()
                 .setColor('#A9E9F6')
-                .setDescription('Loading...')
+                .setDescription('Loading <a:loading:910721336542916660')
         )
 
         weather.find({ search: args.join(" "), degreeType: 'C' }, function (error, result) {
@@ -40,9 +40,9 @@ module.exports = {
                     .setAuthor(`${current.temperature}°C, ${current.skytext}`, current.imageUrl)
                     .setTimestamp()
                     .setDescription(`**${current.observationpoint}**
-                                    - Humidity: ${current.humidity}%
-                                    - Wind Speed: ${current.winddisplay}
-                                    - Timezone: UTC+${location.timezone}`)
+- Humidity: ${current.humidity}%
+- Wind Speed: ${current.winddisplay}
+- Timezone: UTC+${location.timezone}`)
             )
 
 

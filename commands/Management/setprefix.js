@@ -38,7 +38,7 @@ module.exports = {
             newData.save().then(
                 message.lineReply(
                     new Discord.MessageEmbed()
-                        .setColor('#defafe')
+                        .setColor('#A9E9F6')
                         .setDescription(`The **custom prefix** for this server has been set to \`${newprefix}\``)
                 )
             )
@@ -50,7 +50,7 @@ module.exports = {
             newData.save().then(
                 message.lineReply(
                     new Discord.MessageEmbed()
-                        .setColor('#defafe')
+                        .setColor('#A9E9F6')
                         .setDescription(`The **custom prefix** for this server has been set to \`${newprefix}\``)
                 )                
             )

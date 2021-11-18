@@ -47,7 +47,7 @@ module.exports = async (Discord, client, message) => {
         message.channel.send(
             new Discord.MessageEmbed()
                 .setDescription(`Welcome back ${message.member}! I reset your AFK!`)
-                .setColor('#defafe')
+                .setColor('#A9E9F6')
         ).then(msg => { msg.delete({ timeout: 10000 }); })
         await data2.save()
     }
@@ -73,7 +73,7 @@ module.exports = async (Discord, client, message) => {
                 new Discord.MessageEmbed()
                     .setDescription(`${mentionedMember} is AFK!\n${data3.AFK_Reason}`)
                     .setFooter(`- ${moment(data3.time).fromNow()}`)
-                    .setColor('#defafe')
+                    .setColor('#A9E9F6')
             ).then(msg => { msg.delete({ timeout: 10000 }); })
             data3.time = null
             await data3.save()
@@ -124,7 +124,7 @@ module.exports = async (Discord, client, message) => {
     if (message.mentions.has(client.user.id) && message.content.includes("prefix")) {
         message.channel.send(
             new Discord.MessageEmbed()
-                .setColor('#defafe')
+                .setColor('#A9E9F6')
                 .setFooter("NearBot", client.user.displayAvatarURL({
                     dynamic: true
                 }))

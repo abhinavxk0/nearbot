@@ -11,7 +11,7 @@ module.exports = {
     
         if (message.member.id != djUser) return message.lineReply(
             new Discord.MessageEmbed()
-            .setColor('#defafe')
+            .setColor('#A9E9F6')
             .setDescription('you are not the dj for this music session!')
             .setFooter(`${djmember.tag} is the current dj`)
         )
@@ -22,7 +22,7 @@ module.exports = {
             await db.set(`djuser.${message.guild.id}`, mention.id)
             message.lineReply(
                 new Discord.MessageEmbed()
-                .setColor('#defafe')
+                .setColor('#A9E9F6')
                 .setDescription(`dj transferred to ${mention}`)
             )
         

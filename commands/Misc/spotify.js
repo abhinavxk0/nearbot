@@ -66,7 +66,7 @@ module.exports = {
                 .setThumbnail(image)
                 .setTitle(name)
                 .setDescription(`by ${artist}\non ${album}\n- **${time}**\n
-                                [\`Listen now on Spotify!\`](${url}) - [\`Lyrics\`](${firstSong.url})`)
+[\`Listen now on Spotify!\`](${url}) - [\`Lyrics\`](${firstSong.url})`)
                 .setFooter(message.author.tag, message.author.displayAvatarURL({
                     dynamic: true
                 }))

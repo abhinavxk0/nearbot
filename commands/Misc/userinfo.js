@@ -55,22 +55,22 @@ module.exports = {
                         {
                             name: '__User Identity__',
                             value: `**ID**: ${user.id}
-                                   **Created**: ${moment(user.createdTimestamp).format("LLL")}
-                                   **Avatar**: [Click Here](${user.displayAvatarURL({ dynamic: true })})
-                                   **Badges**: ${badge}`,
+**Created**: ${moment(user.createdTimestamp).format("LLL")}
+**Avatar**: [Click Here](${user.displayAvatarURL({ dynamic: true })})
+**Badges**: ${badge}`,
                             inline: true,
                         },
                         {
                             name: '__Presence__',
                             value: `**Status**: ${statuses[user.presence.status]}
-                                   **Device**: ${device}`,
+**Device**: ${device}`,
                             inline: true,
                         },
                         {
                             name: '__Server Member Info__',
                             value: `**Nickname**: ${member.nickname || "None"}
-                                   **Role Count**: ${member.roles.cache.size - 1}
-                                   **Joined on**: ${moment(user.joinedTimestamp).format("LLL")}`,
+**Role Count**: ${member.roles.cache.size - 1}
+**Joined on**: ${moment(user.joinedTimestamp).format("LLL")}`,
                             inline: true,
                         },
                     )
@@ -99,22 +99,22 @@ module.exports = {
                     {
                         name: '__User Identity__',
                         value: `**ID**: ${user.id}
-                           **Created**: ${moment(user.createdTimestamp).format("LLL")}
-                           **Avatar**: [Click Here](${user.displayAvatarURL({ dynamic: true })})
-                           **Badges**: ${badge}`,
+**Created**: ${moment(user.createdTimestamp).format("LLL")}
+**Avatar**: [Click Here](${user.displayAvatarURL({ dynamic: true })})
+ **Badges**: ${badge}`,
                         inline: true,
                     },
                     {
                         name: '__Presence__',
                         value: `**Status**: ${statuses[user.presence.status]}
-                           **Device**: ${device}`,
+**Device**: ${device}`,
                         inline: true,
                     },
                     {
                         name: '__Server Member Info__',
                         value: `**Nickname**: ${member.nickname || "None"}
-                           **Role Count**: ${member.roles.cache.size - 1}
-                           **Joined on**: ${moment(user.joinedTimestamp).format("LLL")}`,
+**Role Count**: ${member.roles.cache.size - 1}
+**Joined on**: ${moment(user.joinedTimestamp).format("LLL")}`,
                         inline: true,
                     },
                 )

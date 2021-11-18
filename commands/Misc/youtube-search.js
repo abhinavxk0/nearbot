@@ -7,64 +7,9 @@ module.exports = {
         let msg = await message.lineReply(
             new Discord.MessageEmbed()
                 .setColor('#A9E9F6')
-                .setDescription('Loading.')
+                .setDescription('Loading <a:loading:910721336542916660>')
         )
-        setTimeout(() => {
-            msg.edit(
-                new Discord.MessageEmbed()
-                .setColor('#A9E9F6')
-                .setDescription('Loading..')
-            )
-            setTimeout(() => {
-                msg.edit(
-                    new Discord.MessageEmbed()
-                    .setColor('#A9E9F6')
-                    .setDescription('Loading...')
-                )
-                setTimeout(() => {
-                    msg.edit(
-                        new Discord.MessageEmbed()
-                        .setColor('#A9E9F6')
-                        .setDescription('Loading.')
-                    )
-                    setTimeout(() => {
-                        msg.edit(
-                            new Discord.MessageEmbed()
-                            .setColor('#A9E9F6')
-                            .setDescription('Loading..')
-                        )
-                        setTimeout(() => {
-                            msg.edit(
-                                new Discord.MessageEmbed()
-                                .setColor('#A9E9F6')
-                                .setDescription('Loading...')
-                            )
-                            setTimeout(() => {
-                                msg.edit(
-                                    new Discord.MessageEmbed()
-                                    .setColor('#A9E9F6')
-                                    .setDescription('Loading.')
-                                )
-                                setTimeout(() => {
-                                    msg.edit(
-                                        new Discord.MessageEmbed()
-                                        .setColor('#A9E9F6')
-                                        .setDescription('Loading..')
-                                    )
-                                    setTimeout(() => {
-                                        msg.edit(
-                                            new Discord.MessageEmbed()
-                                            .setColor('#A9E9F6')
-                                            .setDescription('Loading...')
-                                        )
-                                    }, 1000);
-                                }, 1000);
-                            }, 1000);
-                        }, 1000);
-                    }, 1000);
-                }, 1000);
-            }, 1000);
-        }, 1000);
+
         const query = args.join(" ");
 
         if (!query) return msg.edit("Please provide a search query!");

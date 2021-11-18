@@ -1,5 +1,5 @@
 const schema = require(`../../schema/afk-schema`)
-const moment = require(`moment`)
+
 module.exports = {
     name: 'afk',
     async execute(client, message, args, Discord){
@@ -23,7 +23,7 @@ module.exports = {
         message.lineReplyNoMention(
             new Discord.MessageEmbed()
                 .setDescription(`**Your AFK has been set:**\n${args.join(" ") || "No Reason"}`)
-                .setColor('#defafe')
+                .setColor('#A9E9F6')
         )
 
         data.AFK = true

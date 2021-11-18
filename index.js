@@ -84,6 +84,9 @@ client.distube.on("empty", async (queue, song) => {
           db.delete(`djrole.${queue.id}`)
     }
 }
+client.distube.on("searchNoResult", async (message, query) =>{
+  message.channel.send(`no results were found for\n\`${query}\``)
+})
   queue.textChannel.send(
     new Discord.MessageEmbed()
       .setColor(embedcolor)
@@ -92,6 +95,9 @@ client.distube.on("empty", async (queue, song) => {
   )
 }
 )
+client.distube.on("error", (channel, error) => channel.send(
+  console.log(`Error encountered: ${error}`)
+));
 
 
 client.login(bot_token);

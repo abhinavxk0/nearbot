@@ -38,7 +38,11 @@ module.exports = {
                 .setColor('#A9E9F6')
                 .setDescription(`you are not the dj for this music session!\n${djmember} is the current dj`)            
         )
-        client.distube.resume(message);
+        if (queue.paused){
+            client.distube.resume(message);
         message.react('▶')
+        } else {
+            message.lineReply('the music session is already playing')
+        }
     }
 }

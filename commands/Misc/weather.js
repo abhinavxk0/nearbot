@@ -14,7 +14,7 @@ module.exports = {
         const msg = await message.lineReply(
             new Discord.MessageEmbed()
                 .setColor('#A9E9F6')
-                .setDescription('Loading <a:loading:910721336542916660')
+                .setDescription('Loading <a:loading:910721336542916660>')
         )
 
         weather.find({ search: args.join(" "), degreeType: 'C' }, function (error, result) {

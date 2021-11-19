@@ -41,7 +41,7 @@ client.distube.on("addSong", async (queue, song) => {
   await queue.textChannel.send(
     new Discord.MessageEmbed()
       .setColor(embedcolor)
-      .setDescription(`**added:**\n[\`${song.name}\`](${song.url}) - \`${song.formattedDuration}\`!`)
+      .setDescription(`**added:**\n[\`${song.name}\`](${song.url}) - \`${song.formattedDuration}\``)
       .setFooter(`added by: ${song.user.tag}`, song.user.displayAvatarURL({ size: 4096, dynamic: true }))
   )
 })
@@ -49,7 +49,7 @@ client.distube.on("addList", async (queue, playlist) => {
   await queue.textChannel.send(
     new Discord.MessageEmbed()
       .setColor(embedcolor)
-      .setDescription(`**added:**\n[\`${playlist.name}\`](${playlist.url})!`)
+      .setDescription(`**added:**\n[\`${playlist.name}\`](${playlist.url})`)
       .setFooter(`added by: ${playlist.user.tag}`, playlist.user.displayAvatarURL({ size: 4096, dynamic: true }))
   )
 });

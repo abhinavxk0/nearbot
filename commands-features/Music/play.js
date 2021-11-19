@@ -15,15 +15,21 @@ module.exports = {
 
         const query = args.join(" ");
 
-        if (!query){
+        if (!query) {
             return message.lineReply(
                 new Discord.MessageEmbed()
-                .setColor('#A9E9F6')
-                .setDescription('Enter a song URL or query to play!')
+                    .setColor('#A9E9F6')
+                    .setDescription('Enter a song URL or query to play!')
             ).then(message => { message.delete({ timeout: 10000 }); })
         }
-
-        client.distube.play(message, query)
+        const a = await message.lineReply(
+            new Discord.MessageEmbed()
+                .setColor(embedcolor)
+                .setDescription(`loading <a:loading:910721336542916660>`)
+        )
+        client.distube.play(message, query).then(
+            a.delete()
+        )
     }
 }
 

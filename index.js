@@ -30,31 +30,28 @@ client.distube = new Distube(client, {
 })
 
 client.distube.on("playSong", async (queue, song) => {
-  const message = await queue.textChannel.send(
+  await queue.textChannel.send(
     new Discord.MessageEmbed()
       .setColor(embedcolor)
-      .setDescription(`**playing:**\n[${song.name}](${song.url}) - \`${song.formattedDuration}\``)
+      .setDescription(`**playing:**\n[\`${song.name}\`](${song.url}) - \`${song.formattedDuration}\``)
       .setFooter(`added by ${song.user.tag}`, song.user.displayAvatarURL({ dynamic: true }))
   )
-  message.delete({ timeout: 30000 })
 })
 client.distube.on("addSong", async (queue, song) => {
-  const message = await queue.textChannel.send(
+  await queue.textChannel.send(
     new Discord.MessageEmbed()
       .setColor(embedcolor)
-      .setDescription(`**added:**\n[${song.name}](${song.url}) - \`${song.formattedDuration}\`!`)
+      .setDescription(`**added:**\n[\`${song.name}\`](${song.url}) - \`${song.formattedDuration}\`!`)
       .setFooter(`added by: ${song.user.tag}`, song.user.displayAvatarURL({ size: 4096, dynamic: true }))
   )
-  message.delete({ timeout: 5000 })
 })
 client.distube.on("addList", async (queue, playlist) => {
-  const message = await queue.textChannel.send(
+  await queue.textChannel.send(
     new Discord.MessageEmbed()
       .setColor(embedcolor)
       .setDescription(`**added:**\n[\`${playlist.name}\`](${playlist.url})!`)
       .setFooter(`added by: ${playlist.user.tag}`, playlist.user.displayAvatarURL({ size: 4096, dynamic: true }))
   )
-  message.delete({ timeout: 5000 })
 });
 
 client.distube.on("initQueue", async (queue) => {

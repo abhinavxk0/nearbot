@@ -10,13 +10,13 @@ module.exports = {
         if (!message.member.hasPermission("ADMINISTRATOR")) return message.lineReply(
             new Discord.MessageEmbed()
                 .setColor('#A9E9F6')
-                .setDescription(`You do not have the \`ADMINISTRATOR\` permission to use this command.`)
+                .setDescription(`u do not have the \`ADMINISTRATOR\` permission to use this command lol`)
         )
 
         if (!data) return message.lineReply(
             new Discord.MessageEmbed()
                 .setColor('#A9E9F6')
-                .setDescription("There is no custom prefix set in this server.")
+                .setDescription("there is no custom prefix set! 😞")
         )
 
         let newData = await prefixSchema.findOneAndDelete({
@@ -26,7 +26,7 @@ module.exports = {
             message.lineReply(
                 new Discord.MessageEmbed()
                     .setColor('#A9E9F6')
-                    .setDescription("The custom prefix set in this server has been reset to \`n!\`.")
+                    .setDescription("the custom prefix for this server has been reset to \`n!\`.")
             )
         )
 

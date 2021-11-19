@@ -13,17 +13,17 @@ module.exports = {
                 .setTimestamp()
                 .addFields(
                     {
-                        name: 'Total Count',
+                        name: 'total Count',
                         value: memberCount,
                         inline: true,
                     },
                     {
-                        name: 'Human Count',
+                        name: 'human Count',
                         value: humanCount,
                         inline: true,
                     },
                     {
-                        name: 'Bot Count',
+                        name: 'bot Count',
                         value: message.guild.members.cache.filter((m) => m.user.bot).size,
                         inline: true,
                     }

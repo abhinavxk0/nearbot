@@ -6,24 +6,24 @@ module.exports = {
         if (!message.member.hasPermission("MANAGE_CHANNELS")) return message.lineReply(
             new Discord.MessageEmbed()
                 .setColor('#A9E9F6')
-                .setDescription(`You do not have the \`MANAGE_CHANNELS\` permission to use this command.`)
+                .setDescription(`u do not have the \`MANAGE_CHANNELS\` permission to use this command :/`)
         )
         if (!message.guild.me.hasPermission("MANAGE_CHANNELS")) return message.lineReply(
             new Discord.MessageEmbed()
                 .setColor('#A9E9F6')
-                .setDescription(`I do not have the \`MANAGE_CHANNELS\` permission.`)
+                .setDescription(`i do not have the \`MANAGE_CHANNELS\` permission :c`)
         )
 
         const muteRole = await db.fetch(`muterole.${message.guild.id}`);
         if (muteRole == null) return message.lineReply(
             new Discord.MessageEmbed()
             .setColor('#A9E9F6')
-            .setDescription(`There is no mute role set for this server.`)
+            .setDescription(`set a mute role first to use this command `)
         )
         let msg = await message.lineReply(
             new Discord.MessageEmbed()
                 .setColor('#A9E9F6')
-                .setDescription('Loading...')
+                .setDescription('loading <a:loading:910721336542916660>')
         )
 
         message.guild.channels.cache.forEach( async (channel) => {
@@ -33,7 +33,7 @@ module.exports = {
               msg.edit(
                   new Discord.MessageEmbed()
                   .setColor('#A9E9F6')
-                  .setDescription('**Successfully** setup mute permissions in all channels.')
+                  .setDescription('yay! i successfully set mute perms in every channel')
               )
             )
         })

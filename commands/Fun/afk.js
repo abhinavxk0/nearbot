@@ -22,7 +22,7 @@ module.exports = {
 
         message.lineReplyNoMention(
             new Discord.MessageEmbed()
-                .setDescription(`**Your AFK has been set:**\n${args.join(" ") || "No Reason"}`)
+                .setDescription(`**your AFK has been set:**\n${args.join(" ") || "no reason lol"}`)
                 .setColor('#A9E9F6')
         )
 

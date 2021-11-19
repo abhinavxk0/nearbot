@@ -8,20 +8,20 @@ module.exports = {
         if (!message.member.hasPermission("ADMINISTRATOR")) return message.lineReply(
             new Discord.MessageEmbed()
                 .setColor('#A9E9F6')
-                .setDescription(`You do not have the \`ADMINISTRATOR\` permission to use this command.`)
+                .setDescription(`u do not have the \`ADMINISTRATOR\` permission to use this command lol`)
         )
 
         if (muteRole == null) return message.lineReply(
             new Discord.MessageEmbed()
                 .setColor('#A9E9F6')
-                .setDescription("There is no mute role set in this server.")
+                .setDescription("no DJ role is set in this server 🤨")
         )
 
         db.delete(`muterole.${message.guild.id}`)
         message.lineReply(
             new Discord.MessageEmbed()
                 .setColor('#A9E9F6')
-                .setDescription("The mute role has been reset.")
+                .setDescription("the mute role has been reset! 👍")
         )
     }
 }

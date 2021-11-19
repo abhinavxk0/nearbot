@@ -1,77 +1,98 @@
-const ms = require('ms')
+const { embedcolor, errorcolor } = require('../../config.json')
 const db = require('quick.db')
+const ms = require('ms')
+const pretty = require('pretty-ms')
 
 module.exports = {
     name: 'mute',
     aliases: ['m'],
-    async execute(client, message, args, Discord){
-        if (!message.member.hasPermission("MANAGE_ROLES")) return message.lineReply(
-            new Discord.MessageEmbed()
-                .setColor('#A9E9F6')
-                .setDescription(`You do not have the \`MANAGE_ROLES\` permission to use this command.`)
-        )
-        if (!message.guild.me.hasPermission("MANAGE_ROLES")) return message.lineReply(
-            new Discord.MessageEmbed()
-                .setColor('#A9E9F6')
-                .setDescription(`I do not have the \`MANAGE_ROLES\` permission.`)
-        )
-
+    async execute(client, message, args, Discord) {
         var muteRole = await db.fetch(`muterole.${message.guild.id}`);
-        if (muteRole == null) return message.lineReply(
-            new Discord.MessageEmbed()
-            .setColor('#A9E9F6')
-            .setDescription(`There is no mute role set for this server.`)
-        )
-        var user = message.mentions.members.first()
-        if (!user) return message.lineReply(
-            new Discord.MessageEmbed()
-            .setColor('#A9E9F6')
-            .setDescription(`Enter a user to mute.`)
-        )
-        if (user.id == message.author.id) return message.lineReply(
-            new Discord.MessageEmbed()
-                .setColor('#A9E9F6')
-                .setDescription(`You cannot mute yourself.`)
-        )
-        if (user.id == client.user.id) return message.lineReply(
-            new Discord.MessageEmbed()
-            .setColor('#A9E9F6')
-            .setDescription(`Please don't mute me after all that I did for you.`)
-        ) 
-        
-        let time = args[1];
-        let reason = args.slice(2).join(" ");
+        var muteTarget = message.mentions.members.first();
+        var time = args[1];
+        let memberRole = message.member.roles.highest.position;
+        let targetRole = muteTarget.roles.highest.position;
+        let prettyTime;
+        if (time) {
+            prettyTime = ` for ${pretty(ms(time))}.`
+        } else {
+            prettyTime = '.';
+        }
 
-        if (!args[0]) return message.reply(`\`mute @member time reason\``)
-        if (!user.roles.highest.position >= message.member.roles.highest.position) return message.lineReply('you cannot mute this member as they are the same role as you or higher')
-        if (!time) return message.reply(`\`mute @member time reason\``)
-        if (!reason) reason = 'No Reason';
+        if (muteRole == null) {
+            return message.lineReply(
+                new Discord.MessageEmbed()
+                    .setColor(errorcolor)
+                    .setAuthor(message.author.tag, message.author.displayAvatarURL({
+                        dynamic: true
+                    }))
+                    .setTimestamp()
+                    .setDescription('No mute role is set for this server. Use \`muterole\` to set it!')
+            );
+        }
+        if (!muteTarget) {
+            return message.lineReply(
+                new Discord.MessageEmbed()
+                    .setColor(errorcolor)
+                    .setAuthor(message.author.tag, message.author.displayAvatarURL({
+                        dynamic: true
+                    }))
+                    .setTimestamp()
+                    .setDescription('You need to mention who you want to mute!')
+            )
+        }
+        if (muteTarget.roles.cache.has(muteRole)) {
+            return message.lineReply(
+                new Discord.MessageEmbed()
+                    .setColor(errorcolor)
+                    .setAuthor(message.author.tag, message.author.displayAvatarURL({
+                        dynamic: true
+                    }))
+                    .setTimestamp()
+                    .setDescription(`\`${muteTarget.user.tag}\` is already muted.`)
+            )
+        }
+        if (targetRole >= memberRole) {
+            return message.lineReply(
+                new Discord.MessageEmbed()
+                    .setColor(errorcolor)
+                    .setAuthor(message.author.tag, message.author.displayAvatarURL({
+                        dynamic: true
+                    }))
+                    .setTimestamp()
+                    .setDescription(`\`${muteTarget.user.tag}\` has a higher or the same top role as you!`)
+            )
+        }
 
-        await user.roles.add(muteRole)
+        await muteTarget.roles.add(muteRole)
             .then(
                 message.lineReply(
                     new Discord.MessageEmbed()
-                    .setColor('#A9E9F6')
-                    .setDescription(`${user} has been muted.`)
+                        .setColor(embedcolor)
+                        .setDescription(`\`${muteTarget.user.tag}\` has been muted${prettyTime}`)
+                        .setAuthor(message.author.tag, message.author.displayAvatarURL({
+                            dynamic: true
+                        }))
+                        .setTimestamp()
                 )
             )
-        
-        // setTimeout(function () {
-            // if(!user.roles.cache.has(muteRole)) return;
-            // user.roles.remove(muteRole)
-            // message.channel.send(`${user} has been unmuted.`)
-        // }, ms(time));
-
-        setTimeout(() => {
-            if(!user.roles.cache.has(muteRole)) return;
-            user.roles.remove(muteRole)
-            message.channel.send(
-                new Discord.MessageEmbed()
-                .setColor('#A9E9F6')
-                .setDescription(`${user} has been unmuted.`)
-            )
-        }, ms(time));
-
+        if (time) {
+            setTimeout(() => {
+                if (!muteTarget.roles.cache.has(muteRole)) return;
+                muteTarget.roles.remove(muteRole)
+                try {
+                    muteTarget.send(
+                        new Discord.MessageEmbed()
+                            .setColor(embedcolor)
+                            .setAuthor(message.guild.name, message.guild.iconURL({ dynamic: true }))
+                            .setDescription(`You have been unmuted!`)
+                            .setTimestamp()
+                    )
+                } catch (err) {
+                    throw err;
+                }
+            }, ms(time))
+        } else return;
 
     }
 }

@@ -12,19 +12,18 @@ module.exports = {
         if (!message.member.hasPermission("ADMINISTRATOR")) return message.lineReply(
             new Discord.MessageEmbed()
                 .setColor('#A9E9F6')
-                .setDescription(`You do not have the \`ADMINISTRATOR\` permission to use this command.`)
+                .setDescription(`u do not have the \`ADMINISTRATOR\` permission to use this command lol`)
         )
 
         if (!newprefix) return message.lineReply(
             new Discord.MessageEmbed()
                 .setColor('#A9E9F6')
-                .setDescription(`Please enter a prefix.`)
+                .setDescription(`if u wanna set a prefix, type it out maybe?`)
         )
         if (newprefix.length > 5) return message.lineReply(
             new Discord.MessageEmbed()
                 .setColor('#A9E9F6')
-                .setDescription(`Please enter a prefix under **5** characters.`)
-
+                .setDescription(`you cant spend all those years typing that prefix\nset it to something shorter than 5 characters`)
         )
 
         if ( data ){
@@ -39,7 +38,7 @@ module.exports = {
                 message.lineReply(
                     new Discord.MessageEmbed()
                         .setColor('#A9E9F6')
-                        .setDescription(`The **custom prefix** for this server has been set to \`${newprefix}\``)
+                        .setDescription(`i set the prefix to \`${newprefix}\` :))`)
                 )
             )
         } else if (!data){
@@ -51,7 +50,7 @@ module.exports = {
                 message.lineReply(
                     new Discord.MessageEmbed()
                         .setColor('#A9E9F6')
-                        .setDescription(`The **custom prefix** for this server has been set to \`${newprefix}\``)
+                        .setDescription(`prefix has been set to \`${newprefix}\`!!`)
                 )                
             )
         }

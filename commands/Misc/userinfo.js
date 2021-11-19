@@ -55,7 +55,7 @@ module.exports = {
                         {
                             name: '__User Identity__',
                             value: `**ID**: ${user.id}
-**Created**: ${moment(user.createdTimestamp).format("LLL")}
+**Created**: ${moment(user.createdTimestamp).format("LLL")}; ${moment(user.createdTimestamp).fromNow()}
 **Avatar**: [Click Here](${user.displayAvatarURL({ dynamic: true })})
 **Badges**: ${badge}`,
                             inline: true,

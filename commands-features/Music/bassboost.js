@@ -1,9 +1,10 @@
+const { embedcolor, errorcolor } = require('../../config.json')
 const db = require('quick.db')
-const { embedcolor } = require('../../config.json')
 
 module.exports = {
-    name: 'pause',
-    async execute(client, message, args, Discord) {
+    name: 'bassboost',
+    aliases: ['bb'],
+    async execute(client, message, args, Discord){
 
         const memberVC = message.member.voice.channel;
         if (!memberVC) return message.lineReplyNoMention(
@@ -24,14 +25,14 @@ module.exports = {
                 .setColor('#A9E9F6')
                 .setDescription(`You need to be in ${message.guild.me.voice.channel} to execute this command!`)
         ).then(message => { message.delete({ timeout: 10000 }); })
-        var queue = client.distube.getQueue(message);
-        if (!queue) {
-            return message.lineReply(
-                new Discord.MessageEmbed()
-                    .setColor(embedcolor)
-                    .setDescription(`Nothing's in the queue right now!`)
-            )
-        }
+        let queue = client.distube.getQueue(message);
+
+        if (!queue) return message.channel.send(
+            new Discord.MessageEmbed()
+                .setColor('#A9E9F6')
+                .setDescription('The queue is empty!')
+        )
+
         const djUser = await db.fetch(`djuser.${message.guild.id}`)
         const djmember = await message.guild.member(djUser)
         if (message.member.id != djUser) return message.lineReply(
@@ -39,19 +40,8 @@ module.exports = {
                 .setColor('#A9E9F6')
                 .setDescription(`you are not the dj for this music session!\n${djmember} is the current dj`)            
         )
-        const a = await message.lineReply(
-            new Discord.MessageEmbed()
-                .setColor(embedcolor)
-                .setDescription(`loading <a:loading:910721336542916660>`)
-        )
-        if (queue.playing){
-            client.distube.pause(message)
-            message.react('⏸')
-        } else {
-            message.lineReply('the music session is already paused')
-        }
 
-        
+        client.distube.setFilter(message, bassboost)
 
     }
 }

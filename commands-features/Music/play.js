@@ -1,4 +1,6 @@
 const DisTube = require('distube');
+const { embedcolor } = require('../../config.json')
+
 module.exports = {
     name: 'play',
     aliases: ['p', 'pl'],

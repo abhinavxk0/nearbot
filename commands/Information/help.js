@@ -13,8 +13,8 @@ module.exports = {
         const pagemain = new Discord.MessageEmbed()
             .setColor('#A9E9F6')
             .setAuthor(`Help for NearBot`, client.user.avatarURL({ dynamic: true }))
-            .addField('Links:', `>>> **[Invite Nearbot](${`https://discord.com/oauth2/authorize?client_id=${client.user.id}&scope=bot&permissions=8`})\n[Support Server](https://discord.gg/Dvv48zwGep)**`, true)
-            .setDescription(`Use the **reactions** to check out the commands!\n**Prefix:** \`${prefixdb}\``)
+            .setDescription(`\n\`Prefix: "${prefixdb}"\`
+\n[\`Invite Nearbot\`](${`https://discord.com/oauth2/authorize?client_id=${client.user.id}&scope=bot&permissions=8`})  ·  [\`Support Server\`](https://discord.gg/Dvv48zwGep)`)
         const page1 = new Discord.MessageEmbed()
             .setColor(config.embedcolor)
             .setThumbnail(client.user.avatarURL({ dynamic: true }))

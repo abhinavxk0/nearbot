@@ -1,5 +1,5 @@
 const db = require('quick.db')
-
+const { embedcolor } = require('../../config.json')
 module.exports = {
     name: 'shuffle',
     aliases: ['mix'],
@@ -38,7 +38,14 @@ module.exports = {
                 .setColor('#A9E9F6')
                 .setDescription(`you are not the dj for this music session!\n${djmember} is the current dj`)            
         )
-        client.distube.shuffle(message);
+        const a = await message.lineReply(
+            new Discord.MessageEmbed()
+                .setColor(embedcolor)
+                .setDescription(`loading <a:loading:910721336542916660>`)
+        )
+        client.distube.shuffle(message).then(
+            a.delete()
+        )
         message.react('🔀');
     }
 }

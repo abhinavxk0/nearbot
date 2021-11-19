@@ -10,6 +10,12 @@ module.exports = {
     name: 'lyrics',
     async execute(client, message, args, Discord) {
 
+        const a = await message.lineReply(
+            new Discord.MessageEmbed()
+                .setColor(embedcolor)
+                .setDescription(`loading <a:loading:910721336542916660>`)
+        )
+
         const query = args.join(" ")
         if (!query) {
             return message.lineReply(
@@ -43,7 +49,9 @@ module.exports = {
                 .setTitle('lyrics')
                 .setDescription(lyrics)
             let pagesone = [main, under2000]
-            pagination(message, pagesone, emojis, timeout)
+            pagination(message, pagesone, emojis, timeout).then(
+                a.delete()
+            )
         } else if (lyricsLength <= 4000) {
             let l1 = lyrics.slice(0, 2000)
             let l2 = lyrics.slice(2000, lyricsLength)
@@ -55,7 +63,9 @@ module.exports = {
             .setColor(embedcolor)
             .setDescription(l2)
             let pagestwo = [main, l1em, l2em]
-            pagination(message, pagestwo, emojis, timeout)
+            pagination(message, pagestwo, emojis, timeout).then(
+                a.delete()
+            )
         } else if (lyricsLength <= 4000) {
             let ly1 = lyrics.slice(0, 2000)
             let ly2 = lyrics.slice(2000, 4000)
@@ -73,7 +83,9 @@ module.exports = {
             .setDescription(ly3)
 
             let pagesthree = [main, ly1em, ly2em, ly3em]
-            pagination(message, pagesthree, emojis, timeout)
+            pagination(message, pagesthree, emojis, timeout).then(
+                a.delete()
+            )
         } else if (lyricsLength <= 5000) {
             let li1 = lyrics.slice(0, 2000)
             let li2 = lyrics.slice(2000, 4000)
@@ -91,7 +103,9 @@ module.exports = {
             .setDescription(li3)
 
             let pagesfour = [main, li1em, li2em, li3em]
-            pagination(message, pagesfour, emojis, timeout)
+            pagination(message, pagesfour, emojis, timeout).then(
+                a.delete()
+            )
         } else if (lyricsLength < 6000){
             let le1 = lyrics.slice(0, 2000)
             let le2 = lyrics.slice(2000, 4000)
@@ -113,7 +127,9 @@ module.exports = {
             .setDescription(le4)
 
             let pagesfive = [main, le1e, le2e, le3e, le4e]
-            pagination(message, pagesfive, emojis, timeout)
+            pagination(message, pagesfive, emojis, timeout).then(
+                a.delete()
+            )
         }
         else {
             message.lineReply(`oh no! the lyrics are too long!`)

@@ -1,5 +1,5 @@
 const db = require('quick.db')
-
+const { embedcolor } = require('../../config.json')
 module.exports = {
     name: 'skip',
     aliases: ['next'],
@@ -44,8 +44,15 @@ module.exports = {
         )
 
         if (queue.songs.length === 1) {
+            const a = await message.lineReply(
+                new Discord.MessageEmbed()
+                    .setColor(embedcolor)
+                    .setDescription(`loading <a:loading:910721336542916660>`)
+            )
+
             client.distube.stop(message).then(
-                message.react('⏩')
+                message.react('⏩'),
+                a.delete()
             ).catch((err) => console.log(err))
             const djRole = await db.fetch(`djrole.${message.guild.id}`)
             const djUser = await db.fetch(`djuser.${message.guild.id}`)
@@ -60,8 +67,14 @@ module.exports = {
                       db.delete(`djrole.${message.guild.id}`)
                 }
             }
-        } else {
+        } else {        
+            const a = await message.lineReply(
+            new Discord.MessageEmbed()
+                .setColor(embedcolor)
+                .setDescription(`loading <a:loading:910721336542916660>`)
+        )
             client.distube.skip(message).then(
+                a.delete(),
                 message.react('⏩')
             ).catch((err) => console.log(err))
         }

@@ -1,5 +1,5 @@
 const db = require('quick.db')
-
+const { embedcolor } = require('../../config.json')
 module.exports = {
     name: 'resume',
     aliases: ['unpause'],
@@ -38,8 +38,15 @@ module.exports = {
                 .setColor('#A9E9F6')
                 .setDescription(`you are not the dj for this music session!\n${djmember} is the current dj`)            
         )
+        const a = await message.lineReply(
+            new Discord.MessageEmbed()
+                .setColor(embedcolor)
+                .setDescription(`loading <a:loading:910721336542916660>`)
+        )
         if (queue.paused){
-            client.distube.resume(message);
+            client.distube.resume(message).then(
+                a.delete()
+            )
         message.react('▶')
         } else {
             message.lineReply('the music session is already playing')

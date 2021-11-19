@@ -1,5 +1,5 @@
 const db = require('quick.db')
-
+const { embedcolor } = require('../../config.json')
 module.exports = {
     name: 'jump',
     aliases: ['jumpto', 'skipto'],
@@ -46,8 +46,16 @@ module.exports = {
                 .setDescription('Enter a song number (in the queue) to jump to!')
         ).then(message => { message.delete({ timeout: 10000 }); })
 
+        const a = await message.lineReply(
+            new Discord.MessageEmbed()
+                .setColor(embedcolor)
+                .setDescription(`loading <a:loading:910721336542916660>`)
+        )
+        
         client.distube.jump(message, parseInt(args[0] - 1)).catch(
-            err => message.channel.send("Invalid song number." + err));
+            err => message.channel.send("Invalid song number." + err)).then(
+                a.delete()
+            )
     
     }
 }

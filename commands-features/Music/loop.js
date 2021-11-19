@@ -55,7 +55,14 @@ module.exports = {
                 mode = 2
                 break
         }
-        mode = queue.setRepeatMode(mode)
+        const a = await message.lineReply(
+            new Discord.MessageEmbed()
+                .setColor(embedcolor)
+                .setDescription(`loading <a:loading:910721336542916660>`)
+        )
+        mode = queue.setRepeatMode(mode).then(
+            a.delete()
+        )
         mode = mode ? mode === 2 ? "Repeat queue" : "Repeat song" : "Off"
         message.lineReply(
             new Discord.MessageEmbed()

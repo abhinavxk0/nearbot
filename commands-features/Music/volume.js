@@ -1,5 +1,5 @@
 const db = require('quick.db')
-
+const { embedcolor } = require('../../config.json')
 module.exports = {
     name: 'volume',
     aliases: ['vol', 'v'],
@@ -44,8 +44,15 @@ module.exports = {
                 .setDescription("The volume should be a number, right?")
         )
 
+        const a = await message.lineReply(
+            new Discord.MessageEmbed()
+                .setColor(embedcolor)
+                .setDescription(`loading <a:loading:910721336542916660>`)
+        )
 
-        client.distube.setVolume(message, Number(args[0]));
+        client.distube.setVolume(message, Number(args[0])).then(
+            a.delete()
+        )
         message.lineReplyNoMention(
             new Discord.MessageEmbed()
             .setColor('#A9E9F6')

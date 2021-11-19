@@ -1,5 +1,5 @@
 const db = require('quick.db')
-
+const { embedcolor } = require('../../config.json')
 module.exports = {
     name: 'stop',
     aliases: ['disconnect', 'dc', 'leave'],
@@ -34,8 +34,16 @@ module.exports = {
                 .setColor('#A9E9F6')
                 .setDescription(`you are not the dj for this music session!\n${djmember} is the current dj`)            
         )
+
+        const a = await message.lineReply(
+            new Discord.MessageEmbed()
+                .setColor(embedcolor)
+                .setDescription(`loading <a:loading:910721336542916660>`)
+        )
             
-            client.distube.stop(message)
+            client.distube.stop(message).then(
+                a.delete()
+            )
 
             message.channel.send(
                 new Discord.MessageEmbed()

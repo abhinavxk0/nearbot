@@ -38,12 +38,12 @@ module.exports = {
                 .setColor('#A9E9F6')
                 .setDescription(`you are not the dj for this music session!\n${djmember} is the current dj`)            
         )
-        const a = await message.lineReply(
-            new Discord.MessageEmbed()
-                .setColor(embedcolor)
-                .setDescription(`loading <a:loading:910721336542916660>`)
-        )
         if (queue.paused){
+            const a = await message.lineReply(
+                new Discord.MessageEmbed()
+                    .setColor(embedcolor)
+                    .setDescription(`loading <a:loading:910721336542916660>`)
+            )
             client.distube.resume(message).then(
                 a.delete()
             )

@@ -17,6 +17,7 @@ module.exports = {
                 .setColor('#A9E9F6')
                 .setDescription('I am not currently playing in this guild.')
         ).then(message => { message.delete({ timeout: 10000 }); })
+        
 
         if (memberVC !== clientVC) return message.lineReplyNoMention(
             new Discord.MessageEmbed()

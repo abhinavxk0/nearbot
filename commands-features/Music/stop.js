@@ -53,7 +53,6 @@ module.exports = {
                     .setColor('#A9E9F6')
                     .setDescription('Disconnected!')
             )
-            const djRole = await db.fetch(`djrole.${message.guild.id}`)
             const target = message.guild.member(djUser)
 
             if (djRole){

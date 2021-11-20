@@ -63,14 +63,14 @@ module.exports = {
                 .setColor(embedcolor)
                 .setDescription(`loading <a:loading:910721336542916660>`)
         )
-        mode = queue.setRepeatMode(mode).then(
-            a.delete()
-        )
+        mode = queue.setRepeatMode(mode)
         mode = mode ? mode === 2 ? "Repeat queue" : "Repeat song" : "Off"
         message.lineReply(
             new Discord.MessageEmbed()
             .setColor('#A9E9F6')
             .setDescription(`Set repeat mode to \`${mode}\``)
+        ).then(
+            a.delete()
         )
     }
 }

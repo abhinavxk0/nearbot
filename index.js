@@ -67,8 +67,9 @@ client.distube.on("initQueue", async (queue) => {
 });
 
 client.distube.on("empty", async (queue, song) => {
+
   const djUser = await db.fetch(`djuser.${queue.id}`)
-  const djRole = await db.fetch(`djrole.${queue.textChannel.guild.id}`)
+  const djRole = await db.fetch(`djrole.${queue.id}`)
   const guild = queue.textChannel.guild;
   const target = guild.member(djUser)
 
@@ -78,14 +79,15 @@ client.distube.on("empty", async (queue, song) => {
         target.roles.remove(djRole)
       }
       db.delete(`djuser.${queue.id}`)
-      db.delete(`djrole.${queue.id}`)
     }
   }
+  
   queue.textChannel.send(
     new Discord.MessageEmbed()
       .setColor(embedcolor)
       .setDescription(`leaving ${queue.voiceChannel} because it was empty :c`)
   )
+
 })
 
 client.distube.on("error", (channel, error) => channel.send(

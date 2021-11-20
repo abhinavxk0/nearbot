@@ -4,6 +4,7 @@ module.exports = {
     name: 'shuffle',
     aliases: ['mix'],
     async execute(client, message, args, Discord) {
+        
         const memberVC = message.member.voice.channel;
         if (!memberVC) return message.lineReplyNoMention(
             new Discord.MessageEmbed()
@@ -33,11 +34,14 @@ module.exports = {
         }
         const djUser = await db.fetch(`djuser.${message.guild.id}`)
         const djmember = await message.guild.member(djUser)
-        if (message.member.id != djUser) return message.lineReply(
-            new Discord.MessageEmbed()
-                .setColor('#A9E9F6')
-                .setDescription(`you are not the dj for this music session!\n${djmember} is the current dj`)            
-        )
+        const djRole = await db.fetch(`djrole.${message.guild.id}`)
+        if (djRole){
+            if (message.member.id != djUser) return message.lineReply(
+                new Discord.MessageEmbed()
+                    .setColor('#A9E9F6')
+                    .setDescription(`you are not the dj for this music session!\n${djmember} is the current dj`)            
+            )
+        }
         const a = await message.lineReply(
             new Discord.MessageEmbed()
                 .setColor(embedcolor)

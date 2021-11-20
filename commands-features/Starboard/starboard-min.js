@@ -37,7 +37,7 @@ module.exports = {
         message.lineReply(
             new Discord.MessageEmbed()  
                 .setColor(config.embedcolor)
-                .setDescription(`The minimum reactions required to activate starboard is now **${number + 1}**.`)
+                .setDescription(`Alright now any message with more than ${number} star reactions will be in the starboard!! :))`)
         )
     }
 }

@@ -30,31 +30,38 @@ client.distube = new Distube(client, {
 })
 
 client.distube.on("playSong", async (queue, song) => {
+
   await queue.textChannel.send(
     new Discord.MessageEmbed()
       .setColor(embedcolor)
       .setDescription(`**playing:**\n[\`${song.name}\`](${song.url}) - \`${song.formattedDuration}\``)
       .setFooter(`added by ${song.user.tag}`, song.user.displayAvatarURL({ dynamic: true }))
   )
+
 })
 client.distube.on("addSong", async (queue, song) => {
+
   await queue.textChannel.send(
     new Discord.MessageEmbed()
       .setColor(embedcolor)
       .setDescription(`**added:**\n[\`${song.name}\`](${song.url}) - \`${song.formattedDuration}\``)
       .setFooter(`added by: ${song.user.tag}`, song.user.displayAvatarURL({ size: 4096, dynamic: true }))
   )
+
 })
 client.distube.on("addList", async (queue, playlist) => {
+
   await queue.textChannel.send(
     new Discord.MessageEmbed()
       .setColor(embedcolor)
       .setDescription(`**added:**\n[\`${playlist.name}\`](${playlist.url})`)
       .setFooter(`added by: ${playlist.user.tag}`, playlist.user.displayAvatarURL({ size: 4096, dynamic: true }))
   )
+
 });
 
 client.distube.on("initQueue", async (queue) => {
+
   const djRole = await db.fetch(`djrole.${queue.textChannel.guild.id}`)
   const song = queue.songs[0]
   if (djRole) {

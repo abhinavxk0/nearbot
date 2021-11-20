@@ -10,12 +10,6 @@ module.exports = {
     name: 'lyrics',
     async execute(client, message, args, Discord) {
 
-        const a = await message.lineReply(
-            new Discord.MessageEmbed()
-                .setColor(embedcolor)
-                .setDescription(`loading <a:loading:910721336542916660>`)
-        )
-
         const query = args.join(" ")
         if (!query) {
             return message.lineReply(
@@ -34,6 +28,12 @@ module.exports = {
             return message.lineReply(`There was an error executing this command!`)
 
         }
+        
+        const a = await message.lineReply(
+            new Discord.MessageEmbed()
+                .setColor(embedcolor)
+                .setDescription(`loading <a:loading:910721336542916660>`)
+        )
         const main = new Discord.MessageEmbed()
             .setColor(embedcolor)
             .setThumbnail(firstSong.image)

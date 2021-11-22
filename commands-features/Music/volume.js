@@ -54,7 +54,6 @@ module.exports = {
         )
 
         client.distube.setVolume(message, Number(args[0]))
-
         a.delete()
         message.lineReplyNoMention(
             new Discord.MessageEmbed()

@@ -21,6 +21,7 @@ module.exports = {
             return message.lineReply(`you dont have enough money to give \`$${commaNumber(givecoins)}\``)
         }
         await client.add(target.id, givecoins)
+        await client.del(message.author.id, givecoins)
         message.lineReply(`you gave ${commaNumber(givecoins)} to ${target} :D`)
         
     }

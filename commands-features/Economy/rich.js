@@ -23,8 +23,10 @@ module.exports = {
         message.lineReply(
             new Discord.MessageEmbed()
                 .setColor(embedcolor)
+                .setThumbnail(message.guild.iconURL({dynamic:true}))
                 .setAuthor('Leaderboard')
                 .setDescription(lb)
+                .setTimestamp()
         )
     }
 }

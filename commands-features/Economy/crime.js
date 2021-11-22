@@ -3,7 +3,7 @@ const commaNumber = require('comma-number')
 
 module.exports = {
     name: 'crime',
-    cooldown: 60 * 20,
+    cooldown: 60 * 5,
     async execute(client, message, args, Discord){
 
         const per = Math.floor(Math.random() * 99) + 1;

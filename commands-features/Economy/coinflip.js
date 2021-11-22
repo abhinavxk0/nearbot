@@ -3,6 +3,7 @@ const commaNumber = require('comma-number')
 
 module.exports = {
     name: 'coinflip',
+    cooldown: 15,
     aliases: ['cf'],
     async execute(client, message, args, Discord) {
         if (!args[0]) {

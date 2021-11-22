@@ -24,6 +24,7 @@ module.exports = {
         try {
             const memberTarget = message.guild.members.cache.get(member.id)
             memberTarget.setNickname(null);
+            message.react("<:tick:912211898160779284>")
         } catch (err) {
             throw err;
         }

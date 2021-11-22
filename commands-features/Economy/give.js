@@ -22,7 +22,7 @@ module.exports = {
         }
         await client.add(target.id, givecoins)
         await client.del(message.author.id, givecoins)
-        message.lineReply(`you gave ${commaNumber(givecoins)} to ${target} :D`)
+        message.lineReply(`you gave \`$${commaNumber(givecoins)}\` to ${target} :D`)
         
     }
 }

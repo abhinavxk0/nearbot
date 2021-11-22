@@ -8,8 +8,11 @@ module.exports = {
 
         const per = Math.floor(Math.random() * 99) + 1;
         let reward = Math.floor(Math.random() * 6000) + 2000;
-        let lose = Math.floor(Math.random() * 6000) + 2000;
-
+        let lose = Math.floor(Math.random() * 1500) + 1000;
+        let bal = await client.bal(message.author.id)
+        if (bal < 1500){
+            return message.lineReply(`you need to atleast have \`$1500\` in your balance!`)
+        }
         let winlose;
         if (per > 60){
             winlose = true;

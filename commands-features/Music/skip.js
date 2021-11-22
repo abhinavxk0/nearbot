@@ -12,6 +12,11 @@ module.exports = {
                 .setColor('#A9E9F6')
                 .setDescription('You need to be in a voice channel to execute this command!')
         ).then(message => { message.delete({ timeout: 10000 }); })
+        if (!message.guild.me.hasPermission("SPEAK")) return message.lineReply(
+            new Discord.MessageEmbed()
+                .setColor('#A9E9F6')
+                .setDescription(`I cannot play music in this channel, I am lacking the \`SPEAK\` permission!`)
+        )  
 
         const clientVC = message.guild.me.voice.channel;
         if (!clientVC) return message.lineReplyNoMention(
@@ -62,7 +67,12 @@ module.exports = {
             if (djRole){
                 if (djUser){
                     if (target.roles.cache.has(djRole)){
-                        target.roles.remove(djRole)
+                        try {
+                            target.roles.remove(djRole)
+                          } catch (err) {
+                            console.log(`There was an error while removing ${target.tag}'s DJ role.\nGuild ID: ${queue.id}\nUser ID: ${target.user.id}`)
+                            throw err;
+                          }
                       }
                       db.delete(`djuser.${message.guild.id}`)
                       db.delete(`djrole.${message.guild.id}`)

@@ -66,7 +66,12 @@ client.distube.on("initQueue", async (queue) => {
   const djRole = await db.fetch(`djrole.${queue.textChannel.guild.id}`)
   const song = queue.songs[0]
   if (djRole) {
-    await song.member.roles.add(djRole)
+    try{
+      song.member.roles.add(djRole)
+    } catch(err){
+      console.log(`There was an error while removing ${song.user.tag}'s DJ role.\nGuild ID: ${queue.id}\nUser ID: ${target.user.id}`)
+      throw err;
+    }
     db.set(`djuser.${queue.id}`, song.user.id)
   }
   queue.autoplay = false;
@@ -84,7 +89,12 @@ client.distube.on("empty", async (queue, song) => {
   if (djRole) {
     if (djUser) {
       if (target.roles.cache.has(djRole)) {
-        target.roles.remove(djRole)
+        try {
+          target.roles.remove(djRole)
+        } catch (err) {
+          console.log(`There was an error while removing ${target.tag}'s DJ role.\nGuild ID: ${queue.id}\nUser ID: ${target.user.id}`)
+          throw err;
+        }
       }
       db.delete(`djuser.${queue.id}`)
     }
@@ -96,6 +106,52 @@ client.distube.on("empty", async (queue, song) => {
       .setDescription(`leaving ${queue.voiceChannel} because it was empty :c`)
   )
 
+})
+
+client.distube.on("disconnect", async (queue) => {
+  console.log(`- Bot got disconnected from the voice channel.`)
+
+  const djUser = await db.fetch(`djuser.${queue.id}`)
+  const djRole = await db.fetch(`djrole.${queue.id}`)
+  const guild = queue.textChannel.guild;
+  const target = guild.member(djUser)
+
+  if (djRole) {
+    if (djUser) {
+      if (target.roles.cache.has(djRole)) {
+        try {
+          target.roles.remove(djRole)
+        } catch (err) {
+          console.log(`There was an error while removing ${target.tag}'s DJ role.\nGuild ID: ${queue.id}\nUser ID: ${target.user.id}`)
+          throw err;
+        }
+      }
+      db.delete(`djuser.${queue.id}`)
+    }
+  }
+})
+
+client.distube.on("deleteQueue", async (queue) => {
+  console.log(`- - The queue was deleted for some reason.`)
+
+  const djUser = await db.fetch(`djuser.${queue.id}`)
+  const djRole = await db.fetch(`djrole.${queue.id}`)
+  const guild = queue.textChannel.guild;
+  const target = guild.member(djUser)
+
+  if (djRole) {
+    if (djUser) {
+      if (target.roles.cache.has(djRole)) {
+        try {
+          target.roles.remove(djRole)
+        } catch (err) {
+          console.log(`There was an error while removing ${target.tag}'s DJ role.\nGuild ID: ${queue.id}\nUser ID: ${target.user.id}`)
+          throw err;
+        }
+      }
+      db.delete(`djuser.${queue.id}`)
+    }
+  }
 })
 
 client.distube.on("error", (channel, error) => channel.send(
@@ -115,9 +171,11 @@ client.distube.on("searchNoResult", async (message, query) => {
 
 
 
+
+
 client.bal = (id) => new Promise(async ful => {
   const data = await economySchema.findOne({ id })
-  if (!data){
+  if (!data) {
     return ful(0)
   }
   ful(data.coins)

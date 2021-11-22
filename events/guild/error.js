@@ -1,4 +1,4 @@
 module.exports = async (Discord, client, error) => {
-    console.log(error)
-    throw err;
+    console.log(`DISCORD.JS ERROR!!: ${error}`)
+    throw error;
 }

@@ -9,6 +9,11 @@ module.exports = {
                 .setColor('#A9E9F6')
                 .setDescription('You need to be in a voice channel to execute this command!')
         ).then(message => { message.delete({ timeout: 10000 }); })
+        if (!message.guild.me.hasPermission("SPEAK")) return message.lineReply(
+            new Discord.MessageEmbed()
+                .setColor('#A9E9F6')
+                .setDescription(`I cannot play music in this channel, I am lacking the \`SPEAK\` permissions!`)
+        )   
 
         let queue = client.distube.getQueue(message);
 

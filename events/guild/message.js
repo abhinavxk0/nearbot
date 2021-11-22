@@ -1,4 +1,5 @@
 const cooldowns = new Map();
+const cooldown = require('../../schema/cooldown-schema')
 const moment = require('moment');
 const AFKS = require(`../../schema/afk-schema`);
 const prefixdb = require('../../schema/prefix-schema')
@@ -7,6 +8,12 @@ const Levels = require('discord-xp');
 const quickdb = require('quick.db');
 
 module.exports = async (Discord, client, message) => {
+
+    async function commandExecute(){
+        if (command){
+            if (command) command.execute(client, message, args, Discord)
+        }
+    }
 
     if (message.author.bot) return;
 
@@ -100,7 +107,7 @@ module.exports = async (Discord, client, message) => {
                 const lvlchannel = message.guild.channels.cache.get(lvlup)
                 lvlchannel.send(message.author,
                     new Discord.MessageEmbed()
-                    .setColor('#A9E9F6')
+                    .setColor('#ff9700')
                     .setThumbnail(message.author.displayAvatarURL({
                         dynamic: true
                     }))
@@ -109,7 +116,16 @@ module.exports = async (Discord, client, message) => {
                     .setTimestamp()
                 )
             } 
-            message.channel.send(`Congrats ${message.author.tag}!\nYou just leveled up to **level ${user.level}**!`)
+            message.channel.send(
+                new Discord.MessageEmbed()
+                .setColor('#ff9700')
+                .setThumbnail(message.author.displayAvatarURL({
+                    dynamic: true
+                }))
+                .setAuthor(message.author.tag)
+                .setDescription(`Congrats!\n${message.author} just leveled up to **level ${user.level}**!`)
+                .setTimestamp()
+            )
               .then((msg) => msg.delete({ timeout: 10000 }));
           }
         }
@@ -129,8 +145,8 @@ module.exports = async (Discord, client, message) => {
                     dynamic: true
                 }))
                 .setDescription(
-                    `The prefix for ${client.user} is \`${prefix}\`
-            **[Invite NearBot](https://discord.com/oauth2/authorize?client_id=${client.user.id}&scope=bot&permissions=8)**
+                    `The prefix for ${client.user} is \`${prefix}\`\n
+[\`Invite NearBot\`](https://discord.com/oauth2/authorize?client_id=${client.user.id}&scope=bot&permissions=8)
             `
                 )
         );
@@ -145,34 +161,45 @@ module.exports = async (Discord, client, message) => {
     const command = client.commands.get(commandName) || client.commands.find((cmd) => cmd.aliases && cmd.aliases.includes(commandName));
     if (!command) return;
 
-    if (!cooldowns.has(commandName)) {
-        cooldowns.set(command.name, new Discord.Collection());
-    }
-
-    const currentTime = Date.now();
-    const timestamps = cooldowns.get(command.name);
-    const cooldownAmount = command.cooldown * 1000;
-
-    if (timestamps.has(message.author.id)) {
-        const expirationTime = timestamps.get(message.author.id) + cooldownAmount;
-
-        if (currentTime < expirationTime) {
-            const timeLeft = (expirationTime - currentTime) / 1000;
-
-            return message.lineReply(`Please wait ${timeLeft.toFixed(1)} more second(s) before using that command! :)`)
-        }
-    }
-
-    timestamps.set(message.author.id, currentTime);
-
-    setTimeout(() => {
-        timestamps.delete(message.author.id)
-    }, cooldownAmount);
-
-    try {
-        command.execute(client, message, args, Discord)
-    } catch (error) {
-        console.log(error)
-        message.lineReply(`There was an error executing this command!`)
-    }
+    if(command.cooldown) {
+        const current_time = Date.now();
+        const cooldown_amount = (command.cooldown) * 1000
+    
+        cooldown.findOne({ userId: message.author.id, cmd: command.name }, async(err, data) => {
+            if(data) {
+                const expiration_time = data.time + cooldown_amount;
+            
+                if(current_time < expiration_time) {
+                    const time_left = (expiration_time -  current_time) / 1000
+                                    
+                    if(time_left.toFixed(1) >= 3600){
+                        let hour = (time_left.toFixed(1) / 3600).toLocaleString();
+                        hour = Math.round(hour)
+                        return message.lineReply(`Please wait ${hour.toLocaleString()} more hours before using \`${command.name}\`!`)
+                    }
+                    if(time_left.toFixed(1) >= 60) {
+                        let minute = (time_left.toFixed(1) / 60);
+                        minute = Math.round(minute)
+                        return message.lineReply(`Please wait ${minute} more minutes before using \`${command.name}\`!`)
+                    }
+                    let seconds = (time_left.toFixed(1)).toLocaleString();
+                    seconds = Math.round(seconds)
+                    return message.lineReply(`Please wait ${seconds} more seconds before using \`${command.name}\`!`)
+                    } else {
+                        await cooldown.findOneAndUpdate({ userId: message.author.id, cmd: command.name }, { time: current_time });
+                        commandExecute();
+                    }
+            } else {
+                commandExecute();
+                new cooldown({
+                    userId: message.author.id,
+                    cmd: command.name,
+                    time: current_time,
+                    cooldown: command.cooldown,
+                }).save();
+            }
+        })
+    } else {
+        commandExecute();
+    };
 }

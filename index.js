@@ -7,6 +7,7 @@ const chalk = require('chalk');
 const Levels = require('discord-xp');
 const Distube = require('distube').default;
 const db = require('quick.db')
+const economySchema = require('./schema/economy-schema')
 const { SpotifyPlugin } = require("@distube/spotify");
 const { SoundCloudPlugin } = require("@distube/soundcloud");
 
@@ -88,7 +89,7 @@ client.distube.on("empty", async (queue, song) => {
       db.delete(`djuser.${queue.id}`)
     }
   }
-  
+
   queue.textChannel.send(
     new Discord.MessageEmbed()
       .setColor(embedcolor)
@@ -109,6 +110,46 @@ client.distube.on("searchNoResult", async (message, query) => {
 
   )
 })
+
+
+
+
+
+client.bal = (id) => new Promise(async ful => {
+  const data = await economySchema.findOne({ id })
+  if (!data){
+    return ful(0)
+  }
+  ful(data.coins)
+})
+
+client.add = (id, coins) => {
+  economySchema.findOne({ id }, async (err, data) => {
+    if (err) throw err;
+    if (data) {
+      data.coins += coins;
+    } else {
+      data = new economySchema({ id, coins })
+    }
+    data.save()
+  })
+}
+
+client.del = (id, coins) => {
+  economySchema.findOne({ id }, async (err, data) => {
+    if (err) throw err;
+    if (data) {
+      data.coins -= coins;
+    } else {
+      data = new economySchema({ id, coins: -coins })
+    }
+    data.save()
+  })
+}
+
+
+
+
 
 client.login(bot_token);
 

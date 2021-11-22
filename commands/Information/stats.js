@@ -28,6 +28,7 @@ module.exports = {
                 .setAuthor("Stats 📊", client.user.displayAvatarURL())
                 .setThumbnail(client.user.displayAvatarURL())
                 .setColor(hexColor)
+                .setDescription(`[\`Invite Nearbot\`](${`https://discord.com/oauth2/authorize?client_id=${client.user.id}&scope=bot&permissions=8`})  ·  [\`Support Server\`](https://discord.gg/Dvv48zwGep)  ·  [\`Bot Developer\`](https://discords.com/bio/p/xaviervv)`)
                 .addFields(
                     {
                         name: 'Ping',
@@ -71,6 +72,8 @@ module.exports = {
             new Discord.MessageEmbed()
                 .setAuthor("Stats 📊", client.user.displayAvatarURL())
                 .setColor(hexColor)
+                .setThumbnail(client.user.displayAvatarURL())
+                .setDescription(`[\`Invite Nearbot\`](${`https://discord.com/oauth2/authorize?client_id=${client.user.id}&scope=bot&permissions=8`})  ·  [\`Support Server\`](https://discord.gg/Dvv48zwGep)  ·  [\`Bot Developer\`](https://discords.com/bio/p/xaviervv)`)
                 .addFields(
                     {
                         name: 'Ping',

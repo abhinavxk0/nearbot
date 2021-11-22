@@ -14,7 +14,7 @@ module.exports = {
             .setColor('#A9E9F6')
             .setAuthor(`Help for NearBot`, client.user.avatarURL({ dynamic: true }))
             .setDescription(`\n\`Prefix: "${prefixdb}"\`
-\n[\`Invite Nearbot\`](${`https://discord.com/oauth2/authorize?client_id=${client.user.id}&scope=bot&permissions=8`})  ·  [\`Support Server\`](https://discord.gg/Dvv48zwGep)`)
+\n[\`Invite Nearbot\`](${`https://discord.com/oauth2/authorize?client_id=${client.user.id}&scope=bot&permissions=8`})  ·  [\`Support Server\`](https://discord.gg/Dvv48zwGep)  ·  [\`Bot Developer\`](https://discords.com/bio/p/xaviervv)`)
         const page1 = new Discord.MessageEmbed()
             .setColor(config.embedcolor)
             .setThumbnail(client.user.avatarURL({ dynamic: true }))
@@ -100,7 +100,8 @@ Use \`unmute\` to **unmute** someone in the guild.\n
 Use \`lock\` to **lock** a channel.\n
 Use \`unlock\` to **unlock** a channel.\n
 Use \`purge\` to **delete** messages.\n
-Use \`slowmode\` to set **slowmode** in a channel.`
+Use \`slowmode\` to set **slowmode** in a channel.
+Use \`drag\` to **drag** a user to a voice channel!`
                 }
             )
 
@@ -125,15 +126,18 @@ Use \`transferdj\` to transfer the DJ to another person. (DJ ONLY)
 Use \`autoplay\` to toggle autoplay. (DJ ONLY)
 `, true)
 
-        const pages = [
-            pagemain,
-            page6,
-            page1,
-            page2,
-            page3,
-            page4,
-            page5
-        ]
+        const page7 = new Discord.MessageEmbed()
+            .setColor(config.embedcolor)
+            .setThumbnail(client.user.avatarURL({ dynamic: true }))
+            .addField(`Economy Commands`,
+                `Use \`balance\` to check your **balance**!
+Use \`coinflip\` to **bet an amount** to double or nothing!
+Use \`daily\` to collect your **daily reward**!
+Use \`give\` to **give an amount** to someone else!
+Use \`rich\` to check the **rankings**!
+Use \`work\` to **work** and earn money!`)
+
+        const pages = [pagemain, page6, page1, page2, page3, page4, page5, page7]
 
         pagination(message, pages, emojis, timeout)
 

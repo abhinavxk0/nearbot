@@ -40,9 +40,9 @@ module.exports = {
                 timeStart = status.timestamps.start,
                 timeEnd = status.timestamps.end,
                 timeConvert = convert(timeEnd - timeStart);
-            
+
             let arti;
-            if (artist.includes(';')){
+            if (artist.includes(';')) {
                 let artis = artist.split(';')
                 arti = artis[0]
             } else {
@@ -50,7 +50,7 @@ module.exports = {
             }
 
             const fetchgenius = new Genius.Client(geniusaccess);
-            const searches = await fetchgenius.songs.search(`${name}, ${arti}`,{
+            const searches = await fetchgenius.songs.search(`${name}, ${arti}`, {
                 sanitizeQuery: true
             });
             const firstSong = searches[0];

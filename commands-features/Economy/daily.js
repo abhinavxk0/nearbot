@@ -6,9 +6,7 @@ const level = require('../../schema/settings-schema')
 let claimedCache = [];  
 const clearCache = () => {
     claimedCache = [];
-    setTimeout((clearCache) => {
-        
-    }, 1000 * 60 * 10);
+    setTimeout(clearCache, 1000 * 60 * 10)
 }
 clearCache()
 

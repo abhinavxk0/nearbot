@@ -20,8 +20,8 @@ module.exports = {
         if (bal < givecoins){
             return message.lineReply(`you dont have enough money to give \`$${commaNumber(givecoins)}\``)
         }
-        await client.add(target.id, givecoins).then(
-            message.lineReply(`you gave ${commaNumber(givecoins)} to ${target} :D`)
-        )
+        await client.add(target.id, givecoins)
+        message.lineReply(`you gave ${commaNumber(givecoins)} to ${target} :D`)
+        
     }
 }

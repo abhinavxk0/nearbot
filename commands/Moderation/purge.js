@@ -1,40 +1,56 @@
+const config = require('../../config.json')
+
 module.exports = {
     name: 'purge',
     aliases: ['sweep', 'delete', 'clear'],
     async execute(client, message, args, Discord) {
+        let int = args[0];
         if (!message.member.hasPermission("MANAGE_MESSAGES")) return message.lineReply(
             new Discord.MessageEmbed()
-                .setColor('#A9E9F6')
-                .setDescription(`You do not have the \`MANAGE_MESSAGES\` permission to use this command.`)
+                .setColor(config.errorcolor)
+                .setDescription(`${config.redtick} · You lack \`Manage Messages\` permission.`)
+                .setTimestamp()
         )
         if (!message.guild.me.hasPermission("MANAGE_MESSAGES")) return message.lineReply(
             new Discord.MessageEmbed()
-                .setColor('#A9E9F6')
-                .setDescription(`I do not have the \`MANAGE_MESSAGES\` permission.`)
+                .setColor(config.errorcolor)
+                .setDescription(`${config.redtick} · I lack \`Manage Messages\` permission.`)
+                .setTimestamp()
         )
-        if (!args[0]) return message.lineReply(
+        if (!int) return message.lineReply(
             new Discord.MessageEmbed()
-                .setColor('#A9E9F6')
-                .setDescription('Enter a number of messages to be purged.')
+                .setColor(config.errorcolor)
+                .setDescription(`${config.redtick} · Please enter a number of messages to delete.`)
+                .setTimestamp()
         )
-        if (isNaN(args[0])) return message.lineReply(
+        if (isNaN(int)) return message.lineReply(
             new Discord.MessageEmbed()
-                .setColor('#A9E9F6')
-                .setDescription('The number of messages to be purged should be a number.')
+                .setColor(config.errorcolor)
+                .setDescription(`${config.redtick} · Please enter a **number** of messages to delete.`)
+                .setTimestamp()
         )
-        if (parseInt(args[0]) > 99) return message.lineReply(
-            new Discord.MessageEmbed()
-                .setColor('#A9E9F6')
-                .setDescription('The number of messages to be purged should be under 100.')
-        )
-        await message.channel.bulkDelete(parseInt(args[0]) + 1)
-            .catch((err) => console.log(err)).then(
-                message.channel.send(
-                    new Discord.MessageEmbed()
-                        .setColor('#A9E9F6')
-                        .setDescription(`Purged **${args[0]}** messages.`)
-                )
+        if (int > 100){
+            int = 100;
+        }
+        try {
+            message.delete()
+            const fetch = await message.channel.messages.fetch({ limit: parseInt(int) });
+            await message.channel.bulkDelete(fetch, true);
+            const a = await message.channel.send(
+                new Discord.MessageEmbed()
+                    .setColor(config.embedcolor)
+                    .setDescription(`Purged **${int}** messages.`)
+                    .setTimestamp()
             )
-
+            setTimeout(() => {
+                a.delete()
+            }, 10 * 1000);
+        } catch (error) {
+            message.lineReply(
+                new Discord.MessageEmbed()
+                    .setColor(errorcolor)
+                    .setDescription(`${redtick} · There was an error! :/`)
+            )
+        }
     }
 }

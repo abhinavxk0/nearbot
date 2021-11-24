@@ -1,6 +1,8 @@
 {
-    "bot_token": "ODE5OTQ3MDQ1MDkxNDA5OTkx.YEuBMQ.X0MMnoYckx5dv42AvNEB7AYE240",
+    "bot_token": "ODE5OTQ3MDQ1MDkxNDA5OTkx.YEuBMQ.RVPX3Axrbu64cB9g7QtWeBp0yBQ",
     "mongoPath" : "mongodb+srv://xavierv:ryzen1907@nearbeta.vrusx.mongodb.net/Data",
+    "greentick": "<:green_tick:912211898160779284>",
+    "redtick": "<:red_cross:912793266431332372>",
     "embedcolor": "#A9E9F6",
     "errorcolor": "#AB1724",
     "spotifyID": "f60c8b517d984a86be06dc24e1b08471",

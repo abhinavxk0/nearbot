@@ -6,11 +6,27 @@ const prefixdb = require('../../schema/prefix-schema')
 const levelSchema = require('../../schema/settings-schema')
 const Levels = require('discord-xp');
 const quickdb = require('quick.db');
+const { embedcolor, errorcolor } = require('../../config.json')
+
 
 module.exports = async (Discord, client, message) => {
 
-    async function commandExecute(){
-        if (command){
+    if (message.content.includes("suicide")) {
+        const m = message.lineReply(
+            new Discord.MessageEmbed()
+                .setColor(embedcolor)
+                .setTitle('Suicide Prevention')
+                .setDescription(`I heard you talk about suicide, please don't do that to yourself. We all love you. 💖\n You are not alone.`)
+                .addField('☎️  Helplines', `USA: \`1-800-273-8255\`\nUK: \`0800 689 5652\`\nIndia: \`1800-599-0019\`\nAny Other Nation: [\`Visit Website\`](https://www.opencounseling.com/suicide-hotlines)`)
+                .setFooter('This safety message cannot be disabled.')
+        )
+        setTimeout(() => {
+            m.delete({ timeout: 300000 })
+        }, 300000);
+    }
+
+    async function commandExecute() {
+        if (command) {
             if (command) command.execute(client, message, args, Discord)
         }
     }
@@ -92,44 +108,44 @@ module.exports = async (Discord, client, message) => {
     await levelSchema.findOne(
         { Guild: message.guild.id },
         async (err, data) => {
-          if (!data) return;
-          const randomXp = Math.floor(Math.random() * 20) + 1
-          const hasLeveledUp = await Levels.appendXp(
-            message.author.id,
-            message.guild.id,
-            randomXp
-          );
-          const lvlup = await quickdb.fetch(`announce.${message.guild.id}`)
-          if (hasLeveledUp) {
-            const user = await Levels.fetch(message.author.id, message.guild.id);
+            if (!data) return;
+            const randomXp = Math.floor(Math.random() * 20) + 1
+            const hasLeveledUp = await Levels.appendXp(
+                message.author.id,
+                message.guild.id,
+                randomXp
+            );
+            const lvlup = await quickdb.fetch(`announce.${message.guild.id}`)
+            if (hasLeveledUp) {
+                const user = await Levels.fetch(message.author.id, message.guild.id);
 
-            if (lvlup){
-                const lvlchannel = message.guild.channels.cache.get(lvlup)
-                lvlchannel.send(message.author,
+                if (lvlup) {
+                    const lvlchannel = message.guild.channels.cache.get(lvlup)
+                    lvlchannel.send(message.author,
+                        new Discord.MessageEmbed()
+                            .setColor('#ff9700')
+                            .setThumbnail(message.author.displayAvatarURL({
+                                dynamic: true
+                            }))
+                            .setAuthor(message.author.tag)
+                            .setDescription(`Congrats!\n${message.author} just leveled up to **level ${user.level}**!`)
+                            .setTimestamp()
+                    )
+                }
+                message.channel.send(
                     new Discord.MessageEmbed()
-                    .setColor('#ff9700')
-                    .setThumbnail(message.author.displayAvatarURL({
-                        dynamic: true
-                    }))
-                    .setAuthor(message.author.tag)
-                    .setDescription(`Congrats!\n${message.author} just leveled up to **level ${user.level}**!`)
-                    .setTimestamp()
+                        .setColor('#ff9700')
+                        .setThumbnail(message.author.displayAvatarURL({
+                            dynamic: true
+                        }))
+                        .setAuthor(message.author.tag)
+                        .setDescription(`Congrats!\n${message.author} just leveled up to **level ${user.level}**!`)
+                        .setTimestamp()
                 )
-            } 
-            message.channel.send(
-                new Discord.MessageEmbed()
-                .setColor('#ff9700')
-                .setThumbnail(message.author.displayAvatarURL({
-                    dynamic: true
-                }))
-                .setAuthor(message.author.tag)
-                .setDescription(`Congrats!\n${message.author} just leveled up to **level ${user.level}**!`)
-                .setTimestamp()
-            )
-              .then((msg) => msg.delete({ timeout: 10000 }));
-          }
+                    .then((msg) => msg.delete({ timeout: 10000 }));
+            }
         }
-      );
+    );
 
 
 
@@ -161,23 +177,23 @@ module.exports = async (Discord, client, message) => {
     const command = client.commands.get(commandName) || client.commands.find((cmd) => cmd.aliases && cmd.aliases.includes(commandName));
     if (!command) return;
 
-    if(command.cooldown) {
+    if (command.cooldown) {
         const current_time = Date.now();
         const cooldown_amount = (command.cooldown) * 1000
-    
-        cooldown.findOne({ userId: message.author.id, cmd: command.name }, async(err, data) => {
-            if(data) {
+
+        cooldown.findOne({ userId: message.author.id, cmd: command.name }, async (err, data) => {
+            if (data) {
                 const expiration_time = data.time + cooldown_amount;
-            
-                if(current_time < expiration_time) {
-                    const time_left = (expiration_time -  current_time) / 1000
-                                    
-                    if(time_left.toFixed(1) >= 3600){
+
+                if (current_time < expiration_time) {
+                    const time_left = (expiration_time - current_time) / 1000
+
+                    if (time_left.toFixed(1) >= 3600) {
                         let hour = (time_left.toFixed(1) / 3600).toLocaleString();
                         hour = Math.round(hour)
                         return message.lineReply(`Please wait ${hour.toLocaleString()} more hours before using \`${command.name}\`!`)
                     }
-                    if(time_left.toFixed(1) >= 60) {
+                    if (time_left.toFixed(1) >= 60) {
                         let minute = (time_left.toFixed(1) / 60);
                         minute = Math.round(minute)
                         return message.lineReply(`Please wait ${minute} more minutes before using \`${command.name}\`!`)
@@ -185,10 +201,10 @@ module.exports = async (Discord, client, message) => {
                     let seconds = (time_left.toFixed(1)).toLocaleString();
                     seconds = Math.round(seconds)
                     return message.lineReply(`Please wait ${seconds} more seconds before using \`${command.name}\`!`)
-                    } else {
-                        await cooldown.findOneAndUpdate({ userId: message.author.id, cmd: command.name }, { time: current_time });
-                        commandExecute();
-                    }
+                } else {
+                    await cooldown.findOneAndUpdate({ userId: message.author.id, cmd: command.name }, { time: current_time });
+                    commandExecute();
+                }
             } else {
                 commandExecute();
                 new cooldown({

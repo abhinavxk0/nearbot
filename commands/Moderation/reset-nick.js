@@ -1,31 +1,52 @@
-const { embedcolor, errorcolor } = require('../../config.json')
+const config = require('../../config.json')
 
 module.exports = {
     name: 'reset-nick',
     aliases: ['renick', 'resetnick', 'resetnickname'],
-    async execute(client, message, args, Discord){
+    async execute(client, message, args, Discord){c
+        const member = message.mentions.members.first() || message.guild.member(args[0]);
+        const cl = message.guild.member(client.user.id)
         if (!message.member.hasPermission("MANAGE_NICKNAMES")) return message.lineReply(
             new Discord.MessageEmbed()
-                .setColor('#A9E9F6')
-                .setDescription(`You do not have the \`MANAGE_NICKNAMES\` permission to use this command.`)
+                .setColor(errorcolor)
+                .setDescription(`${config.redtick} · You lack \`Manage Nicknames\` permission.`)
+                .setTimestamp()
         )
         if (!message.guild.me.hasPermission("MANAGE_NICKNAMES")) return message.lineReply(
             new Discord.MessageEmbed()
-                .setColor('#A9E9F6')
-                .setDescription(`I do not have the \`MANAGE_NICKNAMES\` permission.`)
-        )  
-
-        const member = message.mentions.members.first() || client.users.fetch(args[0])
-        if (!member) return message.channel.send(
+                .setColor(errorcolor)
+                .setDescription(`${config.redtick} · I lack \`Manage Nicknames\` permission.`)
+                .setTimestamp()
+        )
+        if (member.roles.highest.position > cl.roles.highest.position) return message.lineReply(
             new Discord.MessageEmbed()
                 .setColor(errorcolor)
-                .setDescription('Specify a member.')
+                .setDescription(`${config.redtick} · I am not higher than **${member.user.username}** to reset their nickname.`)
+                .setTimestamp()
+        )
+        if (member.roles.highest.position >= message.member.roles.highest.position) return message.lineReply(
+            new Discord.MessageEmbed()
+                .setColor(errorcolor)
+                .setDescription(`${config.redtick} · **${member.user.username}** has the same or higher role than you.`)
+                .setTimestamp()
+        )
+        
+        if (!member) return message.lineReply(
+            new Discord.MessageEmbed()
+                .setColor(errorcolor)
+                .setTimestamp()
+                .setDescription(`${config.redtick} · Please enter a valid member to reset nickname.`)
         );
         try {
             const memberTarget = message.guild.members.cache.get(member.id)
             memberTarget.setNickname(null);
-            message.react("<:tick:912211898160779284>")
+            message.react(config.greentick)
         } catch (err) {
+            message.lineReply(
+                new Discord.MessageEmbed()
+                    .setColor(errorcolor)
+                    .setDescription(`${config.redtick} · There was an error! :/`)
+            )
             throw err;
         }
 }}

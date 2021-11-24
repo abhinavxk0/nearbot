@@ -1,46 +1,78 @@
 const db = require('quick.db');
-
+const config = require('../../config.json')
 module.exports = {
     name: 'unmute',
     aliases: ['um'],
     async execute(client, message, args, Discord){
+        const muteRole = await db.fetch(`muterole.${message.guild.id}`);
+        const user = message.mentions.members.first()
         if (!message.member.hasPermission("MANAGE_ROLES")) return message.lineReply(
             new Discord.MessageEmbed()
-                .setColor('#A9E9F6')
-                .setDescription(`You do not have the \`MANAGE_ROLES\` permission to use this command.`)
+                .setColor(errorcolor)
+                .setDescription(`${config.redtick} · You lack \`Manage Roles\` permission.`)
+                .setTimestamp()
         )
         if (!message.guild.me.hasPermission("MANAGE_ROLES")) return message.lineReply(
             new Discord.MessageEmbed()
-                .setColor('#A9E9F6')
-                .setDescription(`I do not have the \`MANAGE_ROLES\` permission.`)
+                .setColor(errorcolor)
+                .setDescription(`${config.redtick} · I lack \`Manage Roles\` permission.`)
+                .setTimestamp()
         )
 
-        const muteRole = await db.fetch(`muterole.${message.guild.id}`);
-        if (muteRole == null) return message.lineReply(
-            new Discord.MessageEmbed()
-            .setColor('#A9E9F6')
-            .setDescription(`There is no mute role set for this server.`)
-        )
-
-        const user = message.mentions.members.first()
+        
+        if (muteRole == null) {
+            return message.lineReply(
+                new Discord.MessageEmbed()
+                    .setColor(config.errorcolor)
+                    .setTimestamp()
+                    .setDescription(`${config.redtick} · No mute role is set for this server. Use \`setmuterole\` to set it!`)
+            );
+        }
+        
         if (!user) return message.lineReply(
             new Discord.MessageEmbed()
-            .setColor('#A9E9F6')
-            .setDescription(`Enter a user to mute.`)
+                .setColor(config.errorcolor)
+                .setTimestamp()
+                .setDescription(`${config.redtick} · Enter a valid user to mute.`)
         )
         if (user.id == message.author.id) return message.lineReply(
             new Discord.MessageEmbed()
-                .setColor('#A9E9F6')
-                .setDescription(`You cannot mute yourself.`)
+                .setColor(config.errorcolor)
+                .setTimestamp()
+                .setDescription(`${config.redtick} · You can't mute yourself.`)
+        );
+        const cl = message.guild.member(client.user.id)
+        if (user.roles.highest.position > cl.roles.highest.position) return message.lineReply(
+            new Discord.MessageEmbed()
+                .setColor(errorcolor)
+                .setDescription(`${config.redtick} · I am not higher than **${user.user.username}** to mute them.`)
+                .setTimestamp()
         )
+        if (user.roles.highest.position >= message.member.roles.highest.position) {
+            return message.lineReply(
+                new Discord.MessageEmbed()
+                    .setColor(config.errorcolor)
+                    .setTimestamp()
+                    .setDescription(`${config.redtick} · **${user.user.username}** has the same or higher role than you.`)
+            )
+        }
 
-        if (user.roles.cache.has(muteRole)){
-            user.roles.remove(muteRole).then(
-                message.lineReply(
-                    new Discord.MessageEmbed()
-                    .setColor('#A9E9F6')
-                    .setDescription(`${user} has been unmuted.`)
+        try {
+            if (user.roles.cache.has(muteRole)){
+                user.roles.remove(muteRole).then(
+                    message.lineReply(
+                        new Discord.MessageEmbed()
+                        .setColor(config.embedcolor)
+                        .setDescription(`${config.greentick} · **${user.user.username}** has been unmuted.`)
+                    )
                 )
+            }
+        } catch (error) {
+            message.lineReply(
+                new Discord.MessageEmbed()
+                    .setColor(errorcolor)
+                    .setDescription(`${redtick} · There was an error! :/`)
+                    .setTimestamp()
             )
         }
     }

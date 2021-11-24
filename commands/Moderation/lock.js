@@ -1,32 +1,46 @@
+const { embedcolor, errorcolor, redtick, greentick } = require('../../config.json')
+
 module.exports = {
     name: 'lock',
     aliases: ['l'],
-    async execute(client, message, args, Discord){
+    async execute(client, message, args, Discord) {
         if (!message.member.hasPermission("MANAGE_CHANNELS")) return message.lineReply(
             new Discord.MessageEmbed()
-                .setColor('#A9E9F6')
-                .setDescription(`You do not have the \`MANAGE_CHANNELS\` permission to use this command.`)
+                .setColor(errorcolor)
+                .setDescription(`${redtick} · You lack \`Manage Channels\` permission.`)
+                .setTimestamp()
         )
         if (!message.guild.me.hasPermission("MANAGE_CHANNELS")) return message.lineReply(
             new Discord.MessageEmbed()
-                .setColor('#A9E9F6')
-                .setDescription(`I do not have the \`MANAGE_CHANNELS\` permission.`)
+                .setColor(errorcolor)
+                .setDescription(`${redtick} · I lack \`Manage Channels\` permission.`)
+                .setTimestamp()
         )
 
-        const channel = message.mentions.channels.first() || message.channel;
-        
+        const channel = message.mentions.channels.first() || message.guild.channels.cache.filter(ch => ch.type === 'text').find(ch => ch.name === args[1]) || message.guild.channels.cache.filter(ch => ch.type === 'voice').find(ch => ch.name === args[1]) || message.channel;
+        if (!channel) return message.lineReply(
+            new Discord.MessageEmbed()
+                .setColor(embedcolor)
+                .setDescription(`${redtick} · Enter a valid channel to lock.`)
+                .setTimestamp()
+        )
         try {
             await channel.updateOverwrite(message.guild.roles.cache.find(e => e.name.toLowerCase().trim() === "@everyone"), {
                 SEND_MESSAGES: false,
-              })
+            })
             message.lineReply(
                 new Discord.MessageEmbed()
-                    .setColor('#A9E9F6')
-                    .setDescription(`${channel} has been locked.`)
-                    .setFooter(`Locked by ${message.author.tag}`, message.author.displayAvatarURL({dynamic : true}))
+                    .setColor(embedcolor)
+                    .setDescription(`${greentick} · ${channel} has been locked.`)
+                    .setTimestamp()
             )
-        } catch (e){
-            console.log(e)
+        } catch (error) {
+            message.lineReply(
+                new Discord.MessageEmbed()
+                    .setColor(errorcolor)
+                    .setDescription(`${redtick} · There was an error! :/`)
+                    .setTimestamp()
+            )
         }
     }
 }

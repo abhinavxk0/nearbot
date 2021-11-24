@@ -1,16 +1,20 @@
+const config = require('../../config.json')
+
 module.exports = {
     name: 'unlock',
     aliases: ['ul'],
     async execute(client, message, args, Discord){
         if (!message.member.hasPermission("MANAGE_CHANNELS")) return message.lineReply(
             new Discord.MessageEmbed()
-                .setColor('#A9E9F6')
-                .setDescription(`You do not have the \`MANAGE_CHANNELS\` permission to use this command.`)
+                .setColor(config.errorcolor)
+                .setDescription(`${config.redtick} · You lack \`Manage Channels\` permission.`)
+                .setTimestamp()
         )
         if (!message.guild.me.hasPermission("MANAGE_CHANNELS")) return message.lineReply(
             new Discord.MessageEmbed()
-                .setColor('#A9E9F6')
-                .setDescription(`I do not have the \`MANAGE_CHANNELS\` permission.`)
+                .setColor(config.errorcolor)
+                .setDescription(`${config.redtick} · I lack \`Manage Channels\` permission.`)
+                .setTimestamp()
         )
         
         const channel = message.mentions.channels.first() || message.channel;
@@ -19,14 +23,19 @@ module.exports = {
             await channel.updateOverwrite(message.guild.roles.cache.find(e => e.name.toLowerCase().trim() === "@everyone"), {
                 SEND_MESSAGES: null,
               })
-            message.lineReply(
+              message.lineReply(
                 new Discord.MessageEmbed()
-                    .setColor('#A9E9F6')
-                    .setDescription(`${channel} has been unlocked.`)
-                    .setFooter(`Unlocked by ${message.author.tag}`, message.author.displayAvatarURL({dynamic : true}))
+                    .setColor(config.embedcolor)
+                    .setDescription(`${config.greentick} · ${channel} has been unlocked.`)
+                    .setTimestamp()
             )
         } catch (e){
-            console.log(e)
+            message.lineReply(
+                new Discord.MessageEmbed()
+                    .setColor(config.errorcolor)
+                    .setDescription(`${config.redtick} · There was an error! :/`)
+                    .setTimestamp()
+            )
         }
     }
 }

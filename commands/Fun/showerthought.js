@@ -9,7 +9,7 @@ module.exports = {
 
         message.lineReply(
             new Discord.MessageEmbed()
-                .setColor(embedcolor)
+                .setColor(config.embedcolor)
                 .setDescription(json.result)
                 .setFooter(json.author)
         )

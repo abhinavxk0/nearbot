@@ -48,33 +48,32 @@ module.exports = {
             } else {
                 arti = artist
             }
-
+            let minutes = timeConvert.minutes < 10 ? `0${timeConvert.minutes}` : timeConvert.minutes;
+            let seconds = timeConvert.seconds < 10 ? `0${timeConvert.seconds}` : timeConvert.seconds;
+            let time = `${minutes}:${seconds}`
+            const main1 = new Discord.MessageEmbed()
+            .setColor('0x1ED768')
+            .setAuthor(`Listening to Spotify`, 'https://www.freepnglogos.com/uploads/spotify-logo-png/spotify-download-logo-30.png')
+            .setThumbnail(image)
+            .setTitle(name)
+            .setDescription(`by ${artist}\non ${album}\n- **${time}**\n
+[\`Listen now on Spotify!\`](${url})`)
+            .setFooter(message.author.tag, message.author.displayAvatarURL({
+                dynamic: true
+            }))
             const fetchgenius = new Genius.Client(geniusaccess);
             const searches = await fetchgenius.songs.search(`${name}, ${arti}`, {
                 sanitizeQuery: true
             });
             const firstSong = searches[0];
             let lyrics;
-
-            const lyricsLength = lyrics.length;
-            let minutes = timeConvert.minutes < 10 ? `0${timeConvert.minutes}` : timeConvert.minutes;
-            let seconds = timeConvert.seconds < 10 ? `0${timeConvert.seconds}` : timeConvert.seconds;
-            let time = `${minutes}:${seconds}`
-            const main1 = new Discord.MessageEmbed()
-                .setColor('0x1ED768')
-                .setAuthor(`Listening to Spotify`, 'https://www.freepnglogos.com/uploads/spotify-logo-png/spotify-download-logo-30.png')
-                .setThumbnail(image)
-                .setTitle(name)
-                .setDescription(`by ${artist}\non ${album}\n- **${time}**\n
-[\`Listen now on Spotify!\`](${url})`)
-                .setFooter(message.author.tag, message.author.displayAvatarURL({
-                    dynamic: true
-                }))
             try {
                 let = await firstSong.lyrics();
             } catch (err) {
-                message.lineReply(main1)
+                return message.lineReply(main1)
             }
+            const lyricsLength = lyrics.length;
+
             const main = new Discord.MessageEmbed()
                 .setColor('0x1ED768')
                 .setAuthor(`Listening to Spotify`, 'https://www.freepnglogos.com/uploads/spotify-logo-png/spotify-download-logo-30.png')

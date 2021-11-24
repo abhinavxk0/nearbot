@@ -11,7 +11,7 @@ const { embedcolor, errorcolor } = require('../../config.json')
 
 module.exports = async (Discord, client, message) => {
 
-    if (message.content.includes("suicide")) {
+    if (message.content.includes("suicide" || "Suicide" || "$uicide")) {
         const m = message.lineReply(
             new Discord.MessageEmbed()
                 .setColor(embedcolor)
@@ -154,17 +154,21 @@ module.exports = async (Discord, client, message) => {
     if (message.content.includes("@here") || message.content.includes("@everyone")) return false;
 
     if (message.mentions.has(client.user.id) && message.content.includes("prefix")) {
+        const member = message.guild.member(client.user.id)
+        const rawColor = member.displayHexColor;
+        let hexColor = `#${rawColor.slice(1).trim().split(/ +/g)}`;
+        if (hexColor == '#000000'){
+            hexColor = '#A9E9F6'
+        }
         message.channel.send(
             new Discord.MessageEmbed()
-                .setColor('#A9E9F6')
+                .setColor(hexColor)
                 .setFooter("NearBot", client.user.displayAvatarURL({
                     dynamic: true
                 }))
-                .setDescription(
-                    `The prefix for ${client.user} is \`${prefix}\`\n
-[\`Invite NearBot\`](https://discord.com/oauth2/authorize?client_id=${client.user.id}&scope=bot&permissions=8)
-            `
-                )
+                .setTitle('Hello! 👋')
+                .setDescription(`\n\`Prefix: "${prefix}"\`
+                \n[\`Invite Nearbot\`](${`https://discord.com/oauth2/authorize?client_id=${client.user.id}&scope=bot&permissions=8`})  ·  [\`Support Server\`](https://discord.gg/Dvv48zwGep)  ·  [\`Bot Developer\`](https://discords.com/bio/p/xaviervv)`)
         );
     };
 

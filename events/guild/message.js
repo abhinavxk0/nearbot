@@ -39,9 +39,9 @@ module.exports = async (Discord, client, message) => {
     let mentionRegex = message.content.match(new RegExp(`^<@!?(${client.user.id})>`, "gi"))
     let prefix;
     if (data) {
-        prefix = data.prefix || `${mentionRegex[0]}`
+        prefix = data.prefix
     } else if (!data) {
-        prefix = 'n!' || `${mentionRegex[0]}`
+        prefix = 'n!'
     }
     await quickdb.set(`prefix.${message.guild.id}`, prefix)
 

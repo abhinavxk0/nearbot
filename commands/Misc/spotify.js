@@ -68,7 +68,7 @@ module.exports = {
             const firstSong = searches[0];
             let lyrics;
             try {
-                let = await firstSong.lyrics();
+                lyrics = await firstSong.lyrics();
             } catch (err) {
                 return message.lineReply(main1)
             }

@@ -36,11 +36,12 @@ module.exports = async (Discord, client, message) => {
     const data = await prefixdb.findOne({
         guild: message.guild.id
     })
+    let mentionRegex = message.content.match(new RegExp(`^<@!?(${client.user.id})>`, "gi"))
     let prefix;
     if (data) {
-        prefix = data.prefix
+        prefix = data.prefix || `${mentionRegex[0]}`
     } else if (!data) {
-        prefix = 'n!'
+        prefix = 'n!' || `${mentionRegex[0]}`
     }
     await quickdb.set(`prefix.${message.guild.id}`, prefix)
 
@@ -157,7 +158,7 @@ module.exports = async (Discord, client, message) => {
         const member = message.guild.member(client.user.id)
         const rawColor = member.displayHexColor;
         let hexColor = `#${rawColor.slice(1).trim().split(/ +/g)}`;
-        if (hexColor == '#000000'){
+        if (hexColor == '#000000') {
             hexColor = '#A9E9F6'
         }
         message.channel.send(

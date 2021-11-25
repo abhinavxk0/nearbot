@@ -76,7 +76,6 @@ module.exports = {
                           }
                       }
                       db.delete(`djuser.${message.guild.id}`)
-                      db.delete(`djrole.${message.guild.id}`)
                 }
             }
         } else {        

@@ -35,7 +35,7 @@ module.exports = {
                     `**${id + 1}#**<:spacer:907723859258667038>[${song.name}](${song.url}) - \`${song.formattedDuration}\``
                 ).slice(1, 10).join("\n\n"))
                 .addField('Queue Duration:', proctime, true)
-                .addField('Current DJ:', `${djmember}`, true)
+                .addField('Current DJ:', `${djmember.user.tag}`, true)
         )
     }
 }

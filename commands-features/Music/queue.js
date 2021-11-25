@@ -1,5 +1,6 @@
 const pagination = require('discord.js-pagination')
 const { embedcolor } = require('../../config.json')
+const db = require('quick.db');
 
 module.exports = {
     name: 'queue',

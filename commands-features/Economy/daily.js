@@ -23,7 +23,7 @@ module.exports = {
 
         if (claimedCache.includes(id)){
             console.log('Returning from cache...')
-            message.lineReply('You already claimed your daily rewards!\mCome back tomorrow! :))')
+            message.lineReply('You already claimed your daily rewards!\nCome back tomorrow! :))')
             return
         }
 
@@ -43,7 +43,7 @@ module.exports = {
 
             if (diffdays <= 1){
                 claimedCache.push(id)
-                message.lineReply('You already claimed your daily rewards!\mCome back tomorrow! :))')
+                message.lineReply('You already claimed your daily rewards!\nCome back tomorrow! :))')
                 return
             }
         }

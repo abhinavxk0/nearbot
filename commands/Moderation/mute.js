@@ -33,7 +33,7 @@ module.exports = {
         if (muteRole == null) {
             return message.lineReply(
                 new Discord.MessageEmbed()
-                    .setColor(config.config.errorcolor)
+                    .setColor(config.errorcolor)
                     .setTimestamp()
                     .setDescription(`${config.redtick} · No mute role is set for this server. Use \`setmuterole\` to set it!`)
             );
@@ -41,7 +41,7 @@ module.exports = {
         if (muteTarget.user.id == message.author.id) {
             return message.lineReply(
                 new Discord.MessageEmbed()
-                    .setColor(config.config.errorcolor)
+                    .setColor(config.errorcolor)
                     .setTimestamp()
                     .setDescription(`${config.redtick} · You can't mute yourself.`)
             );
@@ -49,7 +49,7 @@ module.exports = {
         if (!muteTarget) {
             return message.lineReply(
                 new Discord.MessageEmbed()
-                    .setColor(config.config.errorcolor)
+                    .setColor(config.errorcolor)
                     .setTimestamp()
                     .setDescription(`${config.redtick} · Enter a valid user to mute.`)
             )
@@ -57,7 +57,7 @@ module.exports = {
         if (muteTarget.roles.cache.has(muteRole)) {
             return message.lineReply(
                 new Discord.MessageEmbed()
-                    .setColor(config.config.errorcolor)
+                    .setColor(config.errorcolor)
                     .setTimestamp()
                     .setDescription(`${config.redtick} · **${muteTarget.user.username}** is already muted.`)
             )
@@ -72,7 +72,7 @@ module.exports = {
         if (targetRole >= memberRole) {
             return message.lineReply(
                 new Discord.MessageEmbed()
-                    .setColor(config.config.errorcolor)
+                    .setColor(config.errorcolor)
                     .setTimestamp()
                     .setDescription(`${config.redtick} · **${user.user.username}** has the same or higher role than you.`)
             )

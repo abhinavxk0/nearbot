@@ -26,6 +26,7 @@
     "@discordjs/voice": "^0.7.5",
     "@distube/soundcloud": "^1.0.0",
     "@distube/spotify": "^1.0.0",
+    "azlyrics-ext": "^1.0.1",
     "bufferutil": "^4.0.5",
     "canvacord": "^5.2.3",
     "chalk": "^4.1.2",

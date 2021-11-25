@@ -8,6 +8,7 @@ const emojis = [
 ]
 const timeout = '300000';
 const lyparse = require('lyrics-parse')
+const az = require
 module.exports = {
     name: 'spotify',
     aliases: ['sp'],
@@ -41,13 +42,13 @@ module.exports = {
                 timeEnd = status.timestamps.end,
                 timeConvert = convert(timeEnd - timeStart);
 
-            /* let arti;
+            let arti;
             if (artist.includes(';')) {
                 let artis = artist.split(';')
                 arti = artis[0]
             } else {
                 arti = artist
-            } */
+            }
             let minutes = timeConvert.minutes < 10 ? `0${timeConvert.minutes}` : timeConvert.minutes;
             let seconds = timeConvert.seconds < 10 ? `0${timeConvert.seconds}` : timeConvert.seconds;
             let time = `${minutes}:${seconds}`
@@ -69,7 +70,7 @@ module.exports = {
             let lyrics;
             try {
                 // lyrics = await firstSong.lyrics();
-                lyrics = await lyparse(name, artist)
+                lyrics = await lyparse(name, arti)
             } catch (err) {
                 return message.lineReply(main1)
             }
@@ -85,6 +86,10 @@ module.exports = {
                 .setFooter(message.author.tag, message.author.displayAvatarURL({
                     dynamic: true
                 }))
+            console.log(lyrics); console.log(lyrics.length)
+            if (lyrics.startsWith('&#')){
+                return message.lineReply(main)
+            }
 
             if (lyricsLength < 2000) {
                 let under2000 = new Discord.MessageEmbed()
@@ -173,11 +178,34 @@ module.exports = {
 
                 let pagesfive = [main, le1e, le2e, le3e, le4e]
                 pagination(message, pagesfive, emojis, timeout)
+            } else if (lyricsLength < 7000){
+                let u1 = lyrics.slice(0, 2000)
+                let u2 = lyrics.slice(2000, 4000)
+                let u3 = lyrics.slice(4000, 5000)
+                let u4 = lyrics.slice(5000, lyricsLength)
+                let men = new Discord.MessageEmbed()
+                .setTitle('lyrics')
+                .setThumbnail(image)
+                .setAuthor(`${name} - ${artist}`)
+                .setColor(embedcolor)
+                .setDescription(u1)
+            let a1 = new Discord.MessageEmbed()
+                .setColor(embedcolor)
+                .setDescription(u2)
+            let a2 = new Discord.MessageEmbed()
+                .setColor(embedcolor)
+                .setDescription(u3)
+            let a3 = new Discord.MessageEmbed()
+                .setColor(embedcolor)
+                .setDescription(u4);
+            const pagessix = [main, a1, a2, a3]
+            pagination(message, pagessix, emojis, timeout)
             }
+            
             else {
                 let la1a = new Discord.MessageEmbed()
                     .setColor(embedcolor)
-                    .setDescription(`oh no! the lyrics are too long! but you can check it out [here](${firstSong.url})`)
+                    .setDescription(`oh no! the lyrics are too long! :/`)
                 let pagessix = [main, la1a]
                 pagination(message, pagessix, emojis, timeout)
             }

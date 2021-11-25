@@ -100,7 +100,7 @@ Use \`unmute\` to **unmute** someone in the guild.\n
 Use \`lock\` to **lock** a channel.\n
 Use \`unlock\` to **unlock** a channel.\n
 Use \`purge\` to **delete** messages.\n
-Use \`slowmode\` to set **slowmode** in a channel.
+Use \`slowmode\` to set **slowmode** in a channel.\n
 Use \`drag\` to **drag** a user to a voice channel!`
                 }
             )
@@ -114,16 +114,16 @@ Use \`nowplaying\` to check what's playing in the queue right now!\n
 Use \`queue\` to check the guild queue.\n
 Use \`lyrics\` to fetch lyrics for any song.\n`, true)
             .addField('DJ Only Commands',
-                `>>> Use \`skip\` to skip the current track. (DJ ONLY)\n
-Use \`stop\` to stop the current music session. (DJ ONLY)\n
-Use \`pause\` to pause the current track. (DJ ONLY)\n
-Use \`resume\` to resume the current paused track. (DJ ONLY)\n
-Use \`loop\` to loop the current track or queue or turn it off. (DJ ONLY)\n
-Use \`shuffle\` to shuffle the current queue. (DJ ONLY)\n
-Use \`skipto\` to skip to a track in the queue. (DJ ONLY)\n
-Use \`volume\` to adjust the queue's volume. (DJ ONLY)\n
-Use \`transferdj\` to transfer the DJ to another person. (DJ ONLY)
-Use \`autoplay\` to toggle autoplay. (DJ ONLY)
+                `>>> Use \`skip\` to skip the current track.\n
+Use \`stop\` to stop the current music session.\n
+Use \`pause\` to pause the current track.\n
+Use \`resume\` to resume the current paused track.\n
+Use \`loop\` to loop the current track or queue or turn it off.\n
+Use \`shuffle\` to shuffle the current queue.\n
+Use \`skipto\` to skip to a track in the queue.\n
+Use \`volume\` to adjust the queue's volume.\n
+Use \`transferdj\` to transfer the DJ to another person.\n
+Use \`autoplay\` to toggle autoplay.
 `, true)
 
         const page7 = new Discord.MessageEmbed()

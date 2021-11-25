@@ -130,11 +130,11 @@ Use \`autoplay\` to toggle autoplay.
             .setColor(config.embedcolor)
             .setThumbnail(client.user.avatarURL({ dynamic: true }))
             .addField(`Economy Commands`,
-                `Use \`balance\` to check your **balance**!
-Use \`coinflip\` to **bet an amount** to double or nothing!
-Use \`daily\` to collect your **daily reward**!
-Use \`give\` to **give an amount** to someone else!
-Use \`rich\` to check the **rankings**!
+                `>>> Use \`balance\` to check your **balance**!\n
+Use \`coinflip\` to **bet an amount** to double or nothing!\n
+Use \`daily\` to collect your **daily reward**!\n
+Use \`give\` to **give an amount** to someone else!\n
+Use \`rich\` to check the **rankings**!\n
 Use \`work\` to **work** and earn money!`)
 
         const pages = [pagemain, page6, page1, page2, page3, page4, page5, page7]

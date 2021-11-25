@@ -7,8 +7,7 @@ const emojis = [
     "⬅️", "➡️"
 ]
 const timeout = '300000';
-const lyparse = require('lyrics-parse')
-const az = require
+
 module.exports = {
     name: 'spotify',
     aliases: ['sp'],
@@ -53,24 +52,23 @@ module.exports = {
             let seconds = timeConvert.seconds < 10 ? `0${timeConvert.seconds}` : timeConvert.seconds;
             let time = `${minutes}:${seconds}`
             const main1 = new Discord.MessageEmbed()
-            .setColor('0x1ED768')
-            .setAuthor(`Listening to Spotify`, 'https://www.freepnglogos.com/uploads/spotify-logo-png/spotify-download-logo-30.png')
-            .setThumbnail(image)
-            .setTitle(name)
-            .setDescription(`by ${artist}\non ${album}\n- **${time}**\n
+                .setColor('0x1ED768')
+                .setAuthor(`Listening to Spotify`, 'https://www.freepnglogos.com/uploads/spotify-logo-png/spotify-download-logo-30.png')
+                .setThumbnail(image)
+                .setTitle(name)
+                .setDescription(`by ${artist}\non ${album}\n- **${time}**\n
 [\`Listen now on Spotify!\`](${url})`)
-            .setFooter(message.author.tag, message.author.displayAvatarURL({
-                dynamic: true
-            }))
-            /* const fetchgenius = new Genius.Client(geniusaccess);
+                .setFooter(`${message.author.tag} | Error while fetching lyrics.`, message.author.displayAvatarURL({
+                    dynamic: true
+                }))
+            const fetchgenius = new Genius.Client(geniusaccess);
             const searches = await fetchgenius.songs.search(`${name}, ${arti}`, {
                 sanitizeQuery: true
             });
-            const firstSong = searches[0]; */
+            const firstSong = searches[0];
             let lyrics;
             try {
-                // lyrics = await firstSong.lyrics();
-                lyrics = await lyparse(name, arti)
+                lyrics = await firstSong.lyrics();
             } catch (err) {
                 return message.lineReply(main1)
             }
@@ -82,21 +80,21 @@ module.exports = {
                 .setThumbnail(image)
                 .setTitle(name)
                 .setDescription(`by ${artist}\non ${album}\n- **${time}**\n
-[\`Listen now on Spotify!\`](${url})`)
+[\`Listen now on Spotify!\`](${url}) - [\`Lyrics\`](${firstSong.url})`)
                 .setFooter(message.author.tag, message.author.displayAvatarURL({
                     dynamic: true
                 }))
-            console.log(lyrics); console.log(lyrics.length)
-            if (lyrics.startsWith('&#')){
-                return message.lineReply(main)
+            if (!firstSong.fullTitle.includes(name)) {
+                message.lineReply(main1)
+                return
             }
-
             if (lyricsLength < 2000) {
                 let under2000 = new Discord.MessageEmbed()
                     .setColor(embedcolor)
-                    .setAuthor(`${name} - ${artist}`)
-                    .setThumbnail(image)
-                    .setTitle('lyrics')
+                    .setAuthor(`${name} - ${arti}`)
+                    .setThumbnail(firstSong.image)
+                    .setTitle('Lyrics')
+                    .setURL(firstSong.url)
                     .setDescription(lyrics)
                 let pagesone = [main, under2000]
                 pagination(message, pagesone, emojis, timeout)
@@ -104,10 +102,11 @@ module.exports = {
                 let l1 = lyrics.slice(0, 2000)
                 let l2 = lyrics.slice(2000, lyricsLength)
                 let l1em = new Discord.MessageEmbed()
-                    .setTitle('lyrics')
-                    .setThumbnail(image)
+                    .setTitle('Lyrics')
+                    .setThumbnail(firstSong.image)
                     .setColor(embedcolor)
-                    .setAuthor(`${name} - ${artist}`)
+                    .setURL(firstSong.url)
+                    .setAuthor(`${name} - ${arti}`)
                     .setDescription(l1)
                 let l2em = new Discord.MessageEmbed()
                     .setColor(embedcolor)
@@ -120,10 +119,11 @@ module.exports = {
                 let ly3 = lyrics.slice(4000, lyricsLength)
 
                 let ly1em = new Discord.MessageEmbed()
-                    .setTitle('lyrics')
-                    .setThumbnail(image)
+                    .setTitle('Lyrics')
+                    .setThumbnail(firstSong.image)
                     .setColor(embedcolor)
-                    .setAuthor(`${name} - ${artist}`)
+                    .setURL(firstSong.url)
+                    .setAuthor(`${name} - ${arti}`)
                     .setDescription(ly1)
                 let ly2em = new Discord.MessageEmbed()
                     .setColor(embedcolor)
@@ -140,10 +140,11 @@ module.exports = {
                 let li3 = lyrics.slice(4000, lyricsLength)
 
                 let li1em = new Discord.MessageEmbed()
-                    .setTitle('lyrics')
-                    .setThumbnail(image)
-                    .setAuthor(`${name} - ${artist}`)
+                    .setTitle('Lyrics')
+                    .setThumbnail(firstSong.image)
+                    .setAuthor(`${name} - ${arti}`)
                     .setColor(embedcolor)
+                    .setURL(firstSong.url)
                     .setDescription(li1)
                 let li2em = new Discord.MessageEmbed()
                     .setColor(embedcolor)
@@ -154,16 +155,17 @@ module.exports = {
 
                 let pagesfour = [main, li1em, li2em, li3em]
                 pagination(message, pagesfour, emojis, timeout)
-            } else if (lyricsLength < 6000) {
+            } else if (lyricsLength < 7000) {
                 let le1 = lyrics.slice(0, 2000)
                 let le2 = lyrics.slice(2000, 4000)
                 let le3 = lyrics.slice(4000, 5000)
                 let le4 = lyrics.slice(5000, lyricsLength)
 
                 let le1e = new Discord.MessageEmbed()
-                    .setTitle('lyrics')
-                    .setThumbnail(image)
-                    .setAuthor(`${name} - ${artist}`)
+                    .setTitle('Lyrics')
+                    .setThumbnail(firstSong.image)
+                    .setAuthor(`${name} - ${arti}`)
+                    .setURL(firstSong.url)
                     .setColor(embedcolor)
                     .setDescription(le1)
                 let le2e = new Discord.MessageEmbed()
@@ -178,36 +180,20 @@ module.exports = {
 
                 let pagesfive = [main, le1e, le2e, le3e, le4e]
                 pagination(message, pagesfive, emojis, timeout)
-            } else if (lyricsLength < 7000){
-                let u1 = lyrics.slice(0, 2000)
-                let u2 = lyrics.slice(2000, 4000)
-                let u3 = lyrics.slice(4000, 5000)
-                let u4 = lyrics.slice(5000, lyricsLength)
-                let men = new Discord.MessageEmbed()
-                .setTitle('lyrics')
-                .setThumbnail(image)
-                .setAuthor(`${name} - ${artist}`)
-                .setColor(embedcolor)
-                .setDescription(u1)
-            let a1 = new Discord.MessageEmbed()
-                .setColor(embedcolor)
-                .setDescription(u2)
-            let a2 = new Discord.MessageEmbed()
-                .setColor(embedcolor)
-                .setDescription(u3)
-            let a3 = new Discord.MessageEmbed()
-                .setColor(embedcolor)
-                .setDescription(u4);
-            const pagessix = [main, a1, a2, a3]
-            pagination(message, pagessix, emojis, timeout)
             }
-            
             else {
-                let la1a = new Discord.MessageEmbed()
-                    .setColor(embedcolor)
-                    .setDescription(`oh no! the lyrics are too long! :/`)
-                let pagessix = [main, la1a]
-                pagination(message, pagessix, emojis, timeout)
+                message.lineReply(
+                    new Discord.MessageEmbed()
+                        .setColor('0x1ED768')
+                        .setAuthor(`Listening to Spotify`, 'https://www.freepnglogos.com/uploads/spotify-logo-png/spotify-download-logo-30.png')
+                        .setThumbnail(image)
+                        .setTitle(name)
+                        .setDescription(`by ${artist}\non ${album}\n- **${time}**\n
+[\`Listen now on Spotify!\`](${url}) - [\`Lyrics\`](${firstSong.url})`)
+                        .setFooter(`${message.author.tag} | Lyrics are too long.`, message.author.displayAvatarURL({
+                            dynamic: true
+                        }))
+                )
             }
 
         }

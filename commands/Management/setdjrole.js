@@ -1,8 +1,16 @@
 const db = require('quick.db');
-
+const config = require("../../config.json")
 module.exports = {
     name: 'setdjrole',
     async execute(client, message, args, Discord){
+        const queue = await client.distube.getQueue(message);
+
+        if (queue.playing) return message.lineReply(
+            new Discord.MessageEmbed()
+                .setColor(config.errorcolor)
+                .setDescription(`You cannot set the DJ role when music is playing.`)
+                .setFooter('as it might cause major issues.')
+        )
         
         if (!message.member.hasPermission("ADMINISTRATOR")) return message.lineReply(
             new Discord.MessageEmbed()

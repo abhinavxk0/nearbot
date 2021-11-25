@@ -169,7 +169,7 @@ module.exports = async (Discord, client, message) => {
                 }))
                 .setTitle('Hello! 👋')
                 .setDescription(`\n\`Prefix: "${prefix}"\`
-                \n[\`Invite Nearbot\`](${`https://discord.com/oauth2/authorize?client_id=${client.user.id}&scope=bot&permissions=8`})  ·  [\`Support Server\`](https://discord.gg/Dvv48zwGep)  ·  [\`Bot Developer\`](https://discords.com/bio/p/xaviervv)`)
+                \n[\`Invite Nearbot\`](${`https://discord.com/oauth2/authorize?client_id=${client.user.id}&scope=bot&permissions=8`})  ·  [\`Support Server\`](https://discord.gg/3h5ajxffkw)  ·  [\`Bot Developer\`](https://discords.com/bio/p/xaviervv)`)
         );
     };
 

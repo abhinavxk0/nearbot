@@ -17,6 +17,8 @@ module.exports = {
         const rawtime = queue.duration;
         const minproctime = Math.round(rawtime / 60);
         const current = client.distube.getQueue(message).songs[0]
+        const djUser = await db.fetch(`djuser.${message.guild.id}`)
+        const djmember = message.guild.member(djUser)
         let proctime;
         if (minproctime > 60) {
             proctime = `${Math.round(minproctime / 60)} hours`
@@ -31,7 +33,8 @@ module.exports = {
                 .setDescription(`**now playing:**\n[${current.name}](${current.url}) - \`${queue.formattedCurrentTime} / ${current.formattedDuration}\`` + '\n\n' + queue.songs.map((song, id) =>
                     `**${id + 1}#**<:spacer:907723859258667038>[${song.name}](${song.url}) - \`${song.formattedDuration}\``
                 ).slice(1, 10).join("\n\n"))
-                .addField('Queue Duration:', proctime)
+                .addField('Queue Duration:', proctime, true)
+                .addField('Current DJ:', `${djmember}`, true)
         )
     }
 }

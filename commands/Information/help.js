@@ -14,7 +14,7 @@ module.exports = {
             .setColor('#A9E9F6')
             .setAuthor(`Help for NearBot`, client.user.avatarURL({ dynamic: true }))
             .setDescription(`\n\`Prefix: "${prefixdb}"\`
-\n[\`Invite Nearbot\`](${`https://discord.com/oauth2/authorize?client_id=${client.user.id}&scope=bot&permissions=8`})  ·  [\`Support Server\`](https://discord.gg/Dvv48zwGep)  ·  [\`Bot Developer\`](https://discords.com/bio/p/xaviervv)`)
+\n[\`Invite Nearbot\`](${`https://discord.com/oauth2/authorize?client_id=${client.user.id}&scope=bot&permissions=8`})  ·  [\`Support Server\`](https://discord.gg/3h5ajxffkw)  ·  [\`Bot Developer\`](https://discords.com/bio/p/xaviervv)`)
         const page1 = new Discord.MessageEmbed()
             .setColor(config.embedcolor)
             .setThumbnail(client.user.avatarURL({ dynamic: true }))

@@ -40,10 +40,10 @@ module.exports = {
         const djmember = await message.guild.member(djUser)
         const djRole = await db.fetch(`djrole.${message.guild.id}`)
         if (djRole){
-            if (message.member.id != djUser) return message.lineReply(
+            if (!message.member.id === djUser) return message.lineReply(
                 new Discord.MessageEmbed()
                     .setColor('#A9E9F6')
-                    .setDescription(`you are not the dj for this music session!\n${djmember} is the current dj`)            
+                    .setDescription(`You are not the DJ for this music session!\n${djmember} is the current DJ.`)            
             )
         }
         if (!args[0]) return message.lineReply(

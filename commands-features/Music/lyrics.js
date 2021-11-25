@@ -9,14 +9,19 @@ const timeout = '300000';
 module.exports = {
     name: 'lyrics',
     async execute(client, message, args, Discord) {
-
-        const query = args.join(" ")
+        const queue = await client.distube.getQueue(message);
+        const song = client.distube.getQueue(message).songs[0]
+        let query = args.join(" ")
         if (!query) {
-            return message.lineReply(
-                new Discord.MessageEmbed()
-                    .setColor(embedcolor)
-                    .setDescription(`you need lyrics? np! just enter a query!`)
-            )
+            if (queue.playing){
+                query = song.name
+            } else {
+                message.lineReply(
+                    new Discord.MessageEmbed()
+                        .setColor(embedcolor)
+                        .setDescription(`you need lyrics? np! just enter a query!`)
+                )
+            }
         }
         const fetchgenius = new Genius.Client(geniusaccess);
         try {

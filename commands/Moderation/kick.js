@@ -17,7 +17,7 @@ module.exports = {
         )  
 
         var user = message.mentions.members.first() || message.guild.members.cache.get(args[0]);
-        var reason = args.join(" ") || 'No Reason'
+        var reason = args.slice(1).join(" ") || 'No Reason'
         if (!user) return message.lineReply(
             new Discord.MessageEmbed()
             .setColor(errorcolor)

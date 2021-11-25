@@ -9,6 +9,14 @@ module.exports = {
     async execute(client, message, args, Discord) {
         var muteRole = await db.fetch(`muterole.${message.guild.id}`);
         var muteTarget = message.mentions.members.first();
+        if (!muteTarget) {
+            return message.lineReply(
+                new Discord.MessageEmbed()
+                    .setColor(config.errorcolor)
+                    .setTimestamp()
+                    .setDescription(`${config.redtick} · Enter a valid user to mute.`)
+            )
+        }
         var time = args[1];
         let memberRole = message.member.roles.highest.position;
         let targetRole = muteTarget.roles.highest.position;
@@ -45,14 +53,6 @@ module.exports = {
                     .setTimestamp()
                     .setDescription(`${config.redtick} · You can't mute yourself.`)
             );
-        }
-        if (!muteTarget) {
-            return message.lineReply(
-                new Discord.MessageEmbed()
-                    .setColor(config.errorcolor)
-                    .setTimestamp()
-                    .setDescription(`${config.redtick} · Enter a valid user to mute.`)
-            )
         }
         if (muteTarget.roles.cache.has(muteRole)) {
             return message.lineReply(

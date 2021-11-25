@@ -40,6 +40,7 @@
     "fs": "^0.0.1-security",
     "genius-lyrics": "^4.3.4",
     "got": "^11.8.3",
+    "lyrics-parse": "^1.1.1",
     "moment": "^2.29.1",
     "mongoose": "^5.13.13",
     "node-fetch": "^2.6.1",

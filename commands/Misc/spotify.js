@@ -7,7 +7,7 @@ const emojis = [
     "⬅️", "➡️"
 ]
 const timeout = '300000';
-
+const lyparse = require('lyrics-parse')
 module.exports = {
     name: 'spotify',
     aliases: ['sp'],
@@ -41,13 +41,13 @@ module.exports = {
                 timeEnd = status.timestamps.end,
                 timeConvert = convert(timeEnd - timeStart);
 
-            let arti;
+            /* let arti;
             if (artist.includes(';')) {
                 let artis = artist.split(';')
                 arti = artis[0]
             } else {
                 arti = artist
-            }
+            } */
             let minutes = timeConvert.minutes < 10 ? `0${timeConvert.minutes}` : timeConvert.minutes;
             let seconds = timeConvert.seconds < 10 ? `0${timeConvert.seconds}` : timeConvert.seconds;
             let time = `${minutes}:${seconds}`
@@ -61,14 +61,15 @@ module.exports = {
             .setFooter(message.author.tag, message.author.displayAvatarURL({
                 dynamic: true
             }))
-            const fetchgenius = new Genius.Client(geniusaccess);
+            /* const fetchgenius = new Genius.Client(geniusaccess);
             const searches = await fetchgenius.songs.search(`${name}, ${arti}`, {
                 sanitizeQuery: true
             });
-            const firstSong = searches[0];
+            const firstSong = searches[0]; */
             let lyrics;
             try {
-                lyrics = await firstSong.lyrics();
+                // lyrics = await firstSong.lyrics();
+                lyrics = await lyparse(name, artist)
             } catch (err) {
                 return message.lineReply(main1)
             }
@@ -80,7 +81,7 @@ module.exports = {
                 .setThumbnail(image)
                 .setTitle(name)
                 .setDescription(`by ${artist}\non ${album}\n- **${time}**\n
-[\`Listen now on Spotify!\`](${url}) - [\`Lyrics\`](${firstSong.url})`)
+[\`Listen now on Spotify!\`](${url})`)
                 .setFooter(message.author.tag, message.author.displayAvatarURL({
                     dynamic: true
                 }))
@@ -88,10 +89,9 @@ module.exports = {
             if (lyricsLength < 2000) {
                 let under2000 = new Discord.MessageEmbed()
                     .setColor(embedcolor)
-                    .setAuthor(`${name} - ${arti}`)
-                    .setThumbnail(firstSong.image)
+                    .setAuthor(`${name} - ${artist}`)
+                    .setThumbnail(image)
                     .setTitle('lyrics')
-                    .setURL(firstSong.url)
                     .setDescription(lyrics)
                 let pagesone = [main, under2000]
                 pagination(message, pagesone, emojis, timeout)
@@ -100,10 +100,9 @@ module.exports = {
                 let l2 = lyrics.slice(2000, lyricsLength)
                 let l1em = new Discord.MessageEmbed()
                     .setTitle('lyrics')
-                    .setThumbnail(firstSong.image)
+                    .setThumbnail(image)
                     .setColor(embedcolor)
-                    .setURL(firstSong.url)
-                    .setAuthor(`${name} - ${arti}`)
+                    .setAuthor(`${name} - ${artist}`)
                     .setDescription(l1)
                 let l2em = new Discord.MessageEmbed()
                     .setColor(embedcolor)
@@ -117,10 +116,9 @@ module.exports = {
 
                 let ly1em = new Discord.MessageEmbed()
                     .setTitle('lyrics')
-                    .setThumbnail(firstSong.image)
+                    .setThumbnail(image)
                     .setColor(embedcolor)
-                    .setURL(firstSong.url)
-                    .setAuthor(`${name} - ${arti}`)
+                    .setAuthor(`${name} - ${artist}`)
                     .setDescription(ly1)
                 let ly2em = new Discord.MessageEmbed()
                     .setColor(embedcolor)
@@ -138,10 +136,9 @@ module.exports = {
 
                 let li1em = new Discord.MessageEmbed()
                     .setTitle('lyrics')
-                    .setThumbnail(firstSong.image)
-                    .setAuthor(`${name} - ${arti}`)
+                    .setThumbnail(image)
+                    .setAuthor(`${name} - ${artist}`)
                     .setColor(embedcolor)
-                    .setURL(firstSong.url)
                     .setDescription(li1)
                 let li2em = new Discord.MessageEmbed()
                     .setColor(embedcolor)
@@ -160,9 +157,8 @@ module.exports = {
 
                 let le1e = new Discord.MessageEmbed()
                     .setTitle('lyrics')
-                    .setThumbnail(firstSong.image)
-                    .setAuthor(`${name} - ${arti}`)
-                    .setURL(firstSong.url)
+                    .setThumbnail(image)
+                    .setAuthor(`${name} - ${artist}`)
                     .setColor(embedcolor)
                     .setDescription(le1)
                 let le2e = new Discord.MessageEmbed()

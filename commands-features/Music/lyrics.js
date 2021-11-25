@@ -13,7 +13,7 @@ module.exports = {
         const song = client.distube.getQueue(message).songs[0]
         let query = args.join(" ")
         if (!query) {
-            if (queue.playing){
+            if (queue){
                 query = song.name
             } else {
                 message.lineReply(

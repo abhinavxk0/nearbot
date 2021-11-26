@@ -1,5 +1,5 @@
 const DisTube = require('distube');
-const { embedcolor } = require('../../config.json')
+const { embedcolor, errorcolor } = require('../../config.json')
 
 module.exports = {
     name: 'play',
@@ -8,10 +8,17 @@ module.exports = {
     category: "music",
     description: 'plays music',
     async execute(client, message, args, Discord) {
+        if (!message){
+            return message.lineReply(
+                new Discord.MessageEmbed()
+                    .setColor(errorcolor)
+                    .setDescription(`Looks like your message got deleted somehow. 🤨`)
+            )
+        }
         const memberVC = message.member.voice.channel;
         if (!memberVC) return message.lineReplyNoMention(
             new Discord.MessageEmbed()
-                .setColor('#A9E9F6')
+                .setColor('#A9E9F6')                                                                                
                 .setDescription('You need to be in a voice channel to execute this command!')
         ).then(message => { message.delete({ timeout: 10000 }); })
         if (!message.guild.me.hasPermission("CONNECT")) return message.lineReply(
@@ -35,6 +42,7 @@ module.exports = {
                     .setDescription('Enter a song URL or query to play!')
             ).then(message => { message.delete({ timeout: 10000 }); })
         }
+
         const a = await message.lineReply(
             new Discord.MessageEmbed()
                 .setColor(embedcolor)

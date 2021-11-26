@@ -42,7 +42,12 @@ module.exports = {
         )
         client.distube.play(message, query).then(
             a.delete()
-        )
+        ).then(
+            message.delete()
+        ).catch((err) => {
+            console.log(err)
+            throw err;
+        })
     }
 }
 

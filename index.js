@@ -211,7 +211,6 @@ client.del = (id, coins) => {
 
 
 
-client.login(bot_token);
 
 mongoose.connect(mongoPath, {
   useNewUrlParser: true,
@@ -219,3 +218,10 @@ mongoose.connect(mongoPath, {
 }).then(
   console.log(chalk` - Successfully connected to {bold.cyan MongoDB}! -`)
 )
+
+process.on('unhandledRejection', error =>{
+  console.log(error)
+  throw err;
+})
+
+client.login(bot_token);

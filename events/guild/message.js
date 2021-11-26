@@ -10,9 +10,6 @@ const { embedcolor, errorcolor } = require('../../config.json')
 
 
 module.exports = async (Discord, client, message) => {
-
-    if (!message) return;
-
     if (message.content.includes("suicide" || "Suicide" || "$uicide")) {
         const m = message.lineReply(
             new Discord.MessageEmbed()
@@ -29,7 +26,14 @@ module.exports = async (Discord, client, message) => {
 
     async function commandExecute() {
         if (command) {
-            if (command) command.execute(client, message, args, Discord)
+            if (command){
+                try {
+                    command.execute(client, message, args, Discord)
+                } catch (err){
+                    console.log(`ERROR!!: ${error}`)
+                    throw error;
+                }
+            }
         }
     }
 

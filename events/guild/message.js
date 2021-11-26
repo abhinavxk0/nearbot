@@ -125,10 +125,9 @@ module.exports = async (Discord, client, message) => {
                     lvlchannel.send(message.author,
                         new Discord.MessageEmbed()
                             .setColor('#ff9700')
-                            .setThumbnail(message.author.displayAvatarURL({
+                            .setAuthor(message.author.tag, message.author.displayAvatarURL({
                                 dynamic: true
                             }))
-                            .setAuthor(message.author.tag)
                             .setDescription(`Congrats!\n${message.author} just leveled up to **level ${user.level}**!`)
                             .setTimestamp()
                     )
@@ -136,10 +135,9 @@ module.exports = async (Discord, client, message) => {
                     message.channel.send(
                         new Discord.MessageEmbed()
                             .setColor('#ff9700')
-                            .setThumbnail(message.author.displayAvatarURL({
+                            .setAuthor(message.author.tag, message.author.displayAvatarURL({
                                 dynamic: true
                             }))
-                            .setAuthor(message.author.tag)
                             .setDescription(`Congrats!\n${message.author} just leveled up to **level ${user.level}**!`)
                             .setTimestamp()
                     )

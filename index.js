@@ -12,6 +12,10 @@ const { SpotifyPlugin } = require("@distube/spotify");
 const { SoundCloudPlugin } = require("@distube/soundcloud");
 
 Levels.setURL(mongoPath)
+process.on('unhandledRejection', error =>{
+  console.log(error)
+  throw err;
+})
 client.commands = new Discord.Collection();
 client.events = new Discord.Collection();
 client.prefix;
@@ -218,10 +222,5 @@ mongoose.connect(mongoPath, {
 }).then(
   console.log(chalk` - Successfully connected to {bold.cyan MongoDB}! -`)
 )
-
-process.on('unhandledRejection', error =>{
-  console.log(error)
-  throw err;
-})
 
 client.login(bot_token);

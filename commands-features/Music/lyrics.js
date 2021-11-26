@@ -10,11 +10,12 @@ module.exports = {
     name: 'lyrics',
     async execute(client, message, args, Discord) {
         const queue = await client.distube.getQueue(message);
-        const song = client.distube.getQueue(message).songs[0]
+        
         let query = args.join(" ")
         if (!query) {
             if (queue){
                 query = song.name
+                const song = client.distube.getQueue(message).songs[0]
             } else {
                 message.lineReply(
                     new Discord.MessageEmbed()

@@ -12,9 +12,6 @@ const { SpotifyPlugin } = require("@distube/spotify");
 const { SoundCloudPlugin } = require("@distube/soundcloud");
 
 Levels.setURL(mongoPath)
-process.on('unhandledRejection',  (error) =>{
-  throw error;
-})
 client.commands = new Discord.Collection();
 client.events = new Discord.Collection();
 client.prefix;

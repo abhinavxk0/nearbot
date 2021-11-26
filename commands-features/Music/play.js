@@ -9,11 +9,7 @@ module.exports = {
     description: 'plays music',
     async execute(client, message, args, Discord) {
         if (!message){
-            return message.lineReply(
-                new Discord.MessageEmbed()
-                    .setColor(errorcolor)
-                    .setDescription(`Looks like your message got deleted somehow. 🤨`)
-            )
+            return console.log('Message dont exist bro.')
         }
         const memberVC = message.member.voice.channel;
         if (!memberVC) return message.lineReplyNoMention(

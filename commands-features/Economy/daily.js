@@ -1,7 +1,8 @@
-/* const { embedcolor, errorcolor } = require('../../config.json')
+const { embedcolor, errorcolor } = require('../../config.json')
 const commaNumber = require('comma-number')
 const dailySchema = require('../../schema/daily-schema')
 const Levels = require('discord-xp')
+const moment = require('moment')
 const level = require('../../schema/settings-schema')
 let claimedCache = [];  
 const clearCache = () => {
@@ -63,4 +64,4 @@ module.exports = {
         }
         
     }
-} */
+} 

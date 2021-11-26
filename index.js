@@ -191,6 +191,7 @@ client.add = (id, coins) => {
     }
     data.save()
   })
+  console.log('Add money, triggered.')
 }
 
 client.del = (id, coins) => {
@@ -203,6 +204,7 @@ client.del = (id, coins) => {
     }
     data.save()
   })
+  console.log('Removed money, triggered.')
 }
 
 

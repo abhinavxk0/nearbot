@@ -1,4 +1,4 @@
-/* const db = require('quick.db')
+const db = require('quick.db')
 const { embedcolor, errorcolor } = require('../../config.json')
 const commaNumber = require('comma-number')
 
@@ -49,4 +49,4 @@ module.exports = {
         }
         
     }
-} */
+}

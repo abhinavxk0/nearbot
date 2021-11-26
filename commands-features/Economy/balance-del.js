@@ -1,4 +1,4 @@
-const { embedcolor, errorcolor } = require('../../config.json')
+/* const { embedcolor, errorcolor } = require('../../config.json')
 const commaNumber = require('comma-number')
 
 module.exports = {
@@ -11,4 +11,4 @@ module.exports = {
         message.lineReply(`Removed \`$${commaNumber(args[0])}\` from **${target.username}'s** balance!`)
 
     }
-}
+} */

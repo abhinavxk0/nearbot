@@ -1,4 +1,4 @@
-const { embedcolor, errorcolor } = require('../../config.json')
+/* const { embedcolor, errorcolor } = require('../../config.json')
 const commaNumber = require('comma-number')
 const dailySchema = require('../../schema/daily-schema')
 const Levels = require('discord-xp')
@@ -63,4 +63,4 @@ module.exports = {
         }
         
     }
-}
+} */

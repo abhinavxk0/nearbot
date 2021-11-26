@@ -1,4 +1,4 @@
-const { embedcolor, errorcolor } = require('../../config.json')
+/* const { embedcolor, errorcolor } = require('../../config.json')
 const commaNumber = require('comma-number')
 module.exports = {
     name: 'rich',
@@ -29,4 +29,4 @@ module.exports = {
                 .setTimestamp()
         )
     }
-}
+} */

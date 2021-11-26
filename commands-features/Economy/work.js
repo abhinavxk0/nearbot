@@ -1,4 +1,4 @@
-const { embedcolor, errorcolor } = require('../../config.json')
+/* const { embedcolor, errorcolor } = require('../../config.json')
 const commaNumber = require('comma-number')
 module.exports = {
     name: 'work',
@@ -13,4 +13,4 @@ module.exports = {
             client.add(message.author.id, coins)
         )
     }
-}
+} */

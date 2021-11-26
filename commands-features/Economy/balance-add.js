@@ -1,4 +1,4 @@
-const { embedcolor, errorcolor } = require('../../config.json')
+/* const { embedcolor, errorcolor } = require('../../config.json')
 const commaNumber = require('comma-number')
 
 module.exports = {
@@ -10,4 +10,4 @@ module.exports = {
         message.lineReply(`Added \`$${commaNumber(args[0])}\` to **${target.username}'s** balance!`)
 
     }
-}
+} */

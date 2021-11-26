@@ -11,6 +11,8 @@ const { embedcolor, errorcolor } = require('../../config.json')
 
 module.exports = async (Discord, client, message) => {
 
+    if (!message) return;
+
     if (message.content.includes("suicide" || "Suicide" || "$uicide")) {
         const m = message.lineReply(
             new Discord.MessageEmbed()

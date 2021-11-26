@@ -8,9 +8,6 @@ module.exports = {
     category: "music",
     description: 'plays music',
     async execute(client, message, args, Discord) {
-        if (!message){
-            return console.log('Message dont exist bro.')
-        }
         const memberVC = message.member.voice.channel;
         if (!memberVC) return message.lineReplyNoMention(
             new Discord.MessageEmbed()

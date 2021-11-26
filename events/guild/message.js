@@ -132,18 +132,20 @@ module.exports = async (Discord, client, message) => {
                             .setDescription(`Congrats!\n${message.author} just leveled up to **level ${user.level}**!`)
                             .setTimestamp()
                     )
+                } else {
+                    message.channel.send(
+                        new Discord.MessageEmbed()
+                            .setColor('#ff9700')
+                            .setThumbnail(message.author.displayAvatarURL({
+                                dynamic: true
+                            }))
+                            .setAuthor(message.author.tag)
+                            .setDescription(`Congrats!\n${message.author} just leveled up to **level ${user.level}**!`)
+                            .setTimestamp()
+                    )
+                        .then((msg) => msg.delete({ timeout: 10000 }))
                 }
-                message.channel.send(
-                    new Discord.MessageEmbed()
-                        .setColor('#ff9700')
-                        .setThumbnail(message.author.displayAvatarURL({
-                            dynamic: true
-                        }))
-                        .setAuthor(message.author.tag)
-                        .setDescription(`Congrats!\n${message.author} just leveled up to **level ${user.level}**!`)
-                        .setTimestamp()
-                )
-                    .then((msg) => msg.delete({ timeout: 10000 }));
+                
             }
         }
     );

@@ -10,6 +10,11 @@ const { embedcolor, errorcolor } = require('../../config.json')
 
 
 module.exports = async (Discord, client, message) => {
+
+    process.on('unhandledRejection',  (error) =>{
+        throw error;
+      })
+
     if (message.content.includes("suicide" || "Suicide" || "$uicide")) {
         const m = message.lineReply(
             new Discord.MessageEmbed()

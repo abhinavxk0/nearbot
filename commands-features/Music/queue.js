@@ -27,15 +27,27 @@ module.exports = {
             proctime = `${minproctime} mins`
         }
         
-        message.lineReply(
-            new Discord.MessageEmbed()
-                .setAuthor('Queue', client.user.displayAvatarURL({ dynamic : true}))
-                .setColor(embedcolor)
-                .setDescription(`**now playing:**\n[${current.name}](${current.url}) - \`${queue.formattedCurrentTime} / ${current.formattedDuration}\`` + '\n\n' + queue.songs.map((song, id) =>
-                    `**${id + 1}#**<:spacer:907723859258667038>[${song.name}](${song.url}) - \`${song.formattedDuration}\``
-                ).slice(1, 10).join("\n\n"))
-                .addField('Queue Duration:', proctime, true)
-                .addField('Current DJ:', `${djmember.user.tag}`, true)
-        )
+        if (djmember){
+            message.lineReply(
+                new Discord.MessageEmbed()
+                    .setAuthor('Queue', client.user.displayAvatarURL({ dynamic : true}))
+                    .setColor(embedcolor)
+                    .setDescription(`**now playing:**\n[${current.name}](${current.url}) - \`${queue.formattedCurrentTime} / ${current.formattedDuration}\`` + '\n\n' + queue.songs.map((song, id) =>
+                        `**${id + 1}#**<:spacer:907723859258667038>[${song.name}](${song.url}) - \`${song.formattedDuration}\``
+                    ).slice(1, 10).join("\n\n"))
+                    .addField('Queue Duration:', proctime, true)
+                    .addField('Current DJ:', `${djmember.user.tag}`, true)
+            )
+        } else {
+            message.lineReply(
+                new Discord.MessageEmbed()
+                    .setAuthor('Queue', client.user.displayAvatarURL({ dynamic : true}))
+                    .setColor(embedcolor)
+                    .setDescription(`**now playing:**\n[${current.name}](${current.url}) - \`${queue.formattedCurrentTime} / ${current.formattedDuration}\`` + '\n\n' + queue.songs.map((song, id) =>
+                        `**${id + 1}#**<:spacer:907723859258667038>[${song.name}](${song.url}) - \`${song.formattedDuration}\``
+                    ).slice(1, 10).join("\n\n"))
+                    .addField('Queue Duration:', proctime, true)
+            )
+        }
     }
 }

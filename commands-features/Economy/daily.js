@@ -45,10 +45,10 @@ module.exports = {
         const coins = Math.floor(Math.random() * 2000) + 1500;
         client.add(id, coins)
         if (data) {
-            message.lineReply(`You collected \`$${commaNumber(coins)}\` and \`+100 xp\` for today!\nCheck back in ${e} for more rewards!`)
+            message.lineReply(`You collected \`$${commaNumber(coins)}\` and \`+100 xp\` for today!\nCheck back in 24 hours for more rewards!`)
             Levels.appendxp(id, guild.id, 100)
         } else {
-            message.lineReply(`You collected \`$${commaNumber(coins)}\` for today!\nCheck back in ${e} for more rewards!`)
+            message.lineReply(`You collected \`$${commaNumber(coins)}\` for today!\nCheck back in 24 hours for more rewards!`)
         }
 
     }

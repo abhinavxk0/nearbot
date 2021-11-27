@@ -8,7 +8,6 @@ module.exports = ( Discord, client ) => {
           name: '@NearBot prefix',
           type: "LISTENING"
       },
-      status: "idle",
     }).then(
       console.log(chalk` - NearBot is {bold.cyan online}! -`)
     )

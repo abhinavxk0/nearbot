@@ -1,145 +1,204 @@
-const pagination = require('discord.js-pagination')
-const config = require('../../config.json')
+const config = require('../../config.json');
 const db = require('quick.db')
+const pag = require('discord.js-pagination')
 module.exports = {
     name: 'help',
     aliases: ['commands', 'cmds'],
     async execute(client, message, args, Discord) {
-        const emojis = [
-            "⬅️", "➡️"
-        ]
-        const timeout = '100000';
+
         const prefixdb = await db.fetch(`prefix.${message.guild.id}`)
-        const pagemain = new Discord.MessageEmbed()
-            .setColor('#A9E9F6')
-            .setAuthor(`Help for NearBot`, client.user.avatarURL({ dynamic: true }))
-            .setDescription(`\n\`Prefix: "${prefixdb}"\`
-\n[\`Invite Nearbot\`](${`https://discord.com/oauth2/authorize?client_id=${client.user.id}&scope=bot&permissions=8`})  ·  [\`Support Server\`](https://discord.gg/3h5ajxffkw)  ·  [\`Bot Developer\`](https://discords.com/bio/p/xaviervv)`)
-        const page1 = new Discord.MessageEmbed()
+        const main = new Discord.MessageEmbed()
             .setColor(config.embedcolor)
-            .setThumbnail(client.user.avatarURL({ dynamic: true }))
-            .setAuthor('Leveling Commands')
-            .addFields(
-                {
-                    name: 'Setup Commands',
-                    value: `>>> Use \`enable-leveling\` to **enable** NearBot's leveling feature.\n
-Use \`disable-leveling\` to **disable** NearBot's leveling feature.\n
-Use \`setannounce\` to set the **level up channel**.\n
-Use \`removeannounce\` to reset the **level up channel**.`,
-                },
-                {
-                    name: 'General Commands',
-                    value: `>>> Use \`level\` to check **your level**.\n
-Use \`leaderboard\` to check the server's **leaderboard**.`
-                },
-                {
-                    name: 'Moderator Commands',
-                    value: `>>> Use \`givelevel\` to **add levels**.\n
-Use \`removelevel\` to **remove levels**.\n
-Use \`resetlevels\` to **reset everyone's levels**.`
-                }
-            )
+            .setAuthor('Help Command')
+            .setThumbnail(client.user.displayAvatarURL())
+            .setDescription(`\`help <category>\``)
+            .addField('Prefix:', `\`${prefixdb}\``)
+            .addField('Links:', `[\`📩 ·  Invite Nearbot\`](${`https://discord.com/oauth2/authorize?client_id=${client.user.id}&scope=bot&permissions=8`})\n[\`🎈 ·  Support Server\`](https://discord.gg/3h5ajxffkw)\n[\`👨‍💻 ·  Bot Developer\`](https://discords.com/bio/p/xaviervv)`)
+            .setFooter('Use help <category>')
+            .setTimestamp()
 
-        const page2 = new Discord.MessageEmbed()
+        const music = new Discord.MessageEmbed()
             .setColor(config.embedcolor)
-            .setThumbnail(client.user.avatarURL({ dynamic: true }))
-            .setAuthor('Starboard Commands')
-            .addField(`Setup Commands`,
-                `>>> Use \`starboard-channel\` to set the **starboard channel**.\n
-Use \`starboard-min\` to set **minimum reactions** required for a message to be on the starboard.\n
-Use \`starboard-disable\` to **disable** NearBot's starboard feature.`)
+            .setThumbnail(client.user.displayAvatarURL())
+            .setAuthor('🎵 ·  Music Commands')
+            .setDescription(`
+**play**\n${config.replyicon} Play music. (supports Spotify and Soundcloud!!)
+**queue**\n${config.replyicon} Shows the current queue.
+**nowplaying**\n${config.replyicon} What's playing in the queue right now.
+**lyrics**\n${config.replyicon} Finds out lyrics for any song.
+**skip**\n${config.replyicon} Skips the current song.
+**stop**\n${config.replyicon} Clears the queue and disconnects.
+**pause**\n${config.replyicon} Pauses the current song.
+**resume**\n${config.replyicon} Resumes the current song.
+**loop**\n${config.replyicon} Loops the current song, queue or turns it off.
+**shuffle**\n${config.replyicon} Shuffles the current queue.
+**jump**\n${config.replyicon} Jumps/skips to another song in the queue.
+**volume**\n${config.replyicon} Adjust the volume.
+**autoplay**\n${config.replyicon} Toggles autoplay.
+**transfer**\n${config.replyicon} Transfers DJ to another user.
+`)
+            .setTimestamp()
+            .setFooter('Music Category')
 
-        const page3 = new Discord.MessageEmbed()
+        const moderation = new Discord.MessageEmbed()
             .setColor(config.embedcolor)
-            .setAuthor('Misc Commands')
-            .setThumbnail(client.user.avatarURL({ dynamic: true }))
-            .addFields(
-                {
-                    name: 'Discord Info Commands',
-                    value: `>>> Use \`userinfo\` to fetch a **user's information**.\n
-Use \`serverinfo\` to fetch the **server's information**.\n
-Use \`spotify\` to fetch a user's **Spotify information**.\n
-Use \`avatar\` to fetch a user's **display avatar**.\n
-Use \`membercount\` to fetch **member count** of a server.`
-                },
-                {
-                    name: 'API Info Commands',
-                    value: `>>> Use \`weather\` to fetch **weather and temperature** (C) of a location.\n
-Use \`urbandictionary\` to fetch definitions from **Urban Dictionary**. (Results might be NSFW.)\n
-Use \`youtube-search\` to fetch a video from **YouTube**.`
-                }
-            )
+            .setThumbnail(client.user.displayAvatarURL())
+            .setAuthor('⚒️ ·  Moderation Commands')
+            .setDescription(`
+**ban**\n${config.replyicon} Bans a member.
+**unban**\n${config.replyicon} Unbans a user.
+**kick**\n${config.replyicon} Kicks a user.
+**mute**\n${config.replyicon} Mutes a member.
+**unmute**\n${config.replyicon} Unmutes a member.
+**set-nick**\n${config.replyicon} Sets a nickname for a member.
+**reset-nick**\n${config.replyicon} Resets a nickname for a member.
+**purge**\n${config.replyicon} Deletes an amount of messages.
+**lock**\n${config.replyicon} Locks a channel. 
+**unlock**\n${config.replyicon} Unlocks a channel.
+**slowmode**\n${config.replyicon} Sets a slowmode for a channel.
+`)
+            .setTimestamp()
+            .setFooter('Moderation Category')
 
-        const page4 = new Discord.MessageEmbed()
+        const misc = new Discord.MessageEmbed()
             .setColor(config.embedcolor)
-            .setThumbnail(client.user.avatarURL({ dynamic: true }))
-            .addFields(
-                {
-                    name: 'Admin-Only Commands',
-                    value: `>>> Use \`setprefix\` to **set a prefix** for this guild.\n
-Use \`resetprefix\` to **reset the prefix** for this guild.\n
-Use \`setmuterole\` to set a **mute role** for this guild.\n
-Use \`resetmuterole\` to reset a **mute role** for this guild.\n
-Use \`setupmuteperms\` to **setup permissions** for the mute role.\n
-Use \`setdjrole\` to set a **DJ role** for this guild.\n
-Use \`resetdjrole\` to reset the **DJ role** for this guild.`
-                }
-            )
-
-        const page5 = new Discord.MessageEmbed()
+            .setThumbnail(client.user.displayAvatarURL())
+            .setAuthor('🎨 ·  Misc')
+            .setFooter('Misc Category')
+            .setDescription(`
+**avatar**\n${config.replyicon} Get a member's avatar/profile picture.
+**spotify**\n${config.replyicon} Show what you or someone else is listening to and that song's lyrics!
+**userinfo**\n${config.replyicon} Gets a member's info.
+**serverinfo**\n${config.replyicon} Gets the server's info.
+**membercount**\n${config.replyicon} Shows the member count of the server.
+**weather**\n${config.replyicon} Finds out the weather for a location.
+**urbandictionary**\n${config.replyicon} Gets the Urban Dictionary definition of a word or phrase.
+**youtube-search**\n${config.replyicon} Searches for a YouTube video.
+`)
+        const manage = new Discord.MessageEmbed()
             .setColor(config.embedcolor)
-            .setThumbnail(client.user.avatarURL({ dynamic: true }))
-            .addFields(
-                {
-                    name: 'Moderation Commands',
-                    value: `>>> Use \`ban\` to **ban** someone from the guild.\n
-Use \`unban\` to **unban** banned users from the guild.\n
-Use \`kick\` to **kick** someone from the guild.\n
-Use \`mute\` to **mute** someone in the guild.\n
-Use \`unmute\` to **unmute** someone in the guild.\n
-Use \`lock\` to **lock** a channel.\n
-Use \`unlock\` to **unlock** a channel.\n
-Use \`purge\` to **delete** messages.\n
-Use \`slowmode\` to set **slowmode** in a channel.\n
-Use \`drag\` to **drag** a user to a voice channel!`
-                }
-            )
-
-        const page6 = new Discord.MessageEmbed()
+            .setThumbnail(client.user.displayAvatarURL())
+            .setAuthor('🔨 ·  Management')
+            .setFooter('Management Category')
+            .setDescription(`
+**setprefix**\n${config.replyicon} Set a custom prefix for this server.
+**setmuterole**\n${config.replyicon} Set a mute role.
+**setdjrole**\n${config.replyicon} Set a DJ role.
+**setupmuteperms**\n${config.replyicon} Set mute permissions in all channels.
+**resetdjrole**\n${config.replyicon} Reset the DJ role.
+**resetmuterole**\n${config.replyicon} Reset the mute role.
+**resetprefix**\n${config.replyicon} Reset the custom prefix.
+**settings**\n${config.replyicon} Check out the server's settings.
+`)
+        const info = new Discord.MessageEmbed()
             .setColor(config.embedcolor)
-            .setThumbnail(client.user.avatarURL({ dynamic: true }))
-            .addField(`Music Commands`,
-                `>>> Use \`play\` to play music. (supports Spotify and Soundcloud!!)\n
-Use \`nowplaying\` to check what's playing in the queue right now!\n
-Use \`queue\` to check the guild queue.\n
-Use \`lyrics\` to fetch lyrics for any song.\n`, true)
-            .addField('DJ Only Commands',
-                `>>> Use \`skip\` to skip the current track.\n
-Use \`stop\` to stop the current music session.\n
-Use \`pause\` to pause the current track.\n
-Use \`resume\` to resume the current paused track.\n
-Use \`loop\` to loop the current track or queue or turn it off.\n
-Use \`shuffle\` to shuffle the current queue.\n
-Use \`skipto\` to skip to a track in the queue.\n
-Use \`volume\` to adjust the queue's volume.\n
-Use \`transferdj\` to transfer the DJ to another person.\n
-Use \`autoplay\` to toggle autoplay.
-`, true)
-
-        const page7 = new Discord.MessageEmbed()
+            .setThumbnail(client.user.displayAvatarURL())
+            .setAuthor('🔨 ·  Information')
+            .setFooter('Information Category')
+            .setDescription(`
+**ping**\n${config.replyicon} Check NearBot's ping. 
+**uptime**\n${config.replyicon} Check how long NearBot has been up for.
+**help**\n${config.replyicon} All commands.
+**message**\n${config.replyicon} Last message from developers.
+`)
+        const level = new Discord.MessageEmbed()
             .setColor(config.embedcolor)
-            .setThumbnail(client.user.avatarURL({ dynamic: true }))
-            .addField(`Economy Commands`,
-                `>>> Use \`balance\` to check your **balance**!\n
-Use \`coinflip\` to **bet an amount** to double or nothing!\n
-Use \`daily\` to collect your **daily reward**!\n
-Use \`give\` to **give an amount** to someone else!\n
-Use \`rich\` to check the **rankings**!\n
-Use \`work\` to **work** and earn money!`)
+            .setThumbnail(client.user.displayAvatarURL())
+            .setAuthor('📈 ·  Leveling System')
+            .setFooter('Leveling Category')
+            .setDescription(`
+**level**\n${config.replyicon} Shows yours or someone elses level card.
+**leaderboard**\n${config.replyicon} The level leaderboard for this server.
+**givelevel**\n${config.replyicon} Give someone an amount of levels.
+**removelevel**\n${config.replyicon} Remove an amount of levels.
+**setannounce**\n${config.replyicon} Set level-up announcement channel.
+**resetannounce**\n${config.replyicon} Reset the level-up announcement channel.
+**enable-leveling**\n${config.replyicon} Enable leveling system. 
+**disable-leveling**\n${config.replyicon} Disable leveling system.
+`)
+        const starboard = new Discord.MessageEmbed()
+            .setColor(config.embedcolor)
+            .setThumbnail(client.user.displayAvatarURL())
+            .setAuthor('⭐ ·  Starboard System')
+            .setFooter('Starboard Category')
+            .setDescription(`
+**starboard-channel**\n${config.replyicon} Set the starboard channel.
+**starboard-min**\n${config.replyicon} Set minimum reactions for starboard.
+**starboard-disable**\n${config.replyicon} Disable starboard.
+`)
+        const eco = new Discord.MessageEmbed()
+            .setColor(config.embedcolor)
+            .setThumbnail(client.user.displayAvatarURL())
+            .setAuthor('💵 ·  Economy Category')
+            .setFooter('Economy Category')
+            .setDescription(`
+**balance**\n${config.replyicon} Check your money balance or someone elses.
+**rich**\n${config.replyicon} Check richest users in the server.
+**crime**\n${config.replyicon} Commit a crime to earn a lot of cash or get fined!
+**work**\n${config.replyicon} Work to earn cash!
+**daily**\n${config.replyicon} Get your daily rewards!
+**coinflip**\n${config.replyicon} Bet an amount to double or nothing it!
+**rob**\n${config.replyicon} Rob someone!
+**give**\n${config.replyicon} Give someone cash from your balance.
+`)
 
-        const pages = [pagemain, page6, page1, page2, page3, page4, page5, page7]
+        if (!args[0]) {
+            return pag(message, [main, music, moderation, eco, misc, manage, info, level, starboard], ['⬅️', '➡️'], '300000')
+        }
+        let category = args[0].toLowerCase();
+        switch (category) {
+            case 'music':
+                message.lineReply(music)
+                break;
+            case 'songs':
+                message.lineReply(music)
+                break;
+            case 'moderation':
+                message.lineReply(moderation)
+                break;
+            case 'mod':
+                message.lineReply(moderation)
+                break;
+            case 'misc':
+                message.lineReply(misc)
+                break;
+            case 'miscellaneous':
+                message.lineReply(misc)
+                break;
+            case 'man':
+                message.lineReply(manage)
+                break;
+            case 'manage':
+                message.lineReply(manage)
+                break;
+            case 'management':
+                message.lineReply(manage)
+                break;
+            case 'info':
+                message.lineReply(info)
+                break;
+            case 'information':
+                message.lineReply(info)
+                break;
+            case 'level':
+                message.lineReply(level)
+                break;
+            case 'leveling':
+                message.lineReply(level)
+                break;
+            case 'eco':
+                message.lineReply(eco)
+                break;
+            case 'economy':
+                message.lineReply(eco)
+                break;
+            case 'money':
+                message.lineReply(eco)
+                break;
+            default:
+                break;
+        }
 
-        pagination(message, pages, emojis, timeout)
 
     }
-}
+};

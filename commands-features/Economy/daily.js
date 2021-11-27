@@ -46,7 +46,7 @@ module.exports = {
         client.add(id, coins)
         if (data) {
             message.lineReply(`You collected \`$${commaNumber(coins)}\` and \`+100 xp\` for today!\nCheck back in 24 hours for more rewards!`)
-            Levels.appendxp(id, guild.id, 100)
+            Levels.appendXp(id, guild.id, 100)
         } else {
             message.lineReply(`You collected \`$${commaNumber(coins)}\` for today!\nCheck back in 24 hours for more rewards!`)
         }

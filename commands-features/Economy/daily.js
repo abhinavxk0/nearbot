@@ -22,29 +22,37 @@ module.exports = {
         const { guild, member } = message;
         const { id } = member;
 
-        if (claimedCache.includes(id)){
-            console.log('Returning from cache...')
-            message.lineReply('You already claimed your daily rewards!\nCome back tomorrow! :))')
-            return
-        }
-
         const obj = {
             guildId: guild.id,
             userId: id
         }
 
         const results = await dailySchema.findOne(obj)
+
+        const b = results.updatedAt;
+        const c = b.getTime();
+        const d = c + 86400000;
+        const e = moment(d).fromNow(true)
+
+        if (claimedCache.includes(id)){
+            console.log('Returning from cache...')
+            message.lineReply(`You already claimed your daily rewards!\nCome back **${e}**! :))`)
+            return
+        }
         console.log("RESULTS:", results)
         if (results) {
             const then = new Date(results.updatedAt).getTime();
             const now = new Date().getTime();
-
+            const b = results.updatedAt;
+            const c = b.getTime();
+            const d = c + 86400000;
+            const e = moment(d).fromNow(true)
             const difference = Math.abs(now - then);
             const diffdays = Math.round(difference / (1000 * 60 * 60 * 24));
 
             if (diffdays <= 1){
                 claimedCache.push(id)
-                message.lineReply('You already claimed your daily rewards!\nCome back tomorrow! :))')
+                message.lineReply(`You already claimed your daily rewards!\nCome back **${e}**! :))`)
                 return
             }
         }

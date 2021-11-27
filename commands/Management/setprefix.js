@@ -1,4 +1,5 @@
 const prefixSchema = require('../../schema/prefix-schema')
+const config = require('../../config.json');
 
 module.exports = {
     name: 'setprefix',
@@ -11,19 +12,19 @@ module.exports = {
 
         if (!message.member.hasPermission("ADMINISTRATOR")) return message.lineReply(
             new Discord.MessageEmbed()
-                .setColor('#A9E9F6')
-                .setDescription(`u do not have the \`ADMINISTRATOR\` permission to use this command lol`)
+                .setColor(config.errorcolor)
+                .setDescription(`${config.redtick} · You lack \`Administrator\` permission!`)
         )
 
         if (!newprefix) return message.lineReply(
             new Discord.MessageEmbed()
-                .setColor('#A9E9F6')
-                .setDescription(`if u wanna set a prefix, type it out maybe?`)
+                .setColor(config.errorcolor)
+                .setDescription(`${config.redtick} ·  If u wanna set a prefix, type it out maybe?`)
         )
         if (newprefix.length > 5) return message.lineReply(
             new Discord.MessageEmbed()
-                .setColor('#A9E9F6')
-                .setDescription(`you cant spend all those years typing that prefix\nset it to something shorter than 5 characters`)
+                .setColor(config.errorcolor)
+                .setDescription(`${config.redtick} ·  You cant spend all those years typing that prefix!\nSet it to something shorter than 5 characters`)
         )
 
         if ( data ){
@@ -37,8 +38,8 @@ module.exports = {
             newData.save().then(
                 message.lineReply(
                     new Discord.MessageEmbed()
-                        .setColor('#A9E9F6')
-                        .setDescription(`i set the prefix to \`${newprefix}\` :))`)
+                        .setColor(config.embedcolor)
+                        .setDescription(`${config.greentick} ·  I set the prefix to \`${newprefix}\` :))`)
                 )
             )
         } else if (!data){
@@ -49,8 +50,8 @@ module.exports = {
             newData.save().then(
                 message.lineReply(
                     new Discord.MessageEmbed()
-                        .setColor('#A9E9F6')
-                        .setDescription(`prefix has been set to \`${newprefix}\`!!`)
+                        .setColor(config.embedcolor)
+                        .setDescription(`${config.greentick} ·  I set the prefix to \`${newprefix}\` :))`)
                 )                
             )
         }

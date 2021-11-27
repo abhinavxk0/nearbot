@@ -2,12 +2,17 @@ const config = require('../../config.json')
 const db = require('quick.db')
 const ms = require('ms')
 const pretty = require('pretty-ms')
+const schema = require('../../schema/muterole-schema');
+
 
 module.exports = {
     name: 'mute',
     aliases: ['m'],
     async execute(client, message, args, Discord) {
-        var muteRole = await db.fetch(`muterole.${message.guild.id}`);
+        var skema = await schema.findOne({
+            guildId: message.guild.id
+        });
+        let muteRole = message.guild.roles.cache.get(skema.roleId)
         var muteTarget = message.mentions.members.first();
         if (!muteTarget) {
             return message.lineReply(

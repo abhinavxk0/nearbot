@@ -6,7 +6,6 @@ const reqString = {
 }
 
 const dailySchema = mongoose.Schema({
-    guildId: reqString,
     userId: reqString
 }, {
     timestamps: true

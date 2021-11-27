@@ -2,9 +2,9 @@ const { embedcolor, errorcolor } = require('../../config.json')
 const commaNumber = require('comma-number')
 module.exports = {
     name: 'work',
-    cooldown: 60 * 30,
+    cooldown: 60 * 60,
     async execute(client, message, args, Discord){
-        const coins = Math.floor(Math.random() * 950) + 500;
+        const coins = Math.floor(Math.random() * (2500 - 1000)) + 1000;
         const jobs = ['a builder', 'a waiter', 'a driver', 'a programmer', 'a chef', 'a doctor', 'a Discord Mod', 'an accountant', 'a footballer']
         const jobIndex = Math.floor(Math.random() * jobs.length);
         

@@ -8,6 +8,7 @@ const Levels = require('discord-xp');
 const Distube = require('distube').default;
 const db = require('quick.db')
 const economySchema = require('./schema/economy-schema')
+const djSchema = require('./schema/djrole-schema');
 const { SpotifyPlugin } = require("@distube/spotify");
 const { SoundCloudPlugin } = require("@distube/soundcloud");
 
@@ -62,13 +63,16 @@ client.distube.on("addList", async (queue, playlist) => {
 });
 
 client.distube.on("initQueue", async (queue) => {
-
-  const djRole = await db.fetch(`djrole.${queue.textChannel.guild.id}`)
+  const djRoles = await djSchema.findOne({
+    guildId: queue.id
+  });
+  
   const song = queue.songs[0]
-  if (djRole) {
-    try{
+  if (djRoles) {
+    try {
+      const djRole = djRoles.roleId
       song.member.roles.add(djRole)
-    } catch(err){
+    } catch (err) {
       console.log(`There was an error while removing ${song.user.tag}'s DJ role.\nGuild ID: ${queue.id}\nUser ID: ${target.user.id}`)
       throw err;
     }
@@ -82,11 +86,15 @@ client.distube.on("initQueue", async (queue) => {
 client.distube.on("empty", async (queue, song) => {
 
   const djUser = await db.fetch(`djuser.${queue.id}`)
-  const djRole = await db.fetch(`djrole.${queue.id}`)
+  const djRoles = await djSchema.findOne({
+    guildId: queue.id
+  });
+  
   const guild = queue.textChannel.guild;
   const target = guild.member(djUser)
 
-  if (djRole) {
+  if (djRoles) {
+    const djRole = djRoles.roleId
     if (djUser) {
       if (target.roles.cache.has(djRole)) {
         try {
@@ -112,11 +120,15 @@ client.distube.on("disconnect", async (queue) => {
   console.log(`- Bot got disconnected from the voice channel.`)
 
   const djUser = await db.fetch(`djuser.${queue.id}`)
-  const djRole = await db.fetch(`djrole.${queue.id}`)
+  const djRoles = await djSchema.findOne({
+    guildId: queue.id
+  });
+  
   const guild = queue.textChannel.guild;
   const target = guild.member(djUser)
 
-  if (djRole) {
+  if (djRoles) {
+    const djRole = djRoles.roleId
     if (djUser) {
       if (target.roles.cache.has(djRole)) {
         try {
@@ -135,11 +147,15 @@ client.distube.on("deleteQueue", async (queue) => {
   console.log(`- - The queue was deleted for some reason.`)
 
   const djUser = await db.fetch(`djuser.${queue.id}`)
-  const djRole = await db.fetch(`djrole.${queue.id}`)
+  const djRoles = await djSchema.findOne({
+    guildId: queue.id
+  });
+  
   const guild = queue.textChannel.guild;
   const target = guild.member(djUser)
 
-  if (djRole) {
+  if (djRoles) {
+    const djRole = djRoles.roleId
     if (djUser) {
       if (target.roles.cache.has(djRole)) {
         try {

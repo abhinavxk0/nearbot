@@ -47,10 +47,11 @@ module.exports = {
             console.log(err)
             throw err;
         })
-        message.delete().catch((err)=> {
-            console.log(err)
+        try {
+            message.delete()
+        }catch (err){
             throw err;
-        })
+        }
     }
 }
 

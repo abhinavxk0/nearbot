@@ -14,8 +14,9 @@ module.exports = {
         let query = args.join(" ")
         if (!query) {
             if (queue){
-                query = song.name
                 const song = client.distube.getQueue(message).songs[0]
+                query = song.name
+                
             } else {
                 message.lineReply(
                     new Discord.MessageEmbed()
@@ -28,7 +29,13 @@ module.exports = {
         try {
             var searches = await fetchgenius.songs.search(query)
             var firstSong = searches[0];
-            var lyrics = await firstSong.lyrics();
+            var lyrics;
+            try {
+                lyrics = await firstSong.lyrics();
+            } catch(err){
+                message.lineReply(`Couldn't find lyrics for this song!`)
+                return;
+            }
             var lyricsLength = lyrics.length;
         } catch (err){
             return message.lineReply(`There was an error executing this command!`)

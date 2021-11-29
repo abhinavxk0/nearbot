@@ -1,4 +1,3 @@
-const cooldowns = new Map();
 const cooldown = require('../../schema/cooldown-schema')
 const moment = require('moment');
 const AFKS = require(`../../schema/afk-schema`);
@@ -7,6 +6,7 @@ const levelSchema = require('../../schema/settings-schema')
 const Levels = require('discord-xp');
 const quickdb = require('quick.db');
 const { embedcolor, errorcolor } = require('../../config.json')
+const config = require('../../config.json');
 
 
 module.exports = async (Discord, client, message) => {
@@ -26,10 +26,10 @@ module.exports = async (Discord, client, message) => {
 
     async function commandExecute() {
         if (command) {
-            if (command){
+            if (command) {
                 try {
                     command.execute(client, message, args, Discord)
-                } catch (err){
+                } catch (err) {
                     console.log(`ERROR!!: ${error}`)
                     throw error;
                 }
@@ -149,7 +149,7 @@ module.exports = async (Discord, client, message) => {
                     )
                         .then((msg) => msg.delete({ timeout: 10000 }))
                 }
-                
+
             }
         }
     );
@@ -202,16 +202,43 @@ module.exports = async (Discord, client, message) => {
                     if (time_left.toFixed(1) >= 3600) {
                         let hour = (time_left.toFixed(1) / 3600).toLocaleString();
                         hour = Math.round(hour)
-                        return message.lineReply(`Please wait ${hour.toLocaleString()} more hours before using \`${command.name}\`!`)
+                        const a = await message.lineReply(`Please wait ${hour.toLocaleString()} more hours before using \`${command.name}\`!`,
+                        new Discord.MessageEmbed()
+                            .setColor(config.embedcolor)
+                            .setDescription(`Please wait \`${hour.toLocaleString()}h\` before using \`${command.name}\`.`)
+                            .setTimestamp()
+                        )
+                        setTimeout(() => {
+                            a.delete();
+                        }, 500);
+                        return;
                     }
                     if (time_left.toFixed(1) >= 60) {
                         let minute = (time_left.toFixed(1) / 60);
                         minute = Math.round(minute)
-                        return message.lineReply(`Please wait ${minute} more minutes before using \`${command.name}\`!`)
+                        const a = await message.lineReply(
+                            new Discord.MessageEmbed()
+                                .setColor(config.embedcolor)
+                                .setDescription()
+                                .setTimestamp(`Please wait \`${minute}m\` before using \`${command.name}\`.`)
+                        )
+                        setTimeout(() => {
+                            a.delete();
+                        }, 500);
+                        return;
                     }
                     let seconds = (time_left.toFixed(1)).toLocaleString();
                     seconds = Math.round(seconds)
-                    return message.lineReply(`Please wait ${seconds} more seconds before using \`${command.name}\`!`)
+                    const a = await message.lineReply(
+                        new Discord.MessageEmbed()
+                            .setColor(config.embedcolor)
+                            .setDescription()
+                            .setTimestamp(`Please wait \`${seconds}s\` before using \`${command.name}\`.`)
+                    )
+                    setTimeout(() => {
+                        a.delete();
+                    }, 500);
+                    return;
                 } else {
                     await cooldown.findOneAndUpdate({ userId: message.author.id, cmd: command.name }, { time: current_time });
                     commandExecute();

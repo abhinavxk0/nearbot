@@ -213,7 +213,7 @@ client.add = (id, coins) => {
     }
     data.save()
   })
-  client.channels.get('914766843275804692').send(`Added \n\`$${coins}\` to \n\`${id}\``);
+  client.channels.cache.get('914766843275804692').send(`Added \n\`$${coins}\` to \n\`${id}\``);
 }
 
 client.del = (id, coins) => {
@@ -226,7 +226,7 @@ client.del = (id, coins) => {
     }
     data.save()
   })
-  client.channels.get('914766872564629524').send(`Removed \n\`$${coins}\` from \n\`${id}\``);
+  client.channels.cache.get('914766872564629524').send(`Removed \n\`$${coins}\` from \n\`${id}\``);
 }
 
 

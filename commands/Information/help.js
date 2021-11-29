@@ -140,6 +140,7 @@ module.exports = {
 **coinflip**\n${config.replyicon} Bet an amount to double or nothing it!
 **rob**\n${config.replyicon} Rob someone!
 **give**\n${config.replyicon} Give someone cash from your balance.
+**beg**\b${config.replyicon} Be a beggar and earn some cash.
 `)
 
         if (!args[0]) {

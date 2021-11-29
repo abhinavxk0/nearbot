@@ -22,7 +22,6 @@ module.exports = {
         }
         const a = await message.lineReply(`${flipping} |  you bet $${betamount} and...`)
         const randomBool = Math.random() > 0.5 ? true : false;
-        console.log(randomBool)
         const winamt = betamount * 2;
         if (randomBool === true){
             setTimeout(() => {

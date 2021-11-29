@@ -1,28 +1,34 @@
-const { embedcolor, errorcolor } = require('../../config.json')
-const commaNumber = require('comma-number')
+const config = require('../../config.json')
+const commaNumber = require('comma-number');
 
 module.exports = {
     name: 'give',
+    cooldown: 30,
     aliases: ['donate'],
-    execute(client, message, args, Discord) {
+    async execute(client, message, args, Discord) {
         let userId = message.author.id;
-        let target = message.mentions.users.first();
-        let targetId = target.id;
-        let userbal = client.bal(userId);
-
+        let userbal = parseInt(await client.bal(userId))
         let toGive = args[0];
-        if (userbal < toGive) {
-            return message.lineReply('you dont have enough money to give that much')
+        let reciever = message.mentions.users.first();
+        
+        if (!reciever){
+            return message.lineReply('mention a user')
         }
 
         if (isNaN(toGive)) {
-            return message.lineReply('enter an amount you wanna give')
+            return message.lineReply('that is not an amount')
+        };
+        if (userId === reciever.id){
+            return message.lineReply('you cant give yourself money')
         }
-        
-        toGive = parseInt(toGive);
+        if (toGive > userbal) {
+            return message.lineReply('not enough cash')
+        };
 
-        client.del(userId, toGive);
-        client.add(targetId, toGive);
-        message.lineReply(`you gave \`$${commaNumber(toGive)}\` to **${target}**`)
+        await client.add(reciever.id, parseInt(toGive))
+        await client.del(userId, parseInt(toGive))
+
+        message.lineReply(`you gave ${reciever} \`$${commaNumber(parseInt(toGive))}\`!`)
+
     }
 }

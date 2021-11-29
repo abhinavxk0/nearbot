@@ -33,7 +33,7 @@ module.exports = async (Discord, client, message) => {
             if (command) {
                 try {
                     command.execute(client, message, args, Discord)
-                } catch (err) {
+                } catch (error) {
                     console.log(`ERROR!!: ${error}`)
                     throw error;
                 }

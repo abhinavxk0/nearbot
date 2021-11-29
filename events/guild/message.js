@@ -202,7 +202,7 @@ module.exports = async (Discord, client, message) => {
                     if (time_left.toFixed(1) >= 3600) {
                         let hour = (time_left.toFixed(1) / 3600).toLocaleString();
                         hour = Math.round(hour)
-                        const a = await message.lineReply(`Please wait ${hour.toLocaleString()} more hours before using \`${command.name}\`!`,
+                        const a = await message.lineReply(
                         new Discord.MessageEmbed()
                             .setColor(config.embedcolor)
                             .setDescription(`Please wait \`${hour.toLocaleString()}h\` before using \`${command.name}\`.`)
@@ -210,7 +210,7 @@ module.exports = async (Discord, client, message) => {
                         )
                         setTimeout(() => {
                             a.delete();
-                        }, 500);
+                        }, 3000);
                         return;
                     }
                     if (time_left.toFixed(1) >= 60) {
@@ -224,7 +224,7 @@ module.exports = async (Discord, client, message) => {
                         )
                         setTimeout(() => {
                             a.delete();
-                        }, 500);
+                        }, 3000);
                         return;
                     }
                     let seconds = (time_left.toFixed(1)).toLocaleString();
@@ -237,7 +237,7 @@ module.exports = async (Discord, client, message) => {
                     )
                     setTimeout(() => {
                         a.delete();
-                    }, 500);
+                    }, 3000);
                     return;
                 } else {
                     await cooldown.findOneAndUpdate({ userId: message.author.id, cmd: command.name }, { time: current_time });

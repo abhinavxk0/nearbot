@@ -20,7 +20,11 @@ module.exports = async (Discord, client, message) => {
                 .setFooter('This safety message cannot be disabled.')
         )
         setTimeout(() => {
-            m.delete({ timeout: 300000 })
+            try{
+                m.delete()
+            } catch(err){
+                throw err;
+            }
         }, 300000);
     }
 

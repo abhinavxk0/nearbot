@@ -85,9 +85,13 @@ module.exports = {
                 .setDescription(`loading <a:loading:910721336542916660>`)
         )
             client.distube.skip(message).then(
-                a.delete(),
                 message.react('⏩')
             ).catch((err) => console.log(err))
+            try {
+                a.delete()
+            } catch (err) {
+                throw err;
+            }
         }
 
     }

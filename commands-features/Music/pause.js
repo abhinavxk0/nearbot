@@ -54,7 +54,11 @@ module.exports = {
         )
         if (queue.playing){
             client.distube.pause(message)
-            a.delete()
+            try {
+                a.delete()
+            } catch (err) {
+                throw err;
+            }
             message.react('⏸')
         } else {
             message.lineReply('the music session is already paused')

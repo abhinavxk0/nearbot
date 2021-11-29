@@ -43,7 +43,11 @@ module.exports = {
                     .setTimestamp()
             )
             setTimeout(() => {
-                a.delete()
+                try {
+                    a.delete()
+                } catch( err){
+                    throw err;
+                }
             }, 10 * 1000);
         } catch (error) {
             message.lineReply(

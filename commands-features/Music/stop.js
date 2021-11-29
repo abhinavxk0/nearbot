@@ -50,9 +50,12 @@ module.exports = {
                 .setDescription(`loading <a:loading:910721336542916660>`)
         )
             
-            client.distube.stop(message).then(
+            client.distube.stop(message)
+            try {
                 a.delete()
-            )
+            } catch (err) {
+                throw err;
+            }
 
             message.channel.send(
                 new Discord.MessageEmbed()

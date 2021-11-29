@@ -52,9 +52,12 @@ module.exports = {
                 .setColor(embedcolor)
                 .setDescription(`loading <a:loading:910721336542916660>`)
         )
-        client.distube.shuffle(message).then(
+        client.distube.shuffle(message)
+        try {
             a.delete()
-        )
+        } catch (err) {
+            throw err;
+        }
         message.react('🔀');
     }
 }

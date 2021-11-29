@@ -74,9 +74,12 @@ module.exports = {
             new Discord.MessageEmbed()
             .setColor('#A9E9F6')
             .setDescription(`Set repeat mode to \`${mode}\``)
-        ).then(
-            a.delete()
         )
+        try {
+            a.delete()
+        } catch (err) {
+            throw err;
+        }
     }
 }
 

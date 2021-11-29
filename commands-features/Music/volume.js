@@ -59,7 +59,11 @@ module.exports = {
         )
 
         client.distube.setVolume(message, Number(args[0]))
-        a.delete()
+        try {
+            a.delete()
+        } catch (err) {
+            throw err;
+        }
         message.lineReplyNoMention(
             new Discord.MessageEmbed()
                 .setColor('#A9E9F6')

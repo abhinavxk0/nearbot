@@ -219,8 +219,8 @@ module.exports = async (Discord, client, message) => {
                         const a = await message.lineReply(
                             new Discord.MessageEmbed()
                                 .setColor(config.embedcolor)
-                                .setDescription()
-                                .setTimestamp(`Please wait \`${minute}m\` before using \`${command.name}\`.`)
+                                .setDescription(`Please wait \`${minute}m\` before using \`${command.name}\`.`)
+                                .setTimestamp()
                         )
                         setTimeout(() => {
                             a.delete();
@@ -232,8 +232,8 @@ module.exports = async (Discord, client, message) => {
                     const a = await message.lineReply(
                         new Discord.MessageEmbed()
                             .setColor(config.embedcolor)
-                            .setDescription()
-                            .setTimestamp(`Please wait \`${seconds}s\` before using \`${command.name}\`.`)
+                            .setDescription(`Please wait \`${seconds}s\` before using \`${command.name}\`.`)
+                            .setTimestamp()
                     )
                     setTimeout(() => {
                         a.delete();

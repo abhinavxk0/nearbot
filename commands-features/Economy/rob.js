@@ -36,7 +36,7 @@ module.exports = {
             rate = false
         }
         const halftar = 50/100 * targetbal
-        const robamt = Math.round(Math.random() * halftar - 1) + 1;
+        const robamt = Math.floor(Math.random() * (2000 - 600) + 600);
 
         if (rate == true){
             await client.del(target.id, robamt)

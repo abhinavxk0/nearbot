@@ -10,16 +10,15 @@ module.exports = {
     cooldown: 0,
     async execute(client, message, args, Discord) { 
 
-        const data = await level.findOne({ Guild: message.guild.id });
-
-        const { guild, member } = message;
-        const { id } = member;
+        const data = await level.findOne({userId: message.author.id });
 
         const obj = {
-            userId: id
+            userId: message.author.id
         }
 
-        const results = await dailySchema.findOne(obj)
+        const results = await dailySchema.findOne({
+            userId: message.author.id
+        })
         if (results) {
 
             const b = results.updatedAt;

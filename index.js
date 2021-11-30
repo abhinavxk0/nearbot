@@ -85,18 +85,18 @@ client.distube.on("addList", async (queue, playlist) => {
   )
 
   const data = await playedtimes.findOne({
-    userId: song.user.id
+    userId: playlist.user.id
   });
   if (data) {
     let plusone = count.countNum + playlist.songs.length
     await playedtimes.findOneAndUpdate({
-      userId: song.user.id,
+      userId: playlist.user.id,
       playNum: parseInt(plusone)
     })
   } else if (!data) {
     let plusone = playlist.songs.length;
     await playedtimes.create({
-      userId: song.user.id,
+      userId: playlist.user.id,
       playNum: parseInt(plusone)
     });
   }

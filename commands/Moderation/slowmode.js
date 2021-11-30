@@ -10,13 +10,13 @@ module.exports = {
 
         if (!message.member.hasPermission("MANAGE_CHANNELS")) return message.lineReply(
             new Discord.MessageEmbed()
-                .setColor(errorcolor)
+                .setColor(config.errorcolor)
                 .setDescription(`${config.redtick} · You lack \`Manage Channels\` permission.`)
                 .setTimestamp()
         )
         if (!message.guild.me.hasPermission("MANAGE_CHANNELS")) return message.lineReply(
             new Discord.MessageEmbed()
-                .setColor(errorcolor)
+                .setColor(config.errorcolor)
                 .setDescription(`${config.redtick} · I lack \`Manage Channels\` permission.`)
                 .setTimestamp()
         )

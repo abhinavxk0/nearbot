@@ -98,7 +98,7 @@ module.exports = {
             message.lineReply(
                 new Discord.MessageEmbed()
                     .setColor(config.errorcolor)
-                    .setDescription(`${redtick} · There was an error! :/`)
+                    .setDescription(`${config.redtick} · There was an error! :/`)
                     .setTimestamp()
             )
         }

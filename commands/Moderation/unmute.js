@@ -8,13 +8,13 @@ module.exports = {
         const user = message.mentions.members.first()
         if (!message.member.hasPermission("MANAGE_ROLES")) return message.lineReply(
             new Discord.MessageEmbed()
-                .setColor(errorcolor)
+                .setColor(config.errorcolor)
                 .setDescription(`${config.redtick} · You lack \`Manage Roles\` permission.`)
                 .setTimestamp()
         )
         if (!message.guild.me.hasPermission("MANAGE_ROLES")) return message.lineReply(
             new Discord.MessageEmbed()
-                .setColor(errorcolor)
+                .setColor(config.errorcolor)
                 .setDescription(`${config.redtick} · I lack \`Manage Roles\` permission.`)
                 .setTimestamp()
         )
@@ -44,7 +44,7 @@ module.exports = {
         const cl = message.guild.member(client.user.id)
         if (user.roles.highest.position > cl.roles.highest.position) return message.lineReply(
             new Discord.MessageEmbed()
-                .setColor(errorcolor)
+                .setColor(config.errorcolor)
                 .setDescription(`${config.redtick} · I am not higher than **${user.user.username}** to mute them.`)
                 .setTimestamp()
         )
@@ -70,7 +70,7 @@ module.exports = {
         } catch (error) {
             message.lineReply(
                 new Discord.MessageEmbed()
-                    .setColor(errorcolor)
+                    .setColor(config.errorcolor)
                     .setDescription(`${redtick} · There was an error! :/`)
                     .setTimestamp()
             )

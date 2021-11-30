@@ -52,7 +52,7 @@ module.exports = {
         } catch (error) {
             message.lineReply(
                 new Discord.MessageEmbed()
-                    .setColor(errorcolor)
+                    .setColor(config.errorcolor)
                     .setDescription(`${redtick} · There was an error! :/`)
             )
         }

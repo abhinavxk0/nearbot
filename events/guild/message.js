@@ -32,22 +32,22 @@ module.exports = async (Discord, client, message) => {
         if (command) {
             if (command) {
                 try {
-                    const data = await countSchema.findOne({
-                        userId: message.author.id,
-                    });
-                    if (data){
-                        await countSchema.findOneAndUpdate({
-                            userId: message.author.id,
-                            countNum: data.countNum++
-                        });
-                        data.save();
-                    } else if (!data){
-                        let newData = new countSchema({
-                            userId: message.author.id,
-                            countNum: 1
-                        });
-                        await newData.save() 
-                    };
+                    // const data = await countSchema.findOne({
+                    //     userId: message.author.id,
+                    // });
+                    // if (data){
+                    //     await countSchema.findOneAndUpdate({
+                    //         userId: message.author.id,
+                    //         countNum: data.countNum++
+                    //     });
+                    //     data.save();
+                    // } else if (!data){
+                    //     let newData = new countSchema({
+                    //         userId: message.author.id,
+                    //         countNum: 1
+                    //     });
+                    //     await newData.save() 
+                    // };
                     command.execute(client, message, args, Discord)
                 } catch (error) {
                     console.log(`ERROR!!: ${error}`)

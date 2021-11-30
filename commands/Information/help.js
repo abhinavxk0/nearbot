@@ -1,6 +1,7 @@
 const config = require('../../config.json');
 const db = require('quick.db')
 const pag = require('discord.js-pagination')
+
 module.exports = {
     name: 'help',
     aliases: ['commands', 'cmds'],

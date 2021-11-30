@@ -42,7 +42,7 @@ module.exports = {
         if (rate == true){
             await client.del(target.id, robamt)
             await client.add(message.author.id, winamt)
-            message.lineReply(`You robbed ${target} stealing \`$${commaNumber(robamt)}\`!`)
+            message.lineReply(`You robbed ${target} stealing \`$${commaNumber(winamt)}\`!`)
             db.set(`rob_${target.id}`, Date.now())
         } else {
             await client.del(message.author.id, robamt)

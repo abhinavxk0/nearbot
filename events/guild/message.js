@@ -40,13 +40,13 @@ module.exports = async (Discord, client, message) => {
                             userId: message.author.id,
                             countNum: data.countNum++
                         });
-                        return data.save();
+                        data.save();
                     } else if (!data){
                         let newData = new countSchema({
                             userId: message.author.id,
                             countNum: 1
                         });
-                        return await newData.save() 
+                        await newData.save() 
                     };
                     command.execute(client, message, args, Discord)
                 } catch (error) {

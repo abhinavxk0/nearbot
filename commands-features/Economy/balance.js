@@ -3,7 +3,7 @@ const commaNumber = require('comma-number')
 
 module.exports = {
     name: 'balance',
-    aliases: ['money', 'bal'],
+    aliases: ['money', 'bal', 'cash'],
     async execute(client, message, args, Discord){
         const target = message.mentions.users.first() || message.author;
         const bal = await client.bal(target.id)

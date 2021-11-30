@@ -8,8 +8,9 @@ const playedtimes = require('../../schema/play-schema');
 module.exports = {
     name: 'profile',
     async execute(client, message, args, Discord){
+        const member = message.mentions.users.first() || message.author;
         const data = await counter.findOne({
-            userId: message.author.id
+            userId: member.id
         })
         let cmdcount;
         if (data){
@@ -18,7 +19,7 @@ module.exports = {
             cmdcount = 0;
         }
         const datatwo = await playedtimes.findOne({
-            userId: message.author.id,
+            userId: member.id
         })
         let playcount;
         if (datatwo){
@@ -26,24 +27,23 @@ module.exports = {
         } else {
             playcount = 0
         }
-        
-        const userBal = await client.bal(message.author.id);
+
+        const userBal = await client.bal(member.id);
         const lee = await levelingsys.findOne({ Guild: message.guild.id });
         let lebel;
         if (lee){
-            const user = await Levels.fetch(message.author.id, message.guild.id);
+            const user = await Levels.fetch(member.id, message.guild.id);
             const neededXp = Levels.xpFor(parseInt(user.level) + 1);
-            lebel = `Leveling System is \`ENABLED\`.\nYou're on Level \`${user.level}\`, you need \`${neededXp}xp\` to reach Level \`${user.level + 1}\`!`
+            lebel = `Leveling System is \`ENABLED\`.\nOn Level \`${user.level}\`, needs \`${neededXp}xp\` to reach Level \`${user.level + 1}\`!`
         } else {
             lebel = `Leveling System is \`DISABLED\`.`
         }
         message.lineReply(
             new Discord.MessageEmbed()
                 .setColor(config.embedcolor)
-                .setTitle(message.author.tag)
-                .setThumbnail(message.author.displayAvatarURL({ dynamic : true}))
-                .setDescription(`You have used **NearBot** \`${cmdcount}\` times!\nYou have \`$${commaNumber(userBal)}\` in your balance.\nYou have added \`${playcount} songs\` to NearBot in total!\n\n${lebel}`)
-                .setFooter('😏')
+                .setTitle(member.tag)
+                .setThumbnail(member.displayAvatarURL({ dynamic : true}))
+                .setDescription(`Used **NearBot** \`${cmdcount}\` times!\nHas \`$${commaNumber(userBal)}\` in your balance.\nAdded \`${playcount} songs\` to NearBot in total!\n\n${lebel}`)
                 .setTimestamp()
         )
     }

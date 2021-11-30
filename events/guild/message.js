@@ -7,7 +7,8 @@ const Levels = require('discord-xp');
 const quickdb = require('quick.db');
 const { embedcolor, errorcolor } = require('../../config.json')
 const config = require('../../config.json');
-const countSchema = require('../../schema/command-counter-schema');
+
+
 
 module.exports = async (Discord, client, message) => {
     if (message.content.toLowerCase().includes("suicide" || "$uicide")) {
@@ -32,23 +33,13 @@ module.exports = async (Discord, client, message) => {
         if (command) {
             if (command) {
                 try {
-                    // const data = await countSchema.findOne({
-                    //     userId: message.author.id,
-                    // });
-                    // if (data){
-                    //     await countSchema.findOneAndUpdate({
-                    //         userId: message.author.id,
-                    //         countNum: data.countNum++
-                    //     });
-                    //     data.save();
-                    // } else if (!data){
-                    //     let newData = new countSchema({
-                    //         userId: message.author.id,
-                    //         countNum: 1
-                    //     });
-                    //     await newData.save() 
-                    // };
                     command.execute(client, message, args, Discord)
+                    const c = await quickdb.fetch(`counter_${message.author.id}`)
+                    if (c === 0 || null){
+                        await quickdb.set(`counter_${message.author.id}`, 1)
+                    } else {
+                        await quickdb.set(`counter_${message.author.id}`, c + 1)
+                    }
                 } catch (error) {
                     console.log(`ERROR!!: ${error}`)
                     throw error;

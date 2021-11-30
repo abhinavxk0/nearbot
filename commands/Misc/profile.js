@@ -4,7 +4,7 @@ const commaNumber = require('comma-number')
 const Levels = require('discord-xp')
 const levelingsys = require('../../schema/settings-schema')
 const playedtimes = require('../../schema/play-schema');
-
+const quickdb = require('quick.db')
 module.exports = {
     name: 'profile',
     async execute(client, message, args, Discord){
@@ -28,6 +28,8 @@ module.exports = {
             playcount = 0
         }
 
+        const a = await quickdb.fetch(`counter_${message.author.id}`)
+
         const userBal = await client.bal(member.id);
         const lee = await levelingsys.findOne({ Guild: message.guild.id });
         let lebel;
@@ -43,7 +45,7 @@ module.exports = {
                 .setColor(config.embedcolor)
                 .setTitle(member.tag)
                 .setThumbnail(member.displayAvatarURL({ dynamic : true}))
-                .setDescription(`Has \`$${commaNumber(userBal)}\` in your balance.\nAdded \`${playcount} songs\` to NearBot in total!\n\n${lebel}`)
+                .setDescription(`Have used **NearBot** \`${a}\` times!\nHas \`$${commaNumber(userBal)}\` in your balance.\nAdded \`${playcount} songs\` to NearBot in total!\n\n${lebel}`)
                 .setTimestamp()
         )
     }

@@ -13,7 +13,7 @@ module.exports = {
             .setThumbnail(client.user.displayAvatarURL())
             .setDescription(`\`help <category>\``)
             .addField('Prefix:', `\`${prefixdb}\``)
-            .addField('Links:', `[\`📩 ·  Invite Nearbot\`](${`https://discord.com/oauth2/authorize?client_id=${client.user.id}&scope=bot&permissions=8`})\n[\`🎈 ·  Support Server\`](https://discord.gg/3h5ajxffkw)\n[\`👨‍💻 ·  Bot Developer\`](https://discords.com/bio/p/xaviervv)`)
+            .addField('Links:', `[\`📩 ·  Invite Nearbot\`](${`https://discord.com/api/oauth2/authorize?client_id=${client.user.id}&permissions=0&redirect_uri=https%3A%2F%2Fdiscord.gg%2F3h5ajxffkw&response_type=code&scope=bot%20guilds.join`})\n[\`🎈 ·  Support Server\`](https://discord.gg/3h5ajxffkw)\n[\`👨‍💻 ·  Bot Developer\`](https://discords.com/bio/p/xaviervv)`)
             .setFooter('Use help <category>')
             .setTimestamp()
 

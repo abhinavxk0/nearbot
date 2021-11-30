@@ -35,18 +35,19 @@ module.exports = {
         } else {
             rate = false
         }
-        const halftar = 50/100 * targetbal
         const winamt = Math.floor(Math.random() * ((targetbal / 3) - 600) + 600);
         const robamt = Math.floor(Math.random() * (2000 - 600) + 600);
 
         if (rate == true){
             await client.del(target.id, robamt)
             await client.add(message.author.id, winamt)
-            message.lineReply(`You robbed ${target} stealing \`$${commaNumber(winamt)}\`!`)
+            const belence = await client.bal(message.author.id)
+            message.lineReply(`You robbed ${target} stealing \`$${commaNumber(winamt)}\`!\nNow you have \`$${commaNumber(belence)}\`.`)
             db.set(`rob_${target.id}`, Date.now())
         } else {
             await client.del(message.author.id, robamt)
-                message.lineReply(`You got caught while robbing ${target} and got fined \`$${commaNumber(robamt)}\`!`)
+            const belence = await client.bal(message.author.id)
+                message.lineReply(`You got caught while robbing ${target} and got fined \`$${commaNumber(robamt)}\`!\nNow you have \`$${commaNumber(belence)}\`.`)
         }
         
     }

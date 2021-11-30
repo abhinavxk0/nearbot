@@ -3,7 +3,7 @@ const config = require('../../config.json')
 module.exports = {
     name: 'reset-nick',
     aliases: ['renick', 'resetnick', 'resetnickname'],
-    async execute(client, message, args, Discord){c
+    async execute(client, message, args, Discord){
         const member = message.mentions.members.first() || message.guild.member(args[0]);
         const cl = message.guild.member(client.user.id)
         if (!message.member.hasPermission("MANAGE_NICKNAMES")) return message.lineReply(

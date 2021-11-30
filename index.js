@@ -59,7 +59,7 @@ client.distube.on("addSong", async (queue, song) => {
   )
 
   const data = await playedtimes.findOne({
-    userId: message.author.id
+    userId: song.user.id
   });
   if (data) {
     let plusone = count.countNum + 1;
@@ -85,7 +85,7 @@ client.distube.on("addList", async (queue, playlist) => {
   )
 
   const data = await playedtimes.findOne({
-    userId: message.author.id
+    userId: song.user.id
   });
   if (data) {
     let plusone = count.countNum + playlist.songs.length

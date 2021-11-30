@@ -17,6 +17,8 @@ const economySchema = require('./schema/economy-schema')
 const djSchema = require('./schema/djrole-schema');
 const { SpotifyPlugin } = require("@distube/spotify");
 const { SoundCloudPlugin } = require("@distube/soundcloud");
+const playedtimes = require('./schema/play-schema');
+
 
 Levels.setURL(mongoPath)
 client.commands = new Discord.Collection();
@@ -56,6 +58,22 @@ client.distube.on("addSong", async (queue, song) => {
       .setFooter(`added by: ${song.user.tag}`, song.user.displayAvatarURL({ size: 4096, dynamic: true }))
   )
 
+  const data = await playedtimes.findOne({
+    userId: message.author.id
+  });
+  if (data) {
+    let plusone = count.countNum + 1;
+    await playedtimes.findOneAndUpdate({
+      userId: song.user.id,
+      playNum: parseInt(plusone)
+    })
+  } else if (!data) {
+    let plusone = 1;
+    await playedtimes.create({
+      userId: song.user.id,
+      playNum: parseInt(plusone)
+    });
+  }
 })
 client.distube.on("addList", async (queue, playlist) => {
 
@@ -66,13 +84,30 @@ client.distube.on("addList", async (queue, playlist) => {
       .setFooter(`added by: ${playlist.user.tag}`, playlist.user.displayAvatarURL({ size: 4096, dynamic: true }))
   )
 
+  const data = await playedtimes.findOne({
+    userId: message.author.id
+  });
+  if (data) {
+    let plusone = count.countNum + playlist.songs.length
+    await playedtimes.findOneAndUpdate({
+      userId: song.user.id,
+      playNum: parseInt(plusone)
+    })
+  } else if (!data) {
+    let plusone = playlist.songs.length;
+    await playedtimes.create({
+      userId: song.user.id,
+      playNum: parseInt(plusone)
+    });
+  }
+
 });
 
 client.distube.on("initQueue", async (queue) => {
   const djRoles = await djSchema.findOne({
     guildId: queue.id
   });
-  
+
   const song = queue.songs[0]
   if (djRoles) {
     try {
@@ -95,7 +130,7 @@ client.distube.on("empty", async (queue, song) => {
   const djRoles = await djSchema.findOne({
     guildId: queue.id
   });
-  
+
   const guild = queue.textChannel.guild;
   const target = guild.member(djUser)
 
@@ -129,7 +164,7 @@ client.distube.on("disconnect", async (queue) => {
   const djRoles = await djSchema.findOne({
     guildId: queue.id
   });
-  
+
   const guild = queue.textChannel.guild;
   const target = guild.member(djUser)
 
@@ -156,7 +191,7 @@ client.distube.on("deleteQueue", async (queue) => {
   const djRoles = await djSchema.findOne({
     guildId: queue.id
   });
-  
+
   const guild = queue.textChannel.guild;
   const target = guild.member(djUser)
 

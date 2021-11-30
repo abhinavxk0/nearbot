@@ -66,6 +66,7 @@ module.exports = {
             .setAuthor('🎨 ·  Misc')
             .setFooter('Misc Category')
             .setDescription(`
+**profile**\n${config.replyicon} See your NearBot profile!
 **avatar**\n${config.replyicon} Get a member's avatar/profile picture.
 **spotify**\n${config.replyicon} Show what you or someone else is listening to and that song's lyrics!
 **userinfo**\n${config.replyicon} Gets a member's info.

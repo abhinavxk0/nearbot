@@ -7,10 +7,10 @@ const Levels = require('discord-xp');
 const quickdb = require('quick.db');
 const { embedcolor, errorcolor } = require('../../config.json')
 const config = require('../../config.json');
-
+const counter = require('../../schema/command-counter-schema');
 
 module.exports = async (Discord, client, message) => {
-    if (message.content.includes("suicide" || "Suicide" || "$uicide")) {
+    if (message.content.toLowerCase().includes("suicide" || "$uicide")) {
         const m = message.lineReply(
             new Discord.MessageEmbed()
                 .setColor(embedcolor)
@@ -33,6 +33,22 @@ module.exports = async (Discord, client, message) => {
             if (command) {
                 try {
                     command.execute(client, message, args, Discord)
+                    const count = await counter.findOne({
+                        userId: message.author.id,
+                    });
+                    if (count){
+                        let plusone = count.countNum + 1;
+                        await counter.findOneAndUpdate({
+                            userId: message.author.id,
+                            countNum: parseInt(plusone)
+                        });
+                    } else if (!count){
+                        let plusone = 1;
+                        await counter.create({
+                            userId: message.author.id,
+                            countNum: parseInt(plusone)
+                        });
+                    };
                 } catch (error) {
                     console.log(`ERROR!!: ${error}`)
                     throw error;

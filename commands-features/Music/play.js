@@ -1,5 +1,6 @@
 const DisTube = require('distube');
 const { embedcolor, errorcolor } = require('../../config.json')
+const playedtimes = require('../../schema/play-schema');
 
 module.exports = {
     name: 'play',

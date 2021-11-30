@@ -7,7 +7,7 @@ const Levels = require('discord-xp');
 const quickdb = require('quick.db');
 const { embedcolor, errorcolor } = require('../../config.json')
 const config = require('../../config.json');
-const counter = require('../../schema/command-counter-schema');
+const countSchema = require('../../schema/command-counter-schema');
 
 module.exports = async (Discord, client, message) => {
     if (message.content.toLowerCase().includes("suicide" || "$uicide")) {
@@ -32,23 +32,23 @@ module.exports = async (Discord, client, message) => {
         if (command) {
             if (command) {
                 try {
-                    command.execute(client, message, args, Discord)
-                    const count = await counter.findOne({
+                    const data = await countSchema.findOne({
                         userId: message.author.id,
                     });
-                    if (count){
-                        let plusone = count.countNum + 1;
-                        await counter.findOneAndUpdate({
+                    if (data){
+                        await countSchema.findOneAndUpdate({
                             userId: message.author.id,
-                            countNum: parseInt(plusone)
+                            countNum: count.countNum++
                         });
-                    } else if (!count){
-                        let plusone = 1;
-                        await counter.create({
+                        return data.save();
+                    } else if (!data){
+                        let newData = new countSchema({
                             userId: message.author.id,
-                            countNum: parseInt(plusone)
+                            countNum: 1
                         });
+                        return await newData.save() 
                     };
+                    command.execute(client, message, args, Discord)
                 } catch (error) {
                     console.log(`ERROR!!: ${error}`)
                     throw error;

@@ -68,10 +68,10 @@ client.distube.on("addSong", async (queue, song) => {
       playNum: parseInt(plusone)
     })
   } else if (!data) {
-    let plusone = 1;
+    let plustwo = 1;
     await playedtimes.create({
       userId: song.user.id,
-      playNum: parseInt(plusone)
+      playNum: parseInt(plustwo)
     });
   }
 })
@@ -94,10 +94,10 @@ client.distube.on("addList", async (queue, playlist) => {
       playNum: parseInt(plusone)
     })
   } else if (!data) {
-    let plusone = playlist.songs.length;
+    let plustwo = playlist.songs.length;
     await playedtimes.create({
       userId: playlist.user.id,
-      playNum: parseInt(plusone)
+      playNum: parseInt(plustwo)
     });
   }
 

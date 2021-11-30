@@ -38,7 +38,7 @@ module.exports = async (Discord, client, message) => {
                     if (data){
                         await countSchema.findOneAndUpdate({
                             userId: message.author.id,
-                            countNum: count.countNum++
+                            countNum: data.countNum++
                         });
                         return data.save();
                     } else if (!data){

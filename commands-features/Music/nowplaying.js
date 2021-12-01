@@ -26,17 +26,17 @@ module.exports = {
                 .setColor(embedcolor)
                 .setTitle('now playing...')
                 .setThumbnail(song.thumbnail)
-                .setDescription(`[**${song.name}**](${song.url})\n${newProgressBar}\n${queue.formattedCurrentTime} / ${song.formattedDuration}`)
+                .setDescription(`[**${song.name}**](${song.url})\n${newProgressBar}\n\`${queue.formattedCurrentTime} / ${song.formattedDuration}\``)
                 .setFooter(`Added by ${song.user.tag}`, song.user.displayAvatarURL({ dynamic: true} ))
                 .addFields(
                     {
                         name: 'Volume:',
-                        value: `${queue.volume}%`,
+                        value: `\`${queue.volume}%\``,
                         inline: true
                     },
                     {
                         name: 'Autoplay:',
-                        value: queue.autoplay ? 'On' : 'Off',
+                        value: queue.autoplay ? '\`On\`' : '\`Off\`',
                         inline: true
                     }
                 )

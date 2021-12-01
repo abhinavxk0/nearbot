@@ -20,36 +20,24 @@ module.exports = {
                 .setDescription(`${config.redtick} · I lack \`Manage Channels\` permission.`)
                 .setTimestamp()
         )
-
-        if (!args[0]) {
-            try {
-                chnl.setRateLimitPerUser(0)
-                message.lineReply(
-                    new Discord.MessageEmbed()
-                        .setColor(config.embedcolor)
-                        .setDescription(`${config.greentick} · Slowmode for ${chnl} has been reset.`)
-                        .setTimestamp()
-                )
-            } catch (error) {
-                message.lineReply(
-                    new Discord.MessageEmbed()
-                        .setColor(config.errorcolor)
-                        .setDescription(`${config.redtick} · There was an error! :/`)
-                        .setTimestamp()
-                )
-            }
-            return 
+        if (!rawchnl){
+            message.lineReply(
+                new Discord.MessageEmbed()
+                    .setColor(config.embedcolor)
+                    .setDescription(`${config.redtick} · Mention a channel!`)
+                    .setTimestamp()
+            )
         }
         const raw = args[1];
-        const milliseconds = ms(raw);
-
-        if (isNaN(milliseconds)) {
-            message.lineReply(
+        let milliseconds;
+        try {
+            milliseconds = ms(raw);
+        } catch (err){
+            return message.lineReply(
                 new Discord.MessageEmbed()
                     .setColor(config.errorcolor)
                     .setDescription(`${config.redtick} · Slowmode duration entered was invalid.`)
             )
-            return;
         }
 
         if (milliseconds < 1000) {

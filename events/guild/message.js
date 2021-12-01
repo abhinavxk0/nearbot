@@ -198,7 +198,20 @@ module.exports = async (Discord, client, message) => {
     const commandName = args.shift().toLowerCase();
     const command = client.commands.get(commandName) || client.commands.find((cmd) => cmd.aliases && cmd.aliases.includes(commandName));
     if (!command) return;
-
+    const serverowner = message.guild.owner
+    if (!message.guild.me.hasPermission("ADMINISTRATOR")){
+        try {
+            serverowner.send(
+                new Discord.MessageEmbed()
+                    .setColor(config.errorcolor)
+                    .setDescription(`Hey there! In your server \`${message.guild.name}\`, I lack the \`ADMIN\` permission!\nIt is an essential permission for the bot to function!`)
+                    .setTimestamp()
+            )
+        } catch (err){
+            throw err;
+        }
+        return
+    }
     if (command.cooldown) {
         const current_time = Date.now();
         const cooldown_amount = (command.cooldown) * 1000

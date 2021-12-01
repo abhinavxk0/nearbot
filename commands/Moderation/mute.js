@@ -27,7 +27,12 @@ module.exports = {
         let targetRole = muteTarget.roles.highest.position;
         let prettyTime;
         if (time) {
-            prettyTime = ` for ${pretty(ms(time))}.`
+            try{
+                let a = pretty(ms(time))
+                prettyTime = ` for ${a}.`
+            } catch(err){
+                return message.lineReply(`${config.redtick} · Enter a correct time!`)
+            }
         } else {
             prettyTime = '.';
         }

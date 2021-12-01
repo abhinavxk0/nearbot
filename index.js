@@ -264,8 +264,25 @@ client.del = (id, coins) => {
   client.channels.cache.get('914766872564629524').send(`Removed \n\`$${coins}\` from \n\`${id}\``);
 }
 
+process.on('unhandledRejection', error => {
+    console.error(chalk.red.bold('Unhandled Promise Rejection =>', error));
+    client.channels.cache.get("915623124031131661").send(`\`\`\`${error}\`\`\``);
+});
 
+process.on("uncaughtException",error => {
+    console.error(chalk.red.bold('Uncaught Exception =>', error));
+    client.channels.cache.get("915623124031131661").send(`\`\`\`${error}\`\`\``);
+});
 
+process.on('exit',error => {
+    console.error(chalk.red.bold('Exit Code =>', error));
+    client.channels.cache.get("915623124031131661").send(`\`\`\`${error}\`\`\``);
+});
+
+process.on('multipleResolves',error => {
+    console.error(chalk.red.bold('Multiple Resolves =>', error));
+    client.channels.cache.get("915623124031131661").send(`\`\`\`${error}\`\`\``);
+});
 
 
 

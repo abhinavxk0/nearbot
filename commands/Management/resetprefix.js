@@ -1,5 +1,5 @@
 const prefixSchema = require('../../schema/prefix-schema')
-
+const config = require('../../config.json')
 module.exports = {
     name: 'resetprefix',
     async execute(client, message, args, Discord){

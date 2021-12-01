@@ -1,10 +1,15 @@
 const db = require('quick.db');
 const config = require('../../config.json')
+const schema = require('../../schema/muterole-schema');
+
 module.exports = {
     name: 'unmute',
     aliases: ['um'],
     async execute(client, message, args, Discord){
-        const muteRole = await db.fetch(`muterole.${message.guild.id}`);
+        const skema = await schema.findOne({
+            guildId: message.guild.id
+        })
+        const muteRole = message.guild.roles.cache.get(skema.roleId)
         const user = message.mentions.members.first()
         if (!message.member.hasPermission("MANAGE_ROLES")) return message.lineReply(
             new Discord.MessageEmbed()
@@ -20,7 +25,7 @@ module.exports = {
         )
 
         
-        if (muteRole == null) {
+        if (!skema) {
             return message.lineReply(
                 new Discord.MessageEmbed()
                     .setColor(config.errorcolor)

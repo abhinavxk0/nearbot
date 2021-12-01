@@ -45,7 +45,7 @@ module.exports = {
                 .setColor(config.embedcolor)
                 .setTitle(member.tag)
                 .setThumbnail(member.displayAvatarURL({ dynamic : true}))
-                .setDescription(`Has \`$${commaNumber(userBal)}\` in your balance.\nAdded \`${playcount} songs\` to NearBot in total!\n\n${lebel}`)
+                .setDescription(`Has \`$${commaNumber(userBal)}\` in your balance.\n\n${lebel}`)
                 .setTimestamp()
         )
     }

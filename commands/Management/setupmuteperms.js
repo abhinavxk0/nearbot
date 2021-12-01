@@ -1,8 +1,12 @@
 const db = require('quick.db');
+const schema = require('../../schema/muterole-schema');
 
 module.exports = {
     name: 'setupmuteperms',
     async execute(client, message, args, Discord){
+        let skema = await schema.findOne({
+            guildId: message.guild.id
+        })
         if (!message.member.hasPermission("MANAGE_CHANNELS")) return message.lineReply(
             new Discord.MessageEmbed()
                 .setColor('#A9E9F6')
@@ -14,8 +18,8 @@ module.exports = {
                 .setDescription(`i do not have the \`MANAGE_CHANNELS\` permission :c`)
         )
 
-        const muteRole = await db.fetch(`muterole.${message.guild.id}`);
-        if (muteRole == null) return message.lineReply(
+        const muteRole = message.guild.roles.cache.get(skema.roleId)
+        if (!skema) return message.lineReply(
             new Discord.MessageEmbed()
             .setColor('#A9E9F6')
             .setDescription(`set a mute role first to use this command `)

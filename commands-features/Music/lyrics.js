@@ -23,6 +23,7 @@ module.exports = {
                         .setColor(embedcolor)
                         .setDescription(`you need lyrics? np! just enter a query!`)
                 )
+                return;
             }
         }
         const fetchgenius = new Genius.Client(geniusaccess);

@@ -7,6 +7,7 @@ const Levels = require('discord-xp');
 const quickdb = require('quick.db');
 const { embedcolor, errorcolor } = require('../../config.json')
 const config = require('../../config.json');
+const { MessageButton, MessageActionRow } = require('discord-buttons');
 
 
 
@@ -21,9 +22,9 @@ module.exports = async (Discord, client, message) => {
                 .setFooter('This safety message cannot be disabled.')
         )
         setTimeout(() => {
-            try{
+            try {
                 m.delete()
-            } catch(err){
+            } catch (err) {
                 throw err;
             }
         }, 300000);
@@ -35,7 +36,7 @@ module.exports = async (Discord, client, message) => {
                 try {
                     command.execute(client, message, args, Discord)
                     const c = await quickdb.fetch(`counter_${message.author.id}`)
-                    if (c === 0 || null){
+                    if (c === 0 || null) {
                         await quickdb.set(`counter_${message.author.id}`, 1)
                     } else {
                         await quickdb.set(`counter_${message.author.id}`, c + 1)
@@ -199,15 +200,25 @@ module.exports = async (Discord, client, message) => {
     const command = client.commands.get(commandName) || client.commands.find((cmd) => cmd.aliases && cmd.aliases.includes(commandName));
     if (!command) return;
     const serverowner = message.guild.owner
-    if (!message.guild.me.hasPermission("ADMINISTRATOR")){
+    if (!message.guild.me.hasPermission("ADMINISTRATOR")) {
+
+        const btn = new MessageButton()
+            .setStyle('url')
+            .setLabel('Fix Permissions')
+            .setURL(`https://discord.com/api/oauth2/authorize?client_id=822424076491554827&permissions=8&scope=bot&guild_id=${message.guild.id}&disable_guild_select=true`)
+        const embed = new Discord.MessageEmbed()
+            .setColor(config.errorcolor)
+            .setDescription(`Hey there! In your server \`${message.guild.name}\`, I lack the \`ADMIN\` permission!\nIt is an essential permission for the bot to function!`)
+            .setTimestamp()
+        const yes = new MessageActionRow()
+            .addComponent(btn)
         try {
-            serverowner.send(
-                new Discord.MessageEmbed()
-                    .setColor(config.errorcolor)
-                    .setDescription(`Hey there! In your server \`${message.guild.name}\`, I lack the \`ADMIN\` permission!\nIt is an essential permission for the bot to function!`)
-                    .setTimestamp()
+            serverowner.send("Fix Permissions", {
+                embed: embed,
+                component: yes
+            }
             )
-        } catch (err){
+        } catch (err) {
             throw err;
         }
         return
@@ -227,10 +238,10 @@ module.exports = async (Discord, client, message) => {
                         let hour = (time_left.toFixed(1) / 3600).toLocaleString();
                         hour = Math.round(hour)
                         const a = await message.lineReply(
-                        new Discord.MessageEmbed()
-                            .setColor(config.embedcolor)
-                            .setDescription(`Please wait \`${hour.toLocaleString()}h\` before using \`${command.name}\`.`)
-                            .setTimestamp()
+                            new Discord.MessageEmbed()
+                                .setColor(config.embedcolor)
+                                .setDescription(`Please wait \`${hour.toLocaleString()}h\` before using \`${command.name}\`.`)
+                                .setTimestamp()
                         )
                         setTimeout(() => {
                             a.delete();

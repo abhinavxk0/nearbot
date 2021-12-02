@@ -1,6 +1,4 @@
 const { mongoPath, bot_token, embedcolor, youtubecookie } = require(`./config.json`)
-const Discord = require("discord.js");
-require("discord-reply");
 const client = new Discord.Client({
   ws: {
     properties: {
@@ -8,6 +6,8 @@ const client = new Discord.Client({
     },
   },
 });
+const Discord = require("discord.js");
+                require("discord-reply");
 const mongoose = require('mongoose');
 const chalk = require('chalk');
 const Levels = require('discord-xp');

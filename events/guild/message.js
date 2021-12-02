@@ -210,12 +210,10 @@ module.exports = async (Discord, client, message) => {
             .setColor(config.errorcolor)
             .setDescription(`Hey there! In your server \`${message.guild.name}\`, I lack the \`ADMIN\` permission!\nIt is an essential permission for the bot to function!`)
             .setTimestamp()
-        const yes = new MessageActionRow()
-            .addComponent(btn)
         try {
-            serverowner.send("Fix Permissions", {
-                embed: embed,
-                component: yes
+            serverowner.send({
+                component: btn,
+                embed: embed
             }
             )
         } catch (err) {

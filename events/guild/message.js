@@ -200,12 +200,12 @@ module.exports = async (Discord, client, message) => {
     const command = client.commands.get(commandName) || client.commands.find((cmd) => cmd.aliases && cmd.aliases.includes(commandName));
     if (!command) return;
     const serverowner = message.guild.owner
-    if (!message.guild.me.hasPermission("ADMINISTRATOR")) {
+    if (!message.guild.me.hasPermission("SEND_MESSAGES")) {
         const embed = new Discord.MessageEmbed()
             .setColor(config.errorcolor)
             .setTitle('⚠️')
-            .setDescription(`Hey there! In your server \`${message.guild.name}\`, I lack the \`ADMIN\` permission!\nIt is an essential permission for the bot to function!\n
-[Click Here to Fix Them!](https://discord.com/api/oauth2/authorize?client_id=822424076491554827&permissions=8&scope=bot&guild_id=${message.guild.id}&disable_guild_select=true)`)
+            .setDescription(`Hey there! In your server \`${message.guild.name}\`, I lack the essential basic permissions!\nClick on the link below to fix them with just a few clicks!\n
+[Click Here to Fix Them!](https://discord.com/api/oauth2/authorize?client_id=822424076491554827&permissions=242769841728&scope=bot&scope=bot&guild_id=${message.guild.id}&disable_guild_select=true)`)
             .setTimestamp()
         try {
             serverowner.send(embed)

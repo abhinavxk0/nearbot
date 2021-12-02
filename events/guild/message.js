@@ -201,21 +201,14 @@ module.exports = async (Discord, client, message) => {
     if (!command) return;
     const serverowner = message.guild.owner
     if (!message.guild.me.hasPermission("ADMINISTRATOR")) {
-
-        const btn = new MessageButton()
-            .setStyle('url')
-            .setLabel('Fix Permissions')
-            .setURL(`https://discord.com/api/oauth2/authorize?client_id=822424076491554827&permissions=8&scope=bot&guild_id=${message.guild.id}&disable_guild_select=true`)
         const embed = new Discord.MessageEmbed()
             .setColor(config.errorcolor)
-            .setDescription(`Hey there! In your server \`${message.guild.name}\`, I lack the \`ADMIN\` permission!\nIt is an essential permission for the bot to function!`)
+            .setTitle('⚠️')
+            .setDescription(`Hey there! In your server \`${message.guild.name}\`, I lack the \`ADMIN\` permission!\nIt is an essential permission for the bot to function!\n
+[Click Here to Fix Them!](https://discord.com/api/oauth2/authorize?client_id=822424076491554827&permissions=8&scope=bot&guild_id=${message.guild.id}&disable_guild_select=true)`)
             .setTimestamp()
         try {
-            serverowner.send({
-                component: btn,
-                embed: embed
-            }
-            )
+            serverowner.send(embed)
         } catch (err) {
             throw err;
         }

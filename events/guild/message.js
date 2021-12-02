@@ -201,6 +201,7 @@ module.exports = async (Discord, client, message) => {
     if (!command) return;
     const serverowner = message.guild.owner
     if (!message.guild.me.hasPermission("SEND_MESSAGES")) {
+        
         const embed = new Discord.MessageEmbed()
             .setColor(config.errorcolor)
             .setTitle('⚠️')

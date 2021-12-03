@@ -56,9 +56,5 @@ module.exports = {
             )
         }
 
-        console.log(message.author.tag)
-        console.log(message.guild.name)
-        console.log(args.join(" "))
-
     }
 }

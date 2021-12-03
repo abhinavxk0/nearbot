@@ -4,8 +4,11 @@ module.exports = {
     name: 'set-nick',
     aliases: ['nick', 'setnick', 'nickname'],
     async execute(client, message, args, Discord) {
-        const member = message.mentions.members.first() || message.guild.member(args[0])
-        const arguments = args.slice(1).join(" ");
+        const member = message.mentions.members.first();
+        let arguments = args[0];
+        if (arguments.startsWith("<@")){
+            arguments = args[1]
+        }
         const cl = message.guild.member(client.user.id)
 
         if (!message.member.hasPermission("MANAGE_NICKNAMES")) return message.lineReply(

@@ -7,7 +7,6 @@ const Levels = require('discord-xp');
 const quickdb = require('quick.db');
 const { embedcolor, errorcolor } = require('../../config.json')
 const config = require('../../config.json');
-const { MessageButton, MessageActionRow } = require('discord-buttons');
 
 
 
@@ -61,6 +60,7 @@ module.exports = async (Discord, client, message) => {
     } else if (!data) {
         prefix = 'n!'
     }
+    client.prefix = prefix
     await quickdb.set(`prefix.${message.guild.id}`, prefix)
 
 

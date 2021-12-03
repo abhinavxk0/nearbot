@@ -39,6 +39,17 @@ module.exports = {
                     .setDescription(`Nothing's in the queue right now!`)
             )
         }
+        const djuser = await db.fetch(`djuser.${message.guild.id}`);
+        if (djuser){
+            const dju = message.guild.member(djuser);
+            if (message.author.id !== dju.id){
+                return message.lineReply(
+                    new Discord.MessageEmbed()
+                        .setColor(config.embedcolor)
+                        .setDescription(`You're not the DJ for this session!`)
+                )
+            }
+        }
         const a = await message.lineReply(
             new Discord.MessageEmbed()
                 .setColor(embedcolor)

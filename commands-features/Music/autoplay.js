@@ -1,11 +1,11 @@
 const db = require('quick.db')
 const { embedcolor } = require('../../config.json')
-const djSchema = require('../../schema/djrole-schema')
 
 module.exports = {
     name: 'autoplay',
     aliases: ['ap'],
     async execute(client, message, args, Discord) {
+
         if (!message.member.voice.channel) return message.lineReplyNoMention(
             new Discord.MessageEmbed()
                 .setColor('#A9E9F6')
@@ -24,6 +24,18 @@ module.exports = {
                 .setColor('#A9E9F6')
                 .setDescription('The queue is empty!')
         )
+        
+        const djuser = await db.fetch(`djuser.${message.guild.id}`);
+        if (djuser){
+            const dju = message.guild.member(djuser);
+            if (message.author.id !== dju.id){
+                return message.lineReply(
+                    new Discord.MessageEmbed()
+                        .setColor(config.embedcolor)
+                        .setDescription(`You're not the DJ for this session!`)
+                )
+            }
+        }
 
         const a = await message.lineReply(
             new Discord.MessageEmbed()

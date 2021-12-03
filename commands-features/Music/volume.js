@@ -25,6 +25,18 @@ module.exports = {
                 .setDescription('I am not currently playing in this guild.')
         ).then(message => { message.delete({ timeout: 10000 }); })
 
+        const djuser = await db.fetch(`djuser.${message.guild.id}`);
+        if (djuser){
+            const dju = message.guild.member(djuser);
+            if (message.author.id !== dju.id){
+                return message.lineReply(
+                    new Discord.MessageEmbed()
+                        .setColor(config.embedcolor)
+                        .setDescription(`You're not the DJ for this session!`)
+                )
+            }
+        }
+        
         if (memberVC !== clientVC) return message.lineReplyNoMention(
             new Discord.MessageEmbed()
                 .setColor('#A9E9F6')

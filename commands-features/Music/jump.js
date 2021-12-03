@@ -38,7 +38,17 @@ module.exports = {
                 .setColor('#A9E9F6')
                 .setDescription('The queue is empty!')
         )
-        
+        const djuser = await db.fetch(`djuser.${message.guild.id}`);
+        if (djuser){
+            const dju = message.guild.member(djuser);
+            if (message.author.id !== dju.id){
+                return message.lineReply(
+                    new Discord.MessageEmbed()
+                        .setColor(config.embedcolor)
+                        .setDescription(`You're not the DJ for this session!`)
+                )
+            }
+        }
         if (isNaN(args[0])) return message.lineReply(
             new Discord.MessageEmbed()
                 .setColor('#A9E9F6')

@@ -53,6 +53,20 @@ module.exports = {
                     .setColor('#A9E9F6')
                     .setDescription('Disconnected!')
             )
+
+            const Schema = require('../../schema/djrole-schema');
+            const djuser = await db.fetch(`djuser.${message.guild.id}`);
+            if (Schema) {
+                if (djuser) {
+                    const dju = message.guild.member(djuser);
+                    try {
+                        dju.remove(Schema.roleId)
+                        db.delete(`djuser.${message.guild.id}`)
+                    } catch (error) {
+                        throw err;
+                    }
+                }
+            }
         
     }
 }

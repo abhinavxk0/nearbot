@@ -1,7 +1,7 @@
 const { mongoPath, bot_token, embedcolor, youtubecookie } = require(`./config.json`)
 
 const Discord = require("discord.js");
-                require("discord-reply");
+require("discord-reply");
 const client = new Discord.Client({
   ws: {
     properties: {
@@ -112,10 +112,8 @@ client.distube.on("initQueue", async (queue) => {
   const song = queue.songs[0]
   if (djRoles) {
     try {
-      const djRole = djRoles.roleId
-      song.member.roles.add(djRole)
+      song.member.roles.add(djRoles.roleId)
     } catch (err) {
-      console.log(`There was an error while removing ${song.user.tag}'s DJ role.\nGuild ID: ${queue.id}\nUser ID: ${target.user.id}`)
       throw err;
     }
     db.set(`djuser.${queue.id}`, song.user.id)
@@ -133,83 +131,79 @@ client.distube.on("empty", async (queue, song) => {
   });
 
   const guild = queue.textChannel.guild;
-  const target = guild.member(djUser)
 
   if (djRoles) {
-    const djRole = djRoles.roleId
     if (djUser) {
-      if (target.roles.cache.has(djRole)) {
+      const target = guild.member(djUser);
+      if (target.roles.cache.has(djRoles.roleId)) {
         try {
-          target.roles.remove(djRole)
-        } catch (err) {
-          console.log(`There was an error while removing ${target.tag}'s DJ role.\nGuild ID: ${queue.id}\nUser ID: ${target.user.id}`)
+          target.roles.remove(djRoles.roleId);
+        } catch (error) {
           throw err;
-        }
-      }
-      db.delete(`djuser.${queue.id}`)
-    }
-  }
+        };
+      };
+    };
+  };
+  db.delete(`djuser.${queue.id}`);
 
   queue.textChannel.send(
     new Discord.MessageEmbed()
       .setColor(embedcolor)
-      .setDescription(`leaving ${queue.voiceChannel} because it was empty :c`)
+      .setDescription(`Leaving ${queue.voiceChannel} because I had no-one to play songs for...  :c`)
   )
 
 })
 
 client.distube.on("disconnect", async (queue) => {
-  console.log(`- Bot got disconnected from the voice channel.`)
-
   const djUser = await db.fetch(`djuser.${queue.id}`)
   const djRoles = await djSchema.findOne({
     guildId: queue.id
   });
 
   const guild = queue.textChannel.guild;
-  const target = guild.member(djUser)
 
   if (djRoles) {
-    const djRole = djRoles.roleId
     if (djUser) {
-      if (target.roles.cache.has(djRole)) {
+      const target = guild.member(djUser);
+      if (target.roles.cache.has(djRoles.roleId)) {
         try {
-          target.roles.remove(djRole)
-        } catch (err) {
-          console.log(`There was an error while removing ${target.tag}'s DJ role.\nGuild ID: ${queue.id}\nUser ID: ${target.user.id}`)
+          target.roles.remove(djRoles.roleId);
+        } catch (error) {
           throw err;
-        }
-      }
-      db.delete(`djuser.${queue.id}`)
-    }
-  }
+        };
+      };
+    };
+  };
+  db.delete(`djuser.${queue.id}`);
+
+  queue.textChannel.send(
+    new Discord.MessageEmbed()
+      .setColor(config.embedcolor)
+      .setDescription(`I got disconnected from ${queue.voiceChannel.name} somehow...`)
+  )
 })
 
 client.distube.on("deleteQueue", async (queue) => {
-  console.log(`- - The queue was deleted for some reason.`)
-
   const djUser = await db.fetch(`djuser.${queue.id}`)
   const djRoles = await djSchema.findOne({
     guildId: queue.id
   });
 
   const guild = queue.textChannel.guild;
-  const target = guild.member(djUser)
 
   if (djRoles) {
-    const djRole = djRoles.roleId
-    if (djUser) { 
-      if (target.roles.cache.has(djRole)) {
+    if (djUser) {
+      const target = guild.member(djUser);
+      if (target.roles.cache.has(djRoles.roleId)) {
         try {
-          target.roles.remove(djRole)
-        } catch (err) {
-          console.log(`There was an error while removing ${target.tag}'s DJ role.\nGuild ID: ${queue.id}\nUser ID: ${target.user.id}`)
+          target.roles.remove(djRoles.roleId);
+        } catch (error) {
           throw err;
-        }
-      }
-      db.delete(`djuser.${queue.id}`)
-    }
-  }
+        };
+      };
+    };
+  };
+  db.delete(`djuser.${queue.id}`);
 })
 
 client.distube.on("error", (channel, error) => channel.send(
@@ -220,7 +214,7 @@ client.distube.on("searchNoResult", async (message, query) => {
   message.channel.send(
     new Discord.MessageEmbed()
       .setColor(embedcolor)
-      .setDescription(`no results were found for \`${query}\` :/`)
+      .setDescription(`No results were found for \`${query}\`\n:/`)
 
   )
 })
@@ -266,23 +260,23 @@ client.del = (id, coins) => {
 }
 
 process.on('unhandledRejection', error => {
-    console.error(chalk.red.bold('Unhandled Promise Rejection =>', error));
-    client.channels.cache.get("915623124031131661").send(`\`\`\`${error}\`\`\``);
+  console.error(chalk.red.bold('Unhandled Promise Rejection =>', error));
+  client.channels.cache.get("915623124031131661").send(`\`\`\`${error}\`\`\``);
 });
 
-process.on("uncaughtException",error => {
-    console.error(chalk.red.bold('Uncaught Exception =>', error));
-    client.channels.cache.get("915623124031131661").send(`\`\`\`${error}\`\`\``);
+process.on("uncaughtException", error => {
+  console.error(chalk.red.bold('Uncaught Exception =>', error));
+  client.channels.cache.get("915623124031131661").send(`\`\`\`${error}\`\`\``);
 });
 
-process.on('exit',error => {
-    console.error(chalk.red.bold('Exit Code =>', error));
-    client.channels.cache.get("915623124031131661").send(`\`\`\`${error}\`\`\``);
+process.on('exit', error => {
+  console.error(chalk.red.bold('Exit Code =>', error));
+  client.channels.cache.get("915623124031131661").send(`\`\`\`${error}\`\`\``);
 });
 
-process.on('multipleResolves',error => {
-    console.error(chalk.red.bold('Multiple Resolves =>', error));
-    client.channels.cache.get("915623124031131661").send(`\`\`\`${error}\`\`\``);
+process.on('multipleResolves', error => {
+  console.error(chalk.red.bold('Multiple Resolves =>', error));
+  client.channels.cache.get("915623124031131661").send(`\`\`\`${error}\`\`\``);
 });
 
 

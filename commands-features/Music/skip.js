@@ -7,7 +7,7 @@ module.exports = {
     aliases: ['next'],
     async execute(client, message, args, Discord) {
 
-        
+
         const memberVC = message.member.voice.channel;
         if (!memberVC) return message.lineReplyNoMention(
             new Discord.MessageEmbed()
@@ -18,7 +18,7 @@ module.exports = {
             new Discord.MessageEmbed()
                 .setColor('#A9E9F6')
                 .setDescription(`I cannot play music in this channel, I am lacking the \`SPEAK\` permission!`)
-        )  
+        )
 
         const clientVC = message.guild.me.voice.channel;
         if (!clientVC) return message.lineReplyNoMention(
@@ -53,12 +53,27 @@ module.exports = {
                 message.react('⏩'),
                 a.delete()
             ).catch((err) => console.log(err))
-        } else {        
+            const Schema = require('../../schema/djrole-schema');
+            const djuser = await db.fetch(`djuser.${message.guild.id}`);
+            if (Schema) {
+                if (djuser) {
+                    const dju = message.guild.member(djuser);
+                    try {
+                        dju.remove(Schema.roleId)
+                    } catch (error) {
+                        throw err;
+                    }
+                }
+            }
+            db.delete(`djuser.${message.guild.id}`)
+        }
+
+        else {
             const a = await message.lineReply(
-            new Discord.MessageEmbed()
-                .setColor(embedcolor)
-                .setDescription(`loading <a:loading:910721336542916660>`)
-        )
+                new Discord.MessageEmbed()
+                    .setColor(embedcolor)
+                    .setDescription(`loading <a:loading:910721336542916660>`)
+            )
             client.distube.skip(message).then(
                 message.react('⏩')
             ).catch((err) => console.log(err))

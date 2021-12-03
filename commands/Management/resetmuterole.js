@@ -23,10 +23,9 @@ module.exports = {
                     .setTimestamp()
             )
         }
-        const resetData = await Schema.findOneAndDelete({
+        await Schema.findOneAndDelete({
             guildId: message.guild.id
         });
-        await resetData.save();
         message.lineReply(
             new Discord.MessageEmbed()
                 .setColor(config.embedcolor)

@@ -31,19 +31,6 @@ module.exports = {
                 .setDescription(`You need to be in ${message.guild.me.voice.channel} to execute this command!`)
         ).then(message => { message.delete({ timeout: 10000 }); })
 
-        const djUser = await db.fetch(`djuser.${message.guild.id}`)
-        const djmember = await message.guild.member(djUser)
-        const djRoles = await djSchema.findOne({
-            guildId: message.guild.id
-        })
-        if (djRoles) {
-            if (!message.member.id === djUser) return message.lineReply(
-                new Discord.MessageEmbed()
-                    .setColor('#A9E9F6')
-                    .setDescription(`You are not the DJ for this music session!\n${djmember} is the current DJ.`)
-            )
-        }
-
         if (args[0] > 100) return message.lineReplyNoMention(
             new Discord.MessageEmbed()
                 .setColor('#A9E9F6')

@@ -24,18 +24,6 @@ module.exports = {
                 .setColor('#A9E9F6')
                 .setDescription('The queue is empty!')
         )
-        const djRoles = await djSchema.findOne({
-            guildId: message.guild.id
-        })
-        const djUser = await db.fetch(`djuser.${message.guild.id}`)
-        const djmember = await message.guild.member(djUser)
-        if (djRoles) {
-            if (!message.member.id === djUser) return message.lineReply(
-                new Discord.MessageEmbed()
-                    .setColor('#A9E9F6')
-                    .setDescription(`You are not the DJ for this music session!\n${djmember} is the current DJ.`)
-            )
-        }
 
         const a = await message.lineReply(
             new Discord.MessageEmbed()

@@ -42,20 +42,6 @@ module.exports = {
                 .setDescription('The queue is empty!')
         )
 
-        const djUser = await db.fetch(`djuser.${message.guild.id}`)
-        const djmember = await message.guild.member(djUser)
-        const djRoles = await djSchema.findOne({
-            guildId: message.guild.id
-        })
-        if (djRoles){
-            if (!message.member.id === djUser) return message.lineReply(
-                new Discord.MessageEmbed()
-                    .setColor('#A9E9F6')
-                    .setDescription(`You are not the DJ for this music session!\n${djmember} is the current DJ.`)            
-            )
-            return;
-        }
-
         if (queue.songs.length === 1) {
             const a = await message.lineReply(
                 new Discord.MessageEmbed()
@@ -67,21 +53,6 @@ module.exports = {
                 message.react('⏩'),
                 a.delete()
             ).catch((err) => console.log(err))
-            const target = message.guild.member(djUser)
-
-            if (djRoles.roleId){
-                if (djUser){
-                    if (target.roles.cache.has(djRoles.roleId)){
-                        try {
-                            target.roles.remove(djRoles.roleId)
-                          } catch (err) {
-                            console.log(`There was an error while removing ${target.tag}'s DJ role.\nGuild ID: ${queue.id}\nUser ID: ${target.user.id}`)
-                            throw err;
-                          }
-                      }
-                      db.delete(`djuser.${message.guild.id}`)
-                }
-            }
         } else {        
             const a = await message.lineReply(
             new Discord.MessageEmbed()

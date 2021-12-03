@@ -1,12 +1,14 @@
 const db = require('quick.db')
 const { embedcolor } = require('../../config.json')
 const djSchema = require('../../schema/djrole-schema')
+const config = require('../../config.json')
 
 module.exports = {
     name: 'skip',
     aliases: ['next'],
     async execute(client, message, args, Discord) {
 
+        const djuser = await db.fetch(`djuser.${message.guild.id}`);
 
         const memberVC = message.member.voice.channel;
         if (!memberVC) return message.lineReplyNoMention(
@@ -33,6 +35,15 @@ module.exports = {
                 .setDescription(`You need to be in ${message.guild.me.voice.channel} to execute this command!`)
         ).then(message => { message.delete({ timeout: 10000 }); })
 
+        if (djuser){
+            if (message.author.id !== djuser){
+                return message.lineReply(
+                    new Discord.MessageEmbed()
+                        .setColor(config.embedcolor)
+                        .setDescription(`You're not the DJ for this session!`)
+                )
+            }
+        }
 
         let queue = client.distube.getQueue(message);
 
@@ -54,7 +65,6 @@ module.exports = {
                 a.delete()
             ).catch((err) => console.log(err))
             const Schema = require('../../schema/djrole-schema');
-            const djuser = await db.fetch(`djuser.${message.guild.id}`);
             if (Schema) {
                 if (djuser) {
                     const dju = message.guild.member(djuser);

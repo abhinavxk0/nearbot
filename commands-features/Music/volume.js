@@ -1,6 +1,7 @@
 const db = require('quick.db')
 const { embedcolor } = require('../../config.json')
 const djSchema = require('../../schema/djrole-schema')
+const config = require('../../config.json')
 
 module.exports = {
     name: 'volume',
@@ -36,7 +37,7 @@ module.exports = {
                 )
             }
         }
-        
+
         if (memberVC !== clientVC) return message.lineReplyNoMention(
             new Discord.MessageEmbed()
                 .setColor('#A9E9F6')

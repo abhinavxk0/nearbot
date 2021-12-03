@@ -1,6 +1,6 @@
 const db = require('quick.db')
 const { embedcolor } = require('../../config.json')
-
+const config = require('../../config.json')
 module.exports = {
     name: 'autoplay',
     aliases: ['ap'],
@@ -24,7 +24,7 @@ module.exports = {
                 .setColor('#A9E9F6')
                 .setDescription('The queue is empty!')
         )
-        
+
         const djuser = await db.fetch(`djuser.${message.guild.id}`);
         if (djuser){
             const dju = message.guild.member(djuser);

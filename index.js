@@ -198,7 +198,7 @@ client.distube.on("deleteQueue", async (queue) => {
 
   if (djRoles) {
     const djRole = djRoles.roleId
-    if (djUser) {
+    if (djUser) { 
       if (target.roles.cache.has(djRole)) {
         try {
           target.roles.remove(djRole)

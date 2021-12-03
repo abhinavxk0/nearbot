@@ -12,7 +12,7 @@ module.exports = {
                 .setColor('#A9E9F6')
                 .setDescription(`Enter a valid user.`)
         )
-        const member = message.guild.members.cache.get(user.id);
+        const member = message.guild.member(user.id);
         const rawColor = member.displayHexColor;
         let hexColor = `#${rawColor.slice(1).trim().split(/ +/g)}`;
         if (hexColor == '#000000'){
@@ -70,7 +70,7 @@ module.exports = {
                             name: '__Server Member Info__',
                             value: `**Nickname**: ${member.nickname || "None"}
 **Role Count**: ${member.roles.cache.size - 1}
-**Joined on**: ${moment(user.joinedTimestamp).format("LLL")}`,
+**Joined on**: ${moment(member.joinedTimestamp).format("LLL")}`,
                             inline: true,
                         },
                     )

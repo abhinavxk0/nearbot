@@ -1,6 +1,6 @@
 const { embedcolor } = require('../../config.json')
 const db = require('quick.db')
-const djSchema = require('./schema/djrole-schema');
+const djSchema = require('../../schema/djrole-schema')
 
 module.exports = {
     name: 'loop',

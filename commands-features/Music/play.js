@@ -5,7 +5,7 @@ const playedtimes = require('../../schema/play-schema');
 module.exports = {
     name: 'play',
     aliases: ['p', 'pl'],
-    cooldown: 15,
+    cooldown: 5,
     category: "music",
     description: 'plays music',
     async execute(client, message, args, Discord) {

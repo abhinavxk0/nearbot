@@ -13,7 +13,7 @@ const { MessageButton, MessageActionRow } = require('discord-buttons');
 
 module.exports = async (Discord, client, message) => {
     if (message.content.toLowerCase().includes("suicide" || "$uicide")) {
-        const m = message.lineReply(
+        const m = await message.lineReply(
             new Discord.MessageEmbed()
                 .setColor(embedcolor)
                 .setTitle('Suicide Prevention')

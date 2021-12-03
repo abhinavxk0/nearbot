@@ -1,5 +1,7 @@
 const db = require('quick.db')
 const { embedcolor } = require('../../config.json')
+const djSchema = require('./schema/djrole-schema');
+
 module.exports = {
     name: 'jump',
     aliases: ['jumpto', 'skipto'],
@@ -39,8 +41,10 @@ module.exports = {
 
         const djUser = await db.fetch(`djuser.${message.guild.id}`)
         const djmember = await message.guild.member(djUser)
-        const djRole = await db.fetch(`djrole.${message.guild.id}`)
-        if (djRole){
+        const djRoles = await djSchema.findOne({
+            guildId: message.guild.id
+        })
+        if (djRoles){
             if (!message.member.id === djUser) return message.lineReply(
                 new Discord.MessageEmbed()
                     .setColor('#A9E9F6')

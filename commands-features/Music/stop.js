@@ -1,5 +1,7 @@
 const db = require('quick.db')
 const { embedcolor } = require('../../config.json')
+const djSchema = require('./schema/djrole-schema');
+
 module.exports = {
     name: 'stop',
     aliases: ['disconnect', 'dc', 'leave'],
@@ -35,8 +37,10 @@ module.exports = {
         
         const djUser = await db.fetch(`djuser.${message.guild.id}`)
         const djmember = await message.guild.member(djUser)
-        const djRole = await db.fetch(`djrole.${message.guild.id}`)
-        if (djRole){
+        const djRoles = await djSchema.findOne({
+            guildId: message.guild.id
+        })
+        if (djRoles){
             if (!message.member.id === djUser) return message.lineReply(
                 new Discord.MessageEmbed()
                     .setColor('#A9E9F6')
@@ -64,11 +68,11 @@ module.exports = {
             )
             const target = message.guild.member(djUser)
 
-            if (djRole){
+            if (djRoles.roleId){
                 if (djUser){
-                    if (target.roles.cache.has(djRole)){
+                    if (target.roles.cache.has(djRoles.roleId)){
                         try {
-                            target.roles.remove(djRole)
+                            target.roles.remove(djRoles.roleId)
                           } catch (err) {
                             console.log(`There was an error while removing ${target.tag}'s DJ role.\nGuild ID: ${queue.id}\nUser ID: ${target.user.id}`)
                             throw err;

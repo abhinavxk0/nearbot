@@ -45,7 +45,7 @@ module.exports = {
                 return message.lineReply(
                     new Discord.MessageEmbed()
                         .setColor(config.embedcolor)
-                        .setDescription(`You're not the DJ for this session!`)
+                        .setDescription(`You're not the DJ for this session! :/`)
                 )
             }
         }

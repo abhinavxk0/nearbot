@@ -7,7 +7,7 @@ module.exports = {
     aliases: ['botinfo', 'bot', 'info'],
     async execute(client, message, args, Discord) {
         const core = os.cpus()[0]
-        const clientCreated = utc(client.user.createdTimesstamp).format("Do MMMM YYYY");
+        const clientCreated = utc(client.user.createdTimestamp).format("Do MMMM YYYY");
         const servers = client.guilds.cache.size.toLocaleString();
         const users = client.guilds.cache.reduce((a, b) => a + b.memberCount, 0).toLocaleString();
         const channels = client.channels.cache.size.toLocaleString();

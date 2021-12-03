@@ -101,6 +101,8 @@ module.exports = {
 **ping**\n${config.replyicon} Check NearBot's ping. 
 **uptime**\n${config.replyicon} Check how long NearBot has been up for.
 **help**\n${config.replyicon} All commands.
+**topservers**\n${config.replyicon} Top servers the bot is in.
+**invite**\n${config.replyicon} Get the invite link.
 **message**\n${config.replyicon} Last message from developers.
 `)
         const level = new Discord.MessageEmbed()

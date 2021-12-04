@@ -179,7 +179,7 @@ client.distube.on("disconnect", async (queue) => {
   queue.textChannel.send(
     new Discord.MessageEmbed()
       .setColor(config.embedcolor)
-      .setDescription(`I got disconnected from ${queue.voiceChannel.name} somehow...`)
+      .setDescription(`I got disconnected somehow...`)
   )
 })
 

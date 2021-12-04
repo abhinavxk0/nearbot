@@ -72,7 +72,7 @@ module.exports = {
                 if (djuser) {
                     const dju = message.guild.member(djuser);
                     try {
-                        dju.remove(Schema.roleId)
+                        dju.roles.remove(Schema.roleId)
                         db.delete(`djuser.${message.guild.id}`)
                     } catch (error) {
                         throw error;

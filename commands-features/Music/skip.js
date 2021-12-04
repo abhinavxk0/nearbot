@@ -69,7 +69,7 @@ module.exports = {
                 if (djuser) {
                     const dju = message.guild.member(djuser);
                     try {
-                        dju.remove(Schema.roleId)
+                        dju.roles.remove(Schema.roleId)
                     } catch (error) {
                         throw error;
                     }

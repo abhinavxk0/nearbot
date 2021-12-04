@@ -1,5 +1,5 @@
 const { mongoPath, bot_token, embedcolor, youtubecookie } = require(`./config.json`)
-
+const config = require('./config.json');
 const Discord = require("discord.js");
 require("discord-reply");
 const client = new Discord.Client({

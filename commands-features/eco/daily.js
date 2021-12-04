@@ -4,6 +4,7 @@ const moment = require('moment')
 
 module.exports = {
     name: 'daily',
+    aliases: ['dl'],
     cooldown: 86400,
     async execute(client, message, args, Discord) {
         const coins = Math.floor(Math.random() * (10000 - 8500) + 8500);

@@ -6,7 +6,7 @@ const spacer = '<:spacer:907723859258667038>';
 module.exports = {
     name: 'coinflip',
     cooldown: 15,
-    aliases: ['cf'],
+    aliases: ['cf', 'bet'],
     async execute(client, message, args, Discord) {
         const userId = message.author.id
         const userBal = await client.bal(userId)

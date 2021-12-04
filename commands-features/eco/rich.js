@@ -5,6 +5,7 @@ const timeout = 10000;
 const emojis = ['⬅️', '➡️']
 module.exports = {
     name: 'rich',
+    aliases: ['ri'],
     cooldown: 30,
     async execute(client, message, args, Discord) {
         const collection = new Discord.Collection();

@@ -34,18 +34,18 @@ module.exports = {
             .setDescription(`**now playing:**\n[${current.name}](${current.url}) - \`${queue.formattedCurrentTime} / ${current.formattedDuration}\`` + '\n\n' + queue.songs.map((song, id) =>
                 `**${id + 1}#**<:spacer:907723859258667038>[${song.name}](${song.url}) - \`${song.formattedDuration}\``
             ).slice(1, 15).join("\n\n"))
-            .addField('Queue Duration:', `${proctime}, ${queue.songs.length} songs`, true)
-            .addField('Current DJ:', `${djmember.user.tag}`, true)
+            .addField('Queue Duration:', `\`${proctime}, ${queue.songs.length} songs\``, true)
+            .addField('Current DJ:', `\`${djmember.user.tag}\``, true)
 
-        if (queue.songs.length > 10 && queue.songs.length < 30) {
+        if (queue.songs.length > 15 && queue.songs.length < 30) {
             const pageTwo = new Discord.MessageEmbed()
                 .setAuthor('Queue', client.user.displayAvatarURL({ dynamic: true }))
                 .setColor(config.embedcolor)
                 .setDescription(`**now playing: **\n[${current.name}](${current.url}) - \`${queue.formattedCurrentTime} / ${current.formattedDuration}\`` + '\n\n' + queue.songs.map((song, id) =>
                     `**${id + 1}#**<:spacer:907723859258667038>[${song.name}](${song.url}) - \`${song.formattedDuration}\``)
-                    .slice(11, queue.songs.length).join("\n\n"))
-                .addField('Queue Duration:', `${proctime}, ${queue.songs.length} songs`, true)
-                .addField('Current DJ:', djmember.user.tag, true)
+                    .slice(16, queue.songs.length).join("\n\n"))
+                .addField('Queue Duration:', `\`${proctime}, ${queue.songs.length} songs\``, true)
+                .addField('Current DJ:', `\`${djmember.user.tag}\``, true)
 
             pag(message, [pageOne, pageTwo], ['⬅️', '➡️'], 30000);
         } else {

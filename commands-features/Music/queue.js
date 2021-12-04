@@ -1,5 +1,6 @@
-const pagination = require('discord.js-pagination')
-const { embedcolor } = require('../../config.json')
+
+const pag = require('discord.js-pagination')
+const config = require('../../config.json')
 const db = require('quick.db');
 
 module.exports = {
@@ -10,7 +11,7 @@ module.exports = {
         if (!queue) {
             return message.lineReply(
                 new Discord.MessageEmbed()
-                    .setColor(embedcolor)
+                    .setColor(config.embedcolor)
                     .setDescription(`Nothing's in the queue right now!`)
             )
         }
@@ -22,32 +23,34 @@ module.exports = {
         const djmember = message.guild.member(djUser)
         let proctime;
         if (minproctime > 60) {
-            proctime = `${Math.round(minproctime / 60)} hours`
+            proctime = `${Math.round(minproctime / 60)} hour(s)`
         } else {
             proctime = `${minproctime} mins`
         }
-        
-        if (djmember){
-            message.lineReply(
-                new Discord.MessageEmbed()
-                    .setAuthor('Queue', client.user.displayAvatarURL({ dynamic : true}))
-                    .setColor(embedcolor)
-                    .setDescription(`**now playing:**\n[${current.name}](${current.url}) - \`${queue.formattedCurrentTime} / ${current.formattedDuration}\`` + '\n\n' + queue.songs.map((song, id) =>
-                        `**${id + 1}#**<:spacer:907723859258667038>[${song.name}](${song.url}) - \`${song.formattedDuration}\``
-                    ).slice(1, 10).join("\n\n"))
-                    .addField('Queue Duration:', proctime, true)
-                    .addField('Current DJ:', `${djmember.user.tag}`, true)
-            )
+
+        const pageOne = new Discord.MessageEmbed()
+            .setAuthor('Queue', client.user.displayAvatarURL({ dynamic: true }))
+            .setColor(config.embedcolor)
+            .setDescription(`**now playing:**\n[${current.name}](${current.url}) - \`${queue.formattedCurrentTime} / ${current.formattedDuration}\`` + '\n\n' + queue.songs.map((song, id) =>
+                `**${id + 1}#**<:spacer:907723859258667038>[${song.name}](${song.url}) - \`${song.formattedDuration}\``
+            ).slice(1, 15).join("\n\n"))
+            .addField('Queue Duration:', `${proctime}, ${queue.songs.length} songs`, true)
+            .addField('Current DJ:', `${djmember.user.tag}`, true)
+
+        if (queue.songs.length > 10 && queue.songs.length < 30) {
+            const pageTwo = new Discord.MessageEmbed()
+                .setAuthor('Queue', client.user.displayAvatarURL({ dynamic: true }))
+                .setColor(config.embedcolor)
+                .setDescription(`**now playing: **\n[${current.name}](${current.url}) - \`${queue.formattedCurrentTime} / ${current.formattedDuration}\`` + '\n\n' + queue.songs.map((song, id) =>
+                    `**${id + 1}#**<:spacer:907723859258667038>[${song.name}](${song.url}) - \`${song.formattedDuration}\``)
+                    .slice(11, queue.songs.length))
+                .addField('Queue Duration:', `${proctime}, ${queue.songs.length} songs`, true)
+                .addField('Current DJ:', djmember.user.tag, true)
+
+            pag(message, [pageOne, pageTwo], ['⬅️', '➡️'], 30000);
         } else {
-            message.lineReply(
-                new Discord.MessageEmbed()
-                    .setAuthor('Queue', client.user.displayAvatarURL({ dynamic : true}))
-                    .setColor(embedcolor)
-                    .setDescription(`**now playing:**\n[${current.name}](${current.url}) - \`${queue.formattedCurrentTime} / ${current.formattedDuration}\`` + '\n\n' + queue.songs.map((song, id) =>
-                        `**${id + 1}#**<:spacer:907723859258667038>[${song.name}](${song.url}) - \`${song.formattedDuration}\``
-                    ).slice(1, 10).join("\n\n"))
-                    .addField('Queue Duration:', proctime, true)
-            )
+            message.lineReplyNoMention(pageOne)
         }
+
     }
 }

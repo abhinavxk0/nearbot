@@ -75,7 +75,7 @@ module.exports = {
                         dju.remove(Schema.roleId)
                         db.delete(`djuser.${message.guild.id}`)
                     } catch (error) {
-                        throw err;
+                        throw error;
                     }
                 }
             }

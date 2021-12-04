@@ -71,7 +71,7 @@ module.exports = {
                     try {
                         dju.remove(Schema.roleId)
                     } catch (error) {
-                        throw err;
+                        throw error;
                     }
                 }
             }

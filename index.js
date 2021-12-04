@@ -175,12 +175,6 @@ client.distube.on("disconnect", async (queue) => {
     };
   };
   db.delete(`djuser.${queue.id}`);
-
-  queue.textChannel.send(
-    new Discord.MessageEmbed()
-      .setColor(config.embedcolor)
-      .setDescription(`I got disconnected somehow...`)
-  )
 })
 
 client.distube.on("deleteQueue", async (queue) => {

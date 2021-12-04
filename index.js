@@ -135,11 +135,12 @@ client.distube.on("empty", async (queue, song) => {
   if (djRoles) {
     if (djUser) {
       const target = guild.member(djUser);
-      if (target.roles.cache.has(djRoles.roleId)) {
+      const role = message.guild.roles.cache.get(djRoles.roleId)
+      if (target.roles.cache.has(role)) {
         try {
-          target.roles.remove(djRoles.roleId);
+          target.roles.remove(role);
         } catch (error) {
-          throw err;
+          throw error;
         };
       };
     };
@@ -165,11 +166,12 @@ client.distube.on("disconnect", async (queue) => {
   if (djRoles) {
     if (djUser) {
       const target = guild.member(djUser);
-      if (target.roles.cache.has(djRoles.roleId)) {
+      const role = message.guild.roles.cache.get(djRoles.roleId)
+      if (target.roles.cache.has(role)) {
         try {
-          target.roles.remove(djRoles.roleId);
+          target.roles.remove(role);
         } catch (error) {
-          throw err;
+          throw error;
         };
       };
     };
@@ -188,11 +190,12 @@ client.distube.on("deleteQueue", async (queue) => {
   if (djRoles) {
     if (djUser) {
       const target = guild.member(djUser);
-      if (target.roles.cache.has(djRoles.roleId)) {
+      const role = message.guild.roles.cache.get(djRoles.roleId)
+      if (target.roles.cache.has(role)) {
         try {
-          target.roles.remove(djRoles.roleId);
+          target.roles.remove(role);
         } catch (error) {
-          throw err;
+          throw error;
         };
       };
     };

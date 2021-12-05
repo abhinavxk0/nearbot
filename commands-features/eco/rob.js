@@ -42,12 +42,12 @@ module.exports = {
             await client.del(target.id, robamt)
             await client.add(message.author.id, winamt)
             const belence = await client.bal(message.author.id)
-            message.lineReply(`You robbed ${target} stealing \`$${commaNumber(winamt)}\`!\nNow you have \`$${commaNumber(belence)}\`.`)
+            message.lineReply(`You robbed ${target} stealing \`$${commaNumber(winamt)}\`!\nNow you have \`$${commaNumber(belence + winamt)}\`.`)
             db.set(`rob_${target.id}`, Date.now())
         } else {
             await client.del(message.author.id, robamt)
             const belence = await client.bal(message.author.id)
-                message.lineReply(`You got caught while robbing ${target} and got fined \`$${commaNumber(robamt)}\`!\nNow you have \`$${commaNumber(belence)}\`.`)
+                message.lineReply(`You got caught while robbing ${target} and got fined \`$${commaNumber(robamt)}\`!\nNow you have \`$${commaNumber(belence - robamt)}\`.`)
         }
         
     }

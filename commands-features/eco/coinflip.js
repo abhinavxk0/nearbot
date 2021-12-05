@@ -25,12 +25,12 @@ module.exports = {
         const winamt = betamount * 2;
         if (randomBool === true){
             setTimeout(() => {
-                a.edit(`${flipped} |  you bet $${betamount} and...\ncongrats youve won! c:`)
+                a.edit(`${flipped} |  you bet $${betamount} and...\ncongrats you won! c:\nnow you have $${commaNumber(userBal + winamt)}`)
             }, 5000);
             client.add(userId, winamt)
         } else {
             setTimeout(() => {
-                a.edit(`${flipped} |  you bet $${betamount} and...\naw you lost! :/`)
+                a.edit(`${flipped} |  you bet $${betamount} and...\naw you lost! :/\nnow you have $${commaNumber(userBal - betamount)}`)
             }, 5000);
             client.del(userId, betamount)
         }

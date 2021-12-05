@@ -61,6 +61,36 @@ module.exports = {
                 .setFooter(`${message.author.tag} | Error while fetching lyrics.`, message.author.displayAvatarURL({
                     dynamic: true
                 }))
+
+            let userargs = args[0]
+            if (userargs === '-l' || '-lyrics') {
+                return message.lineReplyNoMention(
+                    new Discord.MessageEmbed()
+                        .setColor('0x1ED768')
+                        .setAuthor(`Listening to Spotify`, 'https://www.freepnglogos.com/uploads/spotify-logo-png/spotify-download-logo-30.png')
+                        .setThumbnail(image)
+                        .setTitle(name)
+                        .setDescription(`by ${artist}\non ${album}\n- **${time}**\n
+[\`Listen now on Spotify!\`](${url})`)
+                        .setFooter(`${message.author.tag}`, message.author.displayAvatarURL({
+                            dynamic: true
+                        }))
+                )
+            } else if (args[1] === '-l' || '-lyrics') {
+                return message.lineReplyNoMention(
+                    new Discord.MessageEmbed()
+                        .setColor('0x1ED768')
+                        .setAuthor(`Listening to Spotify`, 'https://www.freepnglogos.com/uploads/spotify-logo-png/spotify-download-logo-30.png')
+                        .setThumbnail(image)
+                        .setTitle(name)
+                        .setDescription(`by ${artist}\non ${album}\n- **${time}**\n
+[\`Listen now on Spotify!\`](${url})`)
+                        .setFooter(`${message.author.tag}`, message.author.displayAvatarURL({
+                            dynamic: true
+                        }))
+                )
+            }
+
             const fetchgenius = new Genius.Client(geniusaccess);
             const searches = await fetchgenius.songs.search(`${name}, ${arti}`, {
                 sanitizeQuery: true

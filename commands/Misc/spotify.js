@@ -84,10 +84,7 @@ module.exports = {
                 return message.lineReplyNoMention(errorEmbed);
             };
 
-            const titleLower = firstSong.fullTitle.toLowerCase();
-            const nameLower = songName.toLowerCase();
-
-            if (!titleLower.includes(nameLower)) {
+            if (!firstSong.fullTitle.includes(songName)) {
                 return message.lineReplyNoMention(errorEmbed);
             };
 

@@ -59,9 +59,9 @@ module.exports = {
                 .setDescription(`by ${songArtist}\non ${albumName}\n- **${time}**\n[\`Listen now on Spotify!\`](${songURL})`)
                 .setFooter(`${message.author.tag} | Error while fetching lyrics.`, message.author.displayAvatarURL({ dynamic: true }))
 
-            if (args[0].toLowerCase === '-l' || '-lyrics') {
+            if (args[0].toLowerCase() === '-l' || '-lyrics') {
                 return message.lineReplyNoMention(mainEmbed)
-            } else if (args[1].toLowerCase === '-l' || '-lyrics') {
+            } else if (args[1].toLowerCase() === '-l' || '-lyrics') {
                 return message.lineReplyNoMention(mainEmbed)
             }
 
@@ -84,8 +84,8 @@ module.exports = {
                 return message.lineReplyNoMention(errorEmbed);
             };
 
-            const titleLower = firstSong.fullTitle.toLowerCase;
-            const nameLower = songName.toLowerCase;
+            const titleLower = firstSong.fullTitle.toLowerCase();
+            const nameLower = songName.toLowerCase();
 
             if (!titleLower.includes(nameLower)) {
                 return message.lineReplyNoMention(errorEmbed);

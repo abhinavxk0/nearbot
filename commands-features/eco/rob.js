@@ -39,9 +39,9 @@ module.exports = {
         const robamt = Math.floor(Math.random() * ((targetbal / 16) - 600) + 600);
 
         if (rate == true){
-            await client.del(target.id, robamt).then(
-                client.add(message.author.id, winamt)
-            )
+            await   client.del(target.id, robamt)
+                    client.add(message.author.id, winamt)
+            
             const belence = await client.bal(message.author.id)
             message.lineReply(`You robbed ${target} stealing \`$${commaNumber(winamt)}\`!\nNow you have \`$${commaNumber(belence + winamt)}\`.`)
             db.set(`rob_${target.id}`, Date.now())

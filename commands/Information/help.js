@@ -146,6 +146,17 @@ module.exports = {
 **give**\n${config.replyicon} Give someone cash from your balance.
 **beg**\n${config.replyicon} Be a beggar and earn some cash.
 `)
+        const fun = new Discord.MessageEmbed()
+            .setColor(config.embedcolor)
+            .setThumbnail(client.user.displayAvatarURL())
+            .setAuthor('💵 ·  Economy Category')
+            .setFooter('Economy Category')
+            .setDescription(`
+**8ball**\n${config.replyicon} The magic 8 ball!
+**afk**\n${config.replyicon} Set your AFK!
+**quote**\n${config.replyicon} Get a random quote.
+**showerthought**\n${config.replyicon} Get a thought provoking thought. 👍
+`)
 
         if (!args[0]) {
             return pag(message, [main, music, moderation, eco, misc, manage, info, level, starboard], ['⬅️', '➡️'], '300000')
@@ -199,6 +210,9 @@ module.exports = {
                 break;
             case 'money':
                 message.lineReply(eco)
+                break;
+            case 'fun':
+                message.lineReply(fun)
                 break;
             default:
                 break;

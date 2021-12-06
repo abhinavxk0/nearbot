@@ -15,7 +15,7 @@ module.exports = {
 
             const word = await urban.random()
 
-            message.lineReply(
+            a.edit(
                     new Discord.MessageEmbed()
                         .setColor('#A9E9F6')
                         .setTimestamp()

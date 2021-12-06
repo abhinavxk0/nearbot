@@ -7,7 +7,7 @@ module.exports = {
     cooldown: 60 * 5,
     aliases: ['steal'],
     async execute(client, message, args, Discord){
-        const target = message.mentions.members.first()
+        const target = message.mentions.users.first()
         if (!target){
             return message.lineReply('Mention someone to rob!')
         }
@@ -36,11 +36,12 @@ module.exports = {
             rate = false
         }
         const winamt = Math.floor(Math.random() * ((targetbal / 3) - 600) + 600);
-        const robamt = Math.floor(Math.random() * (2000 - 600) + 600);
+        const robamt = Math.floor(Math.random() * ((targetbal / 16) - 600) + 600);
 
         if (rate == true){
-            await client.del(target.id, robamt)
-            await client.add(message.author.id, winamt)
+            await client.del(target.id, robamt).then(
+                client.add(message.author.id, winamt)
+            )
             const belence = await client.bal(message.author.id)
             message.lineReply(`You robbed ${target} stealing \`$${commaNumber(winamt)}\`!\nNow you have \`$${commaNumber(belence + winamt)}\`.`)
             db.set(`rob_${target.id}`, Date.now())

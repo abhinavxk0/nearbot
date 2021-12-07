@@ -12,25 +12,28 @@ module.exports = {
         const userBal = await client.bal(userId)
         let betamount = args[0];
         if (userBal < betamount) {
-            return message.lineReply('you do not have enough money to bet that amount!')
+            return message.lineReply('You do not have enough money to bet that amount!')
         }
         if (betamount > 50000) {
             betamount = 50000
         }
         if (!betamount) {
-            return message.lineReply('enter a bet amount!')
+            return message.lineReply('Enter a bet amount!')
+        }
+        if (isNaN(betamount)){
+            return message.lineReply('Enter an **amount**.')
         }
         const a = await message.lineReply(`${flipping} |  you bet $${betamount} and...`)
         const randomBool = Math.random() > 0.5 ? true : false;
         const winamt = betamount * 2;
         if (randomBool === true){
             setTimeout(() => {
-                a.edit(`${flipped} |  you bet $${betamount} and...\ncongrats you won! c:\nnow you have $${commaNumber(userBal + winamt)}`)
+                a.edit(`${flipped} |  You bet \`$${commaNumber(betamount)}\` and...\nCongrats you won! c:\nYou now have \`$${commaNumber(userBal + winamt)}\`.`)
             }, 5000);
             client.add(userId, winamt)
         } else {
             setTimeout(() => {
-                a.edit(`${flipped} |  you bet $${betamount} and...\naw you lost! :/\nnow you have $${commaNumber(userBal - betamount)}`)
+                a.edit(`${flipped} |  You bet \`$${commaNumber(betamount)}\` and...\nAw you lost! :/\nYou now have \`$${commaNumber(userBal - betamount)}\``)
             }, 5000);
             client.del(userId, betamount)
         }

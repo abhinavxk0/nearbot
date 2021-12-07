@@ -12,17 +12,17 @@ module.exports = {
         let reciever = message.mentions.users.first();
         
         if (!reciever){
-            return message.lineReply('mention a user')
+            return message.lineReply('Mention a user')
         }
 
         if (isNaN(toGive)) {
-            return message.lineReply('that is not an amount')
+            return message.lineReply('That is not an amount')
         };
         if (userId === reciever.id){
-            return message.lineReply('you cant give yourself money')
+            return message.lineReply('You cant give yourself money')
         }
         if (toGive > userbal) {
-            return message.lineReply('not enough cash')
+            return message.lineReply('Not enough cash!')
         };
 
         await client.add(reciever.id, parseInt(toGive))

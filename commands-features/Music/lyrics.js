@@ -39,7 +39,6 @@ module.exports = {
             var lyricsLength = lyrics.length;
         } catch (err) {
             return message.lineReply(`There was an error executing this command!`)
-
         }
 
         const loading = await message.lineReply(
@@ -62,6 +61,7 @@ module.exports = {
                 .setThumbnail(firstSong.image)
                 .setDescription(`${lyrics}\n\n[\`Open in Browser\`](${firstSong.url})`)
             message.lineReplyNoMention(embed);
+            loading.delete();
         } else if (lyricsLength > 2000 && lyricsLength <= 4000) {
             const firstSlice = lyrics.slice(0, 2000);
             const secondSlice = lyrics.slice(2000, lyricsLength);
@@ -81,6 +81,7 @@ module.exports = {
                 .setDescription(secondSlice)
 
             pag(message, [main, embedFirst, embedSecond], ['⬅️', '➡️'], 300000)
+            loading.delete();
         } else if (lyricsLength > 4000 && lyricsLength <= 6000) {
             const firstSlice = lyrics.slice(0, 2000);
             const secondSlice = lyrics.slice(2000, 4000);
@@ -108,6 +109,7 @@ module.exports = {
                 .setDescription(thirdSlice)
 
             pag(message, [main, embedFirst, embedSecond, embedThird], ['⬅️', '➡️'], 300000)
+            loading.delete();
         } else if (lyricsLength > 6000 && lyricsLength <= 8000) {
             const firstSlice = lyrics.slice(0, 2000);
             const secondSlice = lyrics.slice(2000, 4000);
@@ -143,12 +145,14 @@ module.exports = {
                 .setDescription(fourthSlice)
 
             pag(message, [main, embedFirst, embedSecond, embedThird, embedFourth], ['⬅️', '➡️'], 300000)
+            loading.delete();
         } else {
             message.lineReplyNoMention(
                 new Discord.MessageEmbed()
                     .setColor(config.embedcolor)
                     .setDescription(`Aw the lyrics are too long, but you can check them out [here](${firstSong.url})!`)
             )
+            loading.delete();
         }
     }
 }

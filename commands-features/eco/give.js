@@ -14,6 +14,7 @@ module.exports = {
         if (!reciever){
             return message.lineReply('Mention a user')
         }
+        if (!reciever.bot) return;
 
         if (isNaN(toGive)) {
             return message.lineReply('That is not an amount')

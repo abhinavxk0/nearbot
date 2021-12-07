@@ -11,6 +11,7 @@ module.exports = {
         if (!target){
             return message.lineReply('Mention someone to rob!')
         }
+        if (!target.bot) return;
         if (target.id == message.author.id){
             return message.lineReply(`You can't rob yourself!`)
         }

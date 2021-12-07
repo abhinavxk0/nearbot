@@ -36,7 +36,7 @@ module.exports = {
         ).then(message => { message.delete({ timeout: 10000 }); })
 
         let queue = await client.distube.getQueue(message);
-        if (!queue) return 
+        if (!queue) return;
 
         if (djuser){
             if (message.author.id !== djuser){

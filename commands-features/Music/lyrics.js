@@ -1,168 +1,154 @@
+
 const Genius = require("genius-lyrics");
-const pagination = require('discord.js-pagination')
-const { geniusaccess, embedcolor } = require('../../config.json')
-const emojis = [
-    "⬅️", "➡️"
-]
-const timeout = '300000';
+const pag = require('discord.js-pagination')
+const config = require('../../config.json')
 
 module.exports = {
     name: 'lyrics',
+    description: 'Get lyrics.',
     async execute(client, message, args, Discord) {
         const queue = await client.distube.getQueue(message);
-        
+
         let query = args.join(" ")
         if (!query) {
-            if (queue){
+            if (queue) {
                 const song = client.distube.getQueue(message).songs[0]
                 query = song.name
-                
+
             } else {
                 message.lineReply(
                     new Discord.MessageEmbed()
-                        .setColor(embedcolor)
+                        .setColor('#ffff64')
+                        .setTimestamp()
                         .setDescription(`you need lyrics? np! just enter a query!`)
                 )
                 return;
             }
         }
-        const fetchgenius = new Genius.Client(geniusaccess);
+        const fetchgenius = new Genius.Client(config.geniusaccess);
         try {
             var searches = await fetchgenius.songs.search(query)
             var firstSong = searches[0];
             var lyrics;
             try {
                 lyrics = await firstSong.lyrics();
-            } catch(err){
+            } catch (err) {
                 message.lineReply(`Couldn't find lyrics for this song!`)
                 return;
             }
             var lyricsLength = lyrics.length;
-        } catch (err){
+        } catch (err) {
             return message.lineReply(`There was an error executing this command!`)
 
         }
-        
-        const a = await message.lineReply(
+
+        const loading = await message.lineReply(
             new Discord.MessageEmbed()
-                .setColor(embedcolor)
+                .setColor('#ffff64')
                 .setDescription(`loading <a:loading:910721336542916660>`)
         )
         const main = new Discord.MessageEmbed()
-            .setColor(embedcolor)
+            .setColor('#ffff64')
+            .setAuthor(`by ${firstSong.artist.name}`)
             .setThumbnail(firstSong.image)
             .setTitle(firstSong.title)
-            .setURL(firstSong.url)
-            .setDescription(`by [${firstSong.artist.name}](${firstSong.artist.url})`)
-            // .setDescription(`[**${firstSong.fullTitle}**](${firstSong.url})`)
-
+            .setDescription(`\n\n\n[\`Open in Browser\`](${firstSong.url})`)
 
         if (lyricsLength < 2000) {
-            let under2000 = new Discord.MessageEmbed()
-                .setColor(embedcolor)
-                .setTitle('lyrics')
-                .setDescription(lyrics)
-            let pagesone = [main, under2000]
-            pagination(message, pagesone, emojis, timeout)
-                try {
-                    a.delete()
-                } catch (err) {
-                    throw err;
-                }
-            
-        } else if (lyricsLength <= 4000) {
-            let l1 = lyrics.slice(0, 2000)
-            let l2 = lyrics.slice(2000, lyricsLength)
-            let l1em = new Discord.MessageEmbed()
-            .setTitle('lyrics')
-            .setColor(embedcolor)
-            .setDescription(l1)
-            let l2em = new Discord.MessageEmbed()
-            .setColor(embedcolor)
-            .setDescription(l2)
-            let pagestwo = [main, l1em, l2em]
-            pagination(message, pagestwo, emojis, timeout)        
-            try {
-                a.delete()
-            } catch (err) {
-                throw err;
-            }
-        } else if (lyricsLength <= 4000) {
-            let ly1 = lyrics.slice(0, 2000)
-            let ly2 = lyrics.slice(2000, 4000)
-            let ly3 = lyrics.slice(4000, lyricsLength)
+            const embed = new Discord.MessageEmbed()
+                .setColor('#ffff64')
+                .setAuthor(`by ${firstSong.artist.name}`)
+                .setTitle(firstSong.title)
+                .setThumbnail(firstSong.image)
+                .setDescription(`${lyrics}\n\n[\`Open in Browser\`](${firstSong.url})`)
+            message.lineReplyNoMention(embed);
+        } else if (lyricsLength > 2000 && lyricsLength <= 4000) {
+            const firstSlice = lyrics.slice(0, 2000);
+            const secondSlice = lyrics.slice(2000, lyricsLength);
 
-            let ly1em = new Discord.MessageEmbed()
-            .setTitle('lyrics')
-            .setColor(embedcolor)
-            .setDescription(ly1)
-            let ly2em = new Discord.MessageEmbed()
-            .setColor(embedcolor)
-            .setDescription(ly2)
-            let ly3em =new Discord.MessageEmbed()
-            .setColor(embedcolor)
-            .setDescription(ly3)
+            const embedFirst = new Discord.MessageEmbed()
+                .setColor('#ffff64')
+                .setAuthor(`by ${firstSong.artist.name}`)
+                .setTitle(firstSong.title)
+                .setThumbnail(firstSong.image)
+                .setDescription(firstSlice)
 
-            let pagesthree = [main, ly1em, ly2em, ly3em]
-            pagination(message, pagesthree, emojis, timeout)
-            try {
-                a.delete()
-            } catch (err) {
-                throw err;
-            }
-        } else if (lyricsLength <= 5000) {
-            let li1 = lyrics.slice(0, 2000)
-            let li2 = lyrics.slice(2000, 4000)
-            let li3 = lyrics.slice(4000, lyricsLength)
+            const embedSecond = new Discord.MessageEmbed()
+                .setColor('#ffff64')
+                .setAuthor(`by ${firstSong.artist.name}`)
+                .setTitle(firstSong.title)
+                .setThumbnail(firstSong.image)
+                .setDescription(secondSlice)
 
-            let li1em = new Discord.MessageEmbed()
-            .setTitle('lyrics')
-            .setColor(embedcolor)
-            .setDescription(li1)
-            let li2em = new Discord.MessageEmbed()
-            .setColor(embedcolor)
-            .setDescription(li2)
-            let li3em = new Discord.MessageEmbed()
-            .setColor(embedcolor)
-            .setDescription(li3)
+            pag(message, [main, embedFirst, embedSecond], ['⬅️', '➡️'], 300000)
+        } else if (lyricsLength > 4000 && lyricsLength <= 6000) {
+            const firstSlice = lyrics.slice(0, 2000);
+            const secondSlice = lyrics.slice(2000, 4000);
+            const thirdSlice = lyrics.slice(4000, lyricsLength)
 
-            let pagesfour = [main, li1em, li2em, li3em]
-            pagination(message, pagesfour, emojis, timeout)
-            try {
-                a.delete()
-            } catch (err) {
-                throw err;
-            }
-        } else if (lyricsLength < 6000){
-            let le1 = lyrics.slice(0, 2000)
-            let le2 = lyrics.slice(2000, 4000)
-            let le3 = lyrics.slice(4000, 5000)
-            let le4 = lyrics.slice(5000, lyricsLength)
+            const embedFirst = new Discord.MessageEmbed()
+                .setColor('#ffff64')
+                .setAuthor(`by ${firstSong.artist.name}`)
+                .setTitle(firstSong.title)
+                .setThumbnail(firstSong.image)
+                .setDescription(firstSlice)
 
-            let le1e = new Discord.MessageEmbed()
-            .setTitle('lyrics')
-            .setColor(embedcolor)
-            .setDescription(le1)
-            let le2e = new Discord.MessageEmbed()
-            .setColor(embedcolor)
-            .setDescription(le2)
-            let le3e = new Discord.MessageEmbed()
-            .setColor(embedcolor)
-            .setDescription(le3)
-            let le4e = new Discord.MessageEmbed()
-            .setColor(embedcolor)
-            .setDescription(le4)
+            const embedSecond = new Discord.MessageEmbed()
+                .setColor('#ffff64')
+                .setAuthor(`by ${firstSong.artist.name}`)
+                .setTitle(firstSong.title)
+                .setThumbnail(firstSong.image)
+                .setDescription(secondSlice)
 
-            let pagesfive = [main, le1e, le2e, le3e, le4e]
-            pagination(message, pagesfive, emojis, timeout)
-            try {
-                a.delete()
-            } catch (err) {
-                throw err;
-            }
-        }
-        else {
-            message.lineReply(`oh no! the lyrics are too long!`)
+            const embedThird = new Discord.MessageEmbed()
+                .setColor('#ffff64')
+                .setAuthor(`by ${firstSong.artist.name}`)
+                .setTitle(firstSong.title)
+                .setThumbnail(firstSong.image)
+                .setDescription(thirdSlice)
+
+            pag(message, [main, embedFirst, embedSecond, embedThird], ['⬅️', '➡️'], 300000)
+        } else if (lyricsLength > 6000 && lyricsLength <= 8000) {
+            const firstSlice = lyrics.slice(0, 2000);
+            const secondSlice = lyrics.slice(2000, 4000);
+            const thirdSlice = lyrics.slice(4000, 6000);
+            const fourthSlice = lyrics.slice(6000, lyricsLength)
+
+            const embedFirst = new Discord.MessageEmbed()
+                .setColor('#ffff64')
+                .setAuthor(`by ${firstSong.artist.name}`)
+                .setTitle(firstSong.title)
+                .setThumbnail(firstSong.image)
+                .setDescription(firstSlice)
+
+            const embedSecond = new Discord.MessageEmbed()
+                .setColor('#ffff64')
+                .setAuthor(`by ${firstSong.artist.name}`)
+                .setTitle(firstSong.title)
+                .setThumbnail(firstSong.image)
+                .setDescription(secondSlice)
+
+            const embedThird = new Discord.MessageEmbed()
+                .setColor('#ffff64')
+                .setAuthor(`by ${firstSong.artist.name}`)
+                .setTitle(firstSong.title)
+                .setThumbnail(firstSong.image)
+                .setDescription(thirdSlice)
+
+            const embedFourth = new Discord.MessageEmbed()
+                .setColor('#ffff64')
+                .setAuthor(`by ${firstSong.artist.name}`)
+                .setTitle(firstSong.title)
+                .setThumbnail(firstSong.image)
+                .setDescription(fourthSlice)
+
+            pag(message, [main, embedFirst, embedSecond, embedThird, embedFourth], ['⬅️', '➡️'], 300000)
+        } else {
+            message.lineReplyNoMention(
+                new Discord.MessageEmbed()
+                    .setColor(config.embedcolor)
+                    .setDescription(`Aw the lyrics are too long, but you can check them out [here](${firstSong.url})!`)
+            )
         }
     }
 }

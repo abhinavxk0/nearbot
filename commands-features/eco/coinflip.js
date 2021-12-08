@@ -20,10 +20,13 @@ module.exports = {
         if (!betamount) {
             return message.lineReply('Enter a bet amount!')
         }
+        if (args[0].toLowerCase() === 'all'){
+            betamount = 50000
+        }
         if (isNaN(betamount)){
             return message.lineReply('Enter an **amount**.')
         }
-        const a = await message.lineReply(`${flipping} |  you bet $${betamount} and...`)
+        const a = await message.lineReply(`${flipping} |  You bet $${betamount} and...`)
         const randomBool = Math.random() > 0.5 ? true : false;
         const winamt = betamount * 2;
         if (randomBool === true){

@@ -22,7 +22,7 @@ module.exports = {
         const targetbal = await client.bal(target.id);
         const autbal = await client.bal(message.author.id)
         if (targetbal < 500){
-            return message.lineReply(`**${target.user.username}** is poor, leave them alone!`)
+            return message.lineReply(`**${target.username}** is poor, leave them alone!`)
         }
         if (autbal < 500){
             return message.lineReply("You're poor! Don't steal cash from others!")
@@ -43,12 +43,12 @@ module.exports = {
                     client.add(message.author.id, winamt)
             
             const belence = await client.bal(message.author.id)
-            message.lineReply(`You robbed **${target.user.username}** stealing **$${commaNumber(winamt)}**!\nNow you have **$${commaNumber(belence + winamt)}**.`)
+            message.lineReply(`You robbed **${target.username}** stealing **$${commaNumber(winamt)}**!\nNow you have **$${commaNumber(belence + winamt)}**.`)
             db.set(`rob_${target.id}`, Date.now())
         } else {
             await client.del(message.author.id, robamt)
             const belence = await client.bal(message.author.id)
-                message.lineReply(`You got caught while robbing **${target.user.username}** and got fined **$${commaNumber(robamt)}**!\nNow you have **$${commaNumber(belence - robamt)}**.`)
+                message.lineReply(`You got caught while robbing **${target.username}** and got fined **$${commaNumber(robamt)}**!\nNow you have **$${commaNumber(belence - robamt)}**.`)
         }
         
     }

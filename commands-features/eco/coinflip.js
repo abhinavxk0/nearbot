@@ -19,8 +19,10 @@ module.exports = {
         if (!betamount) {
             return message.lineReply('Enter a bet amount!')
         }
-        if (args[0].toLowerCase() === 'all'){
-            betamount = 50000
+        if (userBal >= 50000){
+            if (args[0].toLowerCase() === 'all'){
+                betamount = 50000
+            }
         }
         if (isNaN(betamount)){
             return message.lineReply('Enter an **amount**.')

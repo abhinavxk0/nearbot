@@ -27,7 +27,7 @@ module.exports = {
         if (isNaN(betamount)){
             return message.lineReply('Enter an **amount**.')
         }
-        const a = await message.lineReply(`${flipping} |  You bet **$${betamount}** and...`)
+        const a = await message.lineReply(`${flipping} |  You bet **$${commaNumber(betamount)}** and...`)
         const randomBool = Math.random() > 0.5 ? true : false;
         const winamt = betamount * 2;
         if (randomBool === true){

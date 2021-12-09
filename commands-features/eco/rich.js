@@ -3,6 +3,7 @@ const commaNumber = require('comma-number')
 const pag = require('discord.js-pagination')
 const timeout = 10000;
 const emojis = ['⬅️', '➡️']
+const spacer = '<:spacer:907723859258667038>'
 module.exports = {
     name: 'rich',
     aliases: ['ri'],
@@ -21,9 +22,11 @@ module.exports = {
                         : null
                 })
         )
-        const data = collection.sort((a, b) => b.bal - a.bal).first(9)
+
+        const data = collection.sort((a, b) => b.bal - a.bal).first(10)
+        console.log(collection)
         const lb = data.map((v, i) => {
-            return `**0${i + 1}#** - ${client.users.cache.get(v.id).tag}\n<:spacer:907723859258667038>\`$${commaNumber(v.bal)}\``
+            return `**${i + 1}#**${spacer}${client.users.cache.get(v.id).tag} - **$${commaNumber(v.bal)}**\n`
         })
 
         message.lineReply(

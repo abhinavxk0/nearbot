@@ -36,7 +36,7 @@ module.exports = {
             rate = false
         }
         const winamt = Math.floor(Math.random() * ((targetbal / 3) - 600) + 600);
-        const robamt = Math.floor(Math.random() * ((targetbal / 16) - 600) + 600);
+        const robamt = Math.floor(Math.random() * ((autbal / 16) - 600) + 600);
 
         if (rate == true){
             await   client.del(target.id, robamt)

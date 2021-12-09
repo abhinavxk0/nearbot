@@ -35,7 +35,9 @@ client.distube = new Distube(client, {
   searchSongs: 0,
   emptyCooldown: 15,
   updateYouTubeDL: false,
-  nsfw: true,
+  youtubeDL: false,
+  nsfw: false,
+  savePreviousSongs: true,
   youtubeCookie: youtubecookie,
   plugins: [new SpotifyPlugin(), new SoundCloudPlugin()],
 })

@@ -26,7 +26,7 @@ module.exports = {
         new Discord.MessageEmbed()
         .setAuthor('🎱  Magic 8 Ball')
         .setColor(config.embedcolor)
-        .setDescription(`\`${question}\`\n**8 Ball** says... ${replies[result]}`)
+        .setDescription(`\`${question}\`\n\n**8 Ball** says... ${replies[result]}`)
       )
     }, 500);
   }

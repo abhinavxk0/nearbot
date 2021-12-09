@@ -1,7 +1,6 @@
 const commaNumber = require('comma-number')
 const flipping = '<a:flipping:911920804357361674>';
 const flipped = '<:flipped:911924945225912320>';
-const spacer = '<:spacer:907723859258667038>';
 
 module.exports = {
     name: 'coinflip',

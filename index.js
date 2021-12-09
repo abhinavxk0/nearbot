@@ -258,22 +258,24 @@ client.del = (id, coins) => {
 
 process.on('unhandledRejection', error => {
   console.error(chalk.red.bold('Unhandled Promise Rejection =>', error));
-  client.channels.cache.get("915623124031131661").send(`\`\`\`${error}\`\`\``);
+  client.channels.cache.get("915623124031131661").send(`Unhandled Rejection:\n\`\`\`${error}\`\`\``);
 });
 
 process.on("uncaughtException", error => {
   console.error(chalk.red.bold('Uncaught Exception =>', error));
-  client.channels.cache.get("915623124031131661").send(`\`\`\`${error}\`\`\``);
+  client.channels.cache.get("915623124031131661").send(`Uncaught Exception:\n\`\`\`${error}\`\`\``);
 });
 
 process.on('exit', error => {
   console.error(chalk.red.bold('Exit Code =>', error));
-  client.channels.cache.get("915623124031131661").send(`\`\`\`${error}\`\`\``);
+  client.channels.cache.get("915623124031131661").send(`Exit:\n\`\`\`${error}\`\`\``);
 });
 
 process.on('multipleResolves', error => {
   console.error(chalk.red.bold('Multiple Resolves =>', error));
-  client.channels.cache.get("915623124031131661").send(`\`\`\`${error}\`\`\``);
+  if (error !== 'reject'){
+    client.channels.cache.get("915623124031131661").send(`Multiple Resolves:\n\`\`\`${error}\`\`\``);
+  }
 });
 
 

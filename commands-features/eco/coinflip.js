@@ -25,17 +25,17 @@ module.exports = {
         if (isNaN(betamount)){
             return message.lineReply('Enter an **amount**.')
         }
-        const a = await message.lineReply(`${flipping} |  You bet $${betamount} and...`)
+        const a = await message.lineReply(`${flipping} |  You bet **$${betamount}** and...`)
         const randomBool = Math.random() > 0.5 ? true : false;
         const winamt = betamount * 2;
         if (randomBool === true){
             setTimeout(() => {
-                a.edit(`${flipped} |  You bet \`$${commaNumber(betamount)}\` and...\nCongrats you won! c:\nYou now have \`$${commaNumber(userBal + winamt)}\`.`)
+                a.edit(`${flipped} |  You bet **$${commaNumber(betamount)}** and...\nCongrats you won! c:\nYou now have **$${commaNumber(userBal + winamt)}**.`)
             }, 5000);
             client.add(userId, winamt)
         } else {
             setTimeout(() => {
-                a.edit(`${flipped} |  You bet \`$${commaNumber(betamount)}\` and...\nAw you lost! :/\nYou now have \`$${commaNumber(userBal - betamount)}\``)
+                a.edit(`${flipped} |  You bet **$${commaNumber(betamount)}** and...\nAw you lost! :/\nYou now have **$${commaNumber(userBal - betamount)}**`)
             }, 5000);
             client.del(userId, betamount)
         }

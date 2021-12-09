@@ -8,7 +8,7 @@ module.exports = {
     cooldown: 86400,
     async execute(client, message, args, Discord) {
         const coins = Math.floor(Math.random() * (50000 - 35000) + 35000);
-        message.lineReply(`You recieved \`$${commaNumber(coins)}\` for today!`)
+        message.lineReply(`You recieved **$${commaNumber(coins)}** for today!`)
         client.add(message.author.id, coins)
     }
 }

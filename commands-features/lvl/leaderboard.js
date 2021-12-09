@@ -10,11 +10,11 @@ module.exports = {
                 .setColor('#A9E9F6')
                 .setDescription("Leveling system is **disabled**.")
         );
-        const rawLeaderboard = await Levels.fetchLeaderboard(message.guild.id, 5);
+        const rawLeaderboard = await Levels.fetchLeaderboard(message.guild.id, 10);
         if (rawLeaderboard.length < 1) return message.reply('there is no leaderboard');
         const leaderboard = await Levels.computeLeaderboard(client, rawLeaderboard, true);
         const lb = leaderboard.map(
-            e => `**0${e.position}#** - ${e.username}#${e.discriminator}\n<:spacer:907723859258667038>**Level**: \`${e.level}\`\n<:spacer:907723859258667038>**XP**: \`${e.xp.toLocaleString()}\``
+            e => `**${e.position}#** - ${e.username}#${e.discriminator}\n<:spacer:907723859258667038>**Level**: \`${e.level}\`\n<:spacer:907723859258667038>**XP**: \`${e.xp.toLocaleString()}\``
         )
         message.lineReply(
             new Discord.MessageEmbed()

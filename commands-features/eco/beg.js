@@ -1,4 +1,5 @@
 const config = require('../../config.json')
+const comnum = require('comma-number')
 
 module.exports = {
     name: 'beg',
@@ -8,7 +9,7 @@ module.exports = {
         const randomBool = Math.random() > 0.1 ? true : false;
         if (randomBool === true){
             client.add(message.author.id, money)
-            message.lineReply(`You begged and earned \`$${money}\`.`)
+            message.lineReply(`You begged and earned **$${comnum(money)}**.`)
         } else if (randomBool === false) {
             message.lineReply('LOL no-one gave you any money!')
         }

@@ -8,7 +8,7 @@ module.exports = {
         const target = message.mentions.users.first() || message.author;
         client.del(target.id, parseInt(args[0]))
 
-        message.lineReply(`Removed \`$${commaNumber(args[0])}\` from **${target.username}'s** balance!`)
+        message.lineReply(`Removed **$${commaNumber(args[0])}** from **${target.username}'s** balance!`)
 
     }
 }

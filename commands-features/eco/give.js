@@ -28,7 +28,7 @@ module.exports = {
         await client.add(reciever.id, parseInt(toGive))
         await client.del(userId, parseInt(toGive))
 
-        message.lineReply(`you gave ${reciever} \`$${commaNumber(parseInt(toGive))}\`!`)
+        message.lineReply(`you gave ${reciever} **$${commaNumber(parseInt(toGive))}**!`)
 
     }
 }

@@ -138,9 +138,9 @@ client.distube.on("empty", async (queue, song) => {
     if (djUser) {
       const target = guild.member(djUser);
       const role = message.guild.roles.cache.get(djRoles.roleId)
-      if (target.roles.cache.has(role)) {
+      if (target.roles.cache.has(role.id)) {
         try {
-          target.roles.remove(role);
+          target.roles.remove(role.id);
         } catch (error) {
           throw error;
         };
@@ -169,9 +169,9 @@ client.distube.on("disconnect", async (queue) => {
     if (djUser) {
       const target = guild.member(djUser);
       const role = message.guild.roles.cache.get(djRoles.roleId)
-      if (target.roles.cache.has(role)) {
+      if (target.roles.cache.has(role.id)) {
         try {
-          target.roles.remove(role);
+          target.roles.remove(role.id);
         } catch (error) {
           throw error;
         };
@@ -193,9 +193,9 @@ client.distube.on("deleteQueue", async (queue) => {
     if (djUser) {
       const target = guild.member(djUser);
       const role = message.guild.roles.cache.get(djRoles.roleId)
-      if (target.roles.cache.has(role)) {
+      if (target.roles.cache.has(role.id)) {
         try {
-          target.roles.remove(role);
+          target.roles.remove(role.id);
         } catch (error) {
           throw error;
         };
@@ -205,9 +205,10 @@ client.distube.on("deleteQueue", async (queue) => {
   db.delete(`djuser.${queue.id}`);
 })
 
-client.distube.on("error", (channel, error) => channel.send(
-  console.log(chalk.red`DISTUBE ERROR!!: ${error}`)
-));
+client.distube.on("error", (channel, error) => {
+  console.log('Distube Error:\n'+ error)
+  client.channels.cache.get("915623124031131661").send(`Distube Error:\n\`\`\`${error}\`\`\``)
+});
 
 client.distube.on("searchNoResult", async (message, query) => {
   message.channel.send(

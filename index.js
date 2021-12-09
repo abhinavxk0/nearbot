@@ -137,7 +137,7 @@ client.distube.on("empty", async (queue, song) => {
   if (djRoles) {
     if (djUser) {
       const target = guild.member(djUser);
-      const role = message.guild.roles.cache.get(djRoles.roleId)
+      const role = guild.roles.cache.get(djRoles.roleId)
       if (target.roles.cache.has(role.id)) {
         try {
           target.roles.remove(role.id);
@@ -168,7 +168,7 @@ client.distube.on("disconnect", async (queue) => {
   if (djRoles) {
     if (djUser) {
       const target = guild.member(djUser);
-      const role = message.guild.roles.cache.get(djRoles.roleId)
+      const role = guild.roles.cache.get(djRoles.roleId)
       if (target.roles.cache.has(role.id)) {
         try {
           target.roles.remove(role.id);
@@ -192,7 +192,7 @@ client.distube.on("deleteQueue", async (queue) => {
   if (djRoles) {
     if (djUser) {
       const target = guild.member(djUser);
-      const role = message.guild.roles.cache.get(djRoles.roleId)
+      const role = guild.roles.cache.get(djRoles.roleId)
       if (target.roles.cache.has(role.id)) {
         try {
           target.roles.remove(role.id);

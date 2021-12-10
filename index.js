@@ -35,7 +35,7 @@ client.distube = new Distube(client, {
   searchSongs: 0,
   emptyCooldown: 15,
   updateYouTubeDL: false,
-  youtubeDL: false,
+  youtubeDL: true,
   nsfw: false,
   savePreviousSongs: true,
   youtubeCookie: youtubecookie,

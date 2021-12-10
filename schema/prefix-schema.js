@@ -7,7 +7,8 @@ const prefixSchema = mongoose.Schema({
    },  
    prefix: {
        type: String, 
-       required: true
+       required: true,
+       default: 'n!'
    },
 
 })

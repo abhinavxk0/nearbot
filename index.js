@@ -34,27 +34,17 @@ client.prefix;
 });
 
 client.distube = new Distube(client, {
-  emitNewSongOnly: true,
+  emitNewSongOnly: false,
   savePreviousSongs: true,
   searchSongs: 0,
   emptyCooldown: 15,
   updateYouTubeDL: false,
-  youtubeDL: true,
-  ytdlOptions: {
-    quality: "highestaudio",
-    format: "audioonly",
-  },
-  nsfw: false,
+  nsfw: true,
   savePreviousSongs: true,
   youtubeCookie: youtubecookie,
   plugins: [
     new SpotifyPlugin({
-      parralel: false,
-      emitEventsAfterFetching: true,
-      api: {
-        clientId: config.spotifyID,
-        clientSecret: config.spotifysecret,
-      },
+      emitEventsAfterFetching: false,
     }),
     new SoundCloudPlugin(),
   ],

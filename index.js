@@ -1,27 +1,31 @@
-const { mongoPath, bot_token, embedcolor, youtubecookie } = require(`./config.json`)
-const config = require('./config.json');
+const {
+  mongoPath,
+  bot_token,
+  embedcolor,
+  youtubecookie,
+} = require(`./config.json`);
+const config = require("./config.json");
 const Discord = require("discord.js");
 require("discord-reply");
 const client = new Discord.Client({
   ws: {
     properties: {
-      $browser: "Discord iOS"
+      $browser: "Discord iOS",
     },
   },
 });
-const mongoose = require('mongoose');
-const chalk = require('chalk');
-const Levels = require('discord-xp');
-const Distube = require('distube').default;
-const db = require('quick.db')
-const economySchema = require('./schema/economy-schema')
-const djSchema = require('./schema/djrole-schema');
+const mongoose = require("mongoose");
+const chalk = require("chalk");
+const Levels = require("discord-xp");
+const Distube = require("distube").default;
+const db = require("quick.db");
+const economySchema = require("./schema/economy-schema");
+const djSchema = require("./schema/djrole-schema");
 const { SpotifyPlugin } = require("@distube/spotify");
 const { SoundCloudPlugin } = require("@distube/soundcloud");
-const playedtimes = require('./schema/play-schema');
+const playedtimes = require("./schema/play-schema");
 
-
-Levels.setURL(mongoPath)
+Levels.setURL(mongoPath);
 client.commands = new Discord.Collection();
 client.events = new Discord.Collection();
 client.prefix;
@@ -36,100 +40,120 @@ client.distube = new Distube(client, {
   emptyCooldown: 15,
   updateYouTubeDL: false,
   youtubeDL: true,
+  ytdlOptions: {
+    quality: "highestaudio",
+    format: "audioonly",
+  },
   nsfw: false,
   savePreviousSongs: true,
   youtubeCookie: youtubecookie,
-  plugins: [new SpotifyPlugin(), new SoundCloudPlugin()],
-})
+  plugins: [
+    new SpotifyPlugin({
+      parralel: false,
+      emitEventsAfterFetching: true,
+      api: {
+        clientId: config.spotifyID,
+        clientSecret: config.spotifysecret,
+      },
+    }),
+    new SoundCloudPlugin(),
+  ],
+});
 
 client.distube.on("playSong", async (queue, song) => {
-
   await queue.textChannel.send(
     new Discord.MessageEmbed()
       .setColor(embedcolor)
-      .setDescription(`**playing:**\n[\`${song.name}\`](${song.url}) - \`${song.formattedDuration}\``)
-      .setFooter(`added by ${song.user.tag}`, song.user.displayAvatarURL({ dynamic: true }))
-  )
-
-})
+      .setDescription(
+        `**playing:**\n[\`${song.name}\`](${song.url}) - \`${song.formattedDuration}\``
+      )
+      .setFooter(
+        `added by ${song.user.tag}`,
+        song.user.displayAvatarURL({ dynamic: true })
+      )
+  );
+});
 client.distube.on("addSong", async (queue, song) => {
-
   await queue.textChannel.send(
     new Discord.MessageEmbed()
       .setColor(embedcolor)
-      .setDescription(`**added:**\n[\`${song.name}\`](${song.url}) - \`${song.formattedDuration}\``)
-      .setFooter(`added by: ${song.user.tag}`, song.user.displayAvatarURL({ size: 4096, dynamic: true }))
-  )
+      .setDescription(
+        `**added:**\n[\`${song.name}\`](${song.url}) - \`${song.formattedDuration}\``
+      )
+      .setFooter(
+        `added by: ${song.user.tag}`,
+        song.user.displayAvatarURL({ size: 4096, dynamic: true })
+      )
+  );
 
   const data = await playedtimes.findOne({
-    userId: song.user.id
+    userId: song.user.id,
   });
   if (data) {
     let plusone = data.playNum + 1;
     await playedtimes.findOneAndUpdate({
       userId: song.user.id,
-      playNum: parseInt(plusone)
-    })
+      playNum: parseInt(plusone),
+    });
   } else if (!data) {
     let plustwo = 1;
     await playedtimes.create({
       userId: song.user.id,
-      playNum: parseInt(plustwo)
+      playNum: parseInt(plustwo),
     });
   }
-})
+});
 client.distube.on("addList", async (queue, playlist) => {
-
   await queue.textChannel.send(
     new Discord.MessageEmbed()
       .setColor(embedcolor)
       .setDescription(`**added:**\n[\`${playlist.name}\`](${playlist.url})`)
-      .setFooter(`added by: ${playlist.user.tag}`, playlist.user.displayAvatarURL({ size: 4096, dynamic: true }))
-  )
+      .setFooter(
+        `added by: ${playlist.user.tag}`,
+        playlist.user.displayAvatarURL({ size: 4096, dynamic: true })
+      )
+  );
 
   const data = await playedtimes.findOne({
-    userId: playlist.user.id
+    userId: playlist.user.id,
   });
   if (data) {
-    let plusone = data.playNum + playlist.songs.length
+    let plusone = data.playNum + playlist.songs.length;
     await playedtimes.findOneAndUpdate({
       userId: playlist.user.id,
-      playNum: parseInt(plusone)
-    })
+      playNum: parseInt(plusone),
+    });
   } else if (!data) {
     let plustwo = playlist.songs.length;
     await playedtimes.create({
       userId: playlist.user.id,
-      playNum: parseInt(plustwo)
+      playNum: parseInt(plustwo),
     });
   }
-
 });
 
 client.distube.on("initQueue", async (queue) => {
   const djRoles = await djSchema.findOne({
-    guildId: queue.id
+    guildId: queue.id,
   });
 
-  const song = queue.songs[0]
+  const song = queue.songs[0];
   if (djRoles) {
     try {
-      song.member.roles.add(djRoles.roleId)
+      song.member.roles.add(djRoles.roleId);
     } catch (err) {
       throw err;
     }
-    db.set(`djuser.${queue.id}`, song.user.id)
+    db.set(`djuser.${queue.id}`, song.user.id);
   }
   queue.autoplay = false;
   queue.volume = 100;
-
 });
 
 client.distube.on("empty", async (queue, song) => {
-
-  const djUser = await db.fetch(`djuser.${queue.id}`)
+  const djUser = await db.fetch(`djuser.${queue.id}`);
   const djRoles = await djSchema.findOne({
-    guildId: queue.id
+    guildId: queue.id,
   });
 
   const guild = queue.textChannel.guild;
@@ -137,30 +161,31 @@ client.distube.on("empty", async (queue, song) => {
   if (djRoles) {
     if (djUser) {
       const target = guild.member(djUser);
-      const role = guild.roles.cache.get(djRoles.roleId)
+      const role = guild.roles.cache.get(djRoles.roleId);
       if (target.roles.cache.has(role.id)) {
         try {
           target.roles.remove(role.id);
         } catch (error) {
           throw error;
-        };
-      };
-    };
-  };
+        }
+      }
+    }
+  }
   db.delete(`djuser.${queue.id}`);
 
   queue.textChannel.send(
     new Discord.MessageEmbed()
       .setColor(embedcolor)
-      .setDescription(`Leaving ${queue.voiceChannel} because I had no-one to play songs for...  :c`)
-  )
-
-})
+      .setDescription(
+        `Leaving ${queue.voiceChannel} because I had no-one to play songs for...  :c`
+      )
+  );
+});
 
 client.distube.on("disconnect", async (queue) => {
-  const djUser = await db.fetch(`djuser.${queue.id}`)
+  const djUser = await db.fetch(`djuser.${queue.id}`);
   const djRoles = await djSchema.findOne({
-    guildId: queue.id
+    guildId: queue.id,
   });
 
   const guild = queue.textChannel.guild;
@@ -168,23 +193,23 @@ client.distube.on("disconnect", async (queue) => {
   if (djRoles) {
     if (djUser) {
       const target = guild.member(djUser);
-      const role = guild.roles.cache.get(djRoles.roleId)
+      const role = guild.roles.cache.get(djRoles.roleId);
       if (target.roles.cache.has(role.id)) {
         try {
           target.roles.remove(role.id);
         } catch (error) {
           throw error;
-        };
-      };
-    };
-  };
+        }
+      }
+    }
+  }
   db.delete(`djuser.${queue.id}`);
-})
+});
 
 client.distube.on("deleteQueue", async (queue) => {
-  const djUser = await db.fetch(`djuser.${queue.id}`)
+  const djUser = await db.fetch(`djuser.${queue.id}`);
   const djRoles = await djSchema.findOne({
-    guildId: queue.id
+    guildId: queue.id,
   });
 
   const guild = queue.textChannel.guild;
@@ -192,22 +217,24 @@ client.distube.on("deleteQueue", async (queue) => {
   if (djRoles) {
     if (djUser) {
       const target = guild.member(djUser);
-      const role = guild.roles.cache.get(djRoles.roleId)
+      const role = guild.roles.cache.get(djRoles.roleId);
       if (target.roles.cache.has(role.id)) {
         try {
           target.roles.remove(role.id);
         } catch (error) {
           throw error;
-        };
-      };
-    };
-  };
+        }
+      }
+    }
+  }
   db.delete(`djuser.${queue.id}`);
-})
+});
 
 client.distube.on("error", (channel, error) => {
-  console.log('Distube Error:\n'+ error)
-  client.channels.cache.get("915623124031131661").send(`Distube Error:\n\`\`\`${error}\`\`\``)
+  console.log("Distube Error:\n" + error);
+  client.channels.cache
+    .get("915623124031131661")
+    .send(`Distube Error:\n\`\`\`${error}\`\`\``);
 });
 
 client.distube.on("searchNoResult", async (message, query) => {
@@ -215,23 +242,17 @@ client.distube.on("searchNoResult", async (message, query) => {
     new Discord.MessageEmbed()
       .setColor(embedcolor)
       .setDescription(`No results were found for \`${query}\`\n:/`)
+  );
+});
 
-  )
-})
-
-
-
-
-
-
-
-client.bal = (id) => new Promise(async ful => {
-  const data = await economySchema.findOne({ id })
-  if (!data) {
-    return ful(0)
-  }
-  ful(data.coins)
-})
+client.bal = (id) =>
+  new Promise(async (ful) => {
+    const data = await economySchema.findOne({ id });
+    if (!data) {
+      return ful(0);
+    }
+    ful(data.coins);
+  });
 
 client.add = (id, coins) => {
   economySchema.findOne({ id }, async (err, data) => {
@@ -239,12 +260,14 @@ client.add = (id, coins) => {
     if (data) {
       data.coins += coins;
     } else {
-      data = new economySchema({ id, coins })
+      data = new economySchema({ id, coins });
     }
-    data.save()
-  })
-  client.channels.cache.get('914766843275804692').send(`Added \n\`$${coins}\` to \n\`${id}\``);
-}
+    data.save();
+  });
+  client.channels.cache
+    .get("914766843275804692")
+    .send(`Added \n\`$${coins}\` to \n\`${id}\``);
+};
 
 client.del = (id, coins) => {
   economySchema.findOne({ id }, async (err, data) => {
@@ -252,42 +275,52 @@ client.del = (id, coins) => {
     if (data) {
       data.coins -= coins;
     } else {
-      data = new economySchema({ id, coins: -coins })
+      data = new economySchema({ id, coins: -coins });
     }
-    data.save()
-  })
-  client.channels.cache.get('914766872564629524').send(`Removed \n\`$${coins}\` from \n\`${id}\``);
-}
+    data.save();
+  });
+  client.channels.cache
+    .get("914766872564629524")
+    .send(`Removed \n\`$${coins}\` from \n\`${id}\``);
+};
 
-process.on('unhandledRejection', error => {
-  console.error(chalk.red.bold('Unhandled Promise Rejection =>', error));
-  client.channels.cache.get("915623124031131661").send(`Unhandled Rejection:\n\`\`\`${error}\`\`\``);
+process.on("unhandledRejection", (error) => {
+  console.error(chalk.red.bold("Unhandled Promise Rejection =>", error));
+  client.channels.cache
+    .get("915623124031131661")
+    .send(`Unhandled Rejection:\n\`\`\`${error}\`\`\``);
 });
 
-process.on("uncaughtException", error => {
-  console.error(chalk.red.bold('Uncaught Exception =>', error));
-  client.channels.cache.get("915623124031131661").send(`Uncaught Exception:\n\`\`\`${error}\`\`\``);
+process.on("uncaughtException", (error) => {
+  console.error(chalk.red.bold("Uncaught Exception =>", error));
+  client.channels.cache
+    .get("915623124031131661")
+    .send(`Uncaught Exception:\n\`\`\`${error}\`\`\``);
 });
 
-process.on('exit', error => {
-  console.error(chalk.red.bold('Exit Code =>', error));
-  client.channels.cache.get("915623124031131661").send(`Exit:\n\`\`\`${error}\`\`\``);
+process.on("exit", (error) => {
+  console.error(chalk.red.bold("Exit Code =>", error));
+  client.channels.cache
+    .get("915623124031131661")
+    .send(`Exit:\n\`\`\`${error}\`\`\``);
 });
 
-process.on('multipleResolves', error => {
-  console.error(chalk.red.bold('Multiple Resolves =>', error));
-  if (error !== 'reject'){
-    client.channels.cache.get("915623124031131661").send(`Multiple Resolves:\n\`\`\`${error}\`\`\``);
+process.on("multipleResolves", (error) => {
+  console.error(chalk.red.bold("Multiple Resolves =>", error));
+  if (error !== "reject") {
+    client.channels.cache
+      .get("915623124031131661")
+      .send(`Multiple Resolves:\n\`\`\`${error}\`\`\``);
   }
 });
 
-
-
-mongoose.connect(mongoPath, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-}).then(
-  console.log(chalk` - Successfully connected to {bold.cyan MongoDB}! -`)
-)
+mongoose
+  .connect(mongoPath, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(
+    console.log(chalk` - Successfully connected to {bold.cyan MongoDB}! -`)
+  );
 
 client.login(bot_token);

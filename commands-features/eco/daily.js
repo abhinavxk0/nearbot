@@ -7,8 +7,16 @@ module.exports = {
     aliases: ['dl'],
     cooldown: 86400,
     async execute(client, message, args, Discord) {
-        const coins = Math.floor(Math.random() * (50000 - 35000) + 35000);
-        message.lineReply(`You recieved **$${commaNumber(coins)}** for today!`)
-        client.add(message.author.id, coins)
+        let coins = Math.floor(Math.random() * (50000 - 35000) + 35000);
+        let day = moment().weekday();
+        if (day == 6 || day == 7) {
+            let coins = Math.floor(Math.random() * (75000 - 50000) + 50000);
+            message.lineReply(`It's a weekend! 🏖️\nYou recieved **$${commaNumber(coins)}** for today!`)
+            await client.add(message.author.id, coins)
+            return;
+        } else {
+            message.lineReply(`You recieved **$${commaNumber(coins)}** for today!`)
+            await client.add(message.author.id, coins)
+        }
     }
 }

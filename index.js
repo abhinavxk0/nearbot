@@ -256,7 +256,7 @@ client.add = (id, coins) => {
   });
   client.channels.cache
     .get("914766843275804692")
-    .send(`Added \n\`$${coins}\` to \n\`${id}\``);
+    .send(`Added \n\`$${coins}\` to \n\`${client.users.cache.get(id)}\``);
 };
 
 client.del = (id, coins) => {
@@ -271,7 +271,7 @@ client.del = (id, coins) => {
   });
   client.channels.cache
     .get("914766872564629524")
-    .send(`Removed \n\`$${coins}\` from \n\`${id}\``);
+    .send(`Removed \n\`$${coins}\` from \n\`${client.users.cache.get(id)}\``);
 };
 
 process.on("unhandledRejection", (error) => {

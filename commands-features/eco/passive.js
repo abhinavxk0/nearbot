@@ -3,8 +3,7 @@ const config = require('../../config.json');
 const passiveSchema = require('../../schema/passive');
 const cooldownSchema = require('../../schema/cooldown-schema');
 const db = require('quick.db');
-
-import { resetCooldown } from '../../functions/resetcooldown';
+const resetFunc = require('../../functions/resetcooldown');
 
 module.exports = {
     name: 'passive',
@@ -20,7 +19,7 @@ module.exports = {
                     .setDescription("To turn passive on add \`on / true / yes\` to the command.\nTo turn off passive add \`off / false / no\` to the command.")
                     .setTimestamp()
             )
-            return resetCooldown(passiveSchema, 'passive', message.author.id)
+            return resetFunc.resetCooldown(passiveSchema, 'passive', message.author.id)
         }
 
         if (offOn === 'on' || offOn === 'true' || offOn === 'yes') {
@@ -50,7 +49,7 @@ module.exports = {
                     .setDescription("To turn passive on add \`on / true / yes\` to the command.\nTo turn off passive add \`off / false / no\` to the command.")
                     .setTimestamp()
             )
-            return resetCooldown(passiveSchema, 'passive', message.author.id)
+            return resetFunc.resetCooldown(passiveSchema, 'passive', message.author.id)
         }
     }
 }

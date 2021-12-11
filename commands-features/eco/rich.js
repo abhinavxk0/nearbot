@@ -24,7 +24,6 @@ module.exports = {
         )
 
         const data = collection.sort((a, b) => b.bal - a.bal).first(10)
-        console.log(collection)
         const lb = data.map((v, i) => {
             return `**${i + 1}#**${spacer}${client.users.cache.get(v.id).tag} - **$${commaNumber(v.bal)}**\n`
         })

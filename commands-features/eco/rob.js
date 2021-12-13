@@ -1,6 +1,7 @@
 const db = require('quick.db')
 const { embedcolor, errorcolor } = require('../../config.json')
 const commaNumber = require('comma-number')
+const passiveSchema = require('../../schema/passive');
 
 module.exports = {
     name: 'rob',
@@ -14,6 +15,18 @@ module.exports = {
         if (target.id == message.author.id) {
             return message.lineReply(`You can't rob yourself!`)
         }
+
+
+        const targetdata = await passiveSchema.findOne({
+            userId: target.id
+        });
+        const authordata = await passiveSchema.findOne({
+            userId: message.author.id
+        });
+
+        if (targetdata) return message.lineReply(`**${target.username}** is training to become a monk, leave them alone!`)
+        if (authordata) return message.lineReply("hey! you're a **passive** monk, you cant rob people!")
+
         const last_rob = await db.fetch(`rob_${target.id}`);
         const current_time = Date.now();
         if ((last_rob + 300000) > current_time) {
@@ -52,7 +65,7 @@ module.exports = {
             message.lineReply(`You got caught while robbing **${target.username}** and got fined **$${commaNumber(robamt)}**!\nNow you have **$${commaNumber(belence - robamt)}**.`)
             try {
                 await client.del(message.author.id, robamt)
-            } catch (err){
+            } catch (err) {
                 throw err;
             }
         }

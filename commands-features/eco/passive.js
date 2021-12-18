@@ -3,7 +3,6 @@ const config = require('../../config.json');
 const passiveSchema = require('../../schema/passive');
 const cooldownSchema = require('../../schema/cooldown-schema');
 const db = require('quick.db');
-const resetFunc = require('../../functions/resetcooldown');
 
 module.exports = {
     name: 'passive',

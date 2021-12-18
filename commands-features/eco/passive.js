@@ -19,7 +19,11 @@ module.exports = {
                     .setDescription("To turn passive on add \`on / true / yes\` to the command.\nTo turn off passive add \`off / false / no\` to the command.")
                     .setTimestamp()
             )
-            return resetFunc.resetCooldown('passive', message.author.id)
+            await passiveSchema.findOneAndDelete({
+                userId: message.author.id,
+                cmd: 'passive'
+            })
+            return;
         }
 
         if (offOn === 'on' || offOn === 'true' || offOn === 'yes') {
@@ -49,7 +53,11 @@ module.exports = {
                     .setDescription("To turn passive on add \`on / true / yes\` to the command.\nTo turn off passive add \`off / false / no\` to the command.")
                     .setTimestamp()
             )
-            return resetFunc.resetCooldown('passive', message.author.id)
+            await passiveSchema.findOneAndDelete({
+                userId: message.author.id,
+                cmd: 'passive'
+            })
+            return;
         }
     }
 }

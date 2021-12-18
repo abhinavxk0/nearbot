@@ -22,7 +22,7 @@ module.exports = {
         });
 
         if (targetdata) return message.lineReply(`**${reciever.username}** is training to become a monk, leave them alone!`)
-        if (authordata) return message.lineReply("hey! you're a **passive** monk, you cant rob people!")
+        if (authordata) return message.lineReply("hey! you're a **passive** monk, you cant transfer money!")
 
         if (isNaN(toGive)) {
             return message.lineReply('That is not an amount')

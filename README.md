@@ -1,1 +1,1 @@
-_**discord.js v12 has been deprecated. bot does not work anymore**_
+_discord.js v12 has been deprecated. bot does not work anymore_
